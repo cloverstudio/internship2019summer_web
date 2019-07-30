@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="151px" height="151px" viewBox="0 0 151 151" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>log_in_error_icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="100%" y1="100%" x2="0%" y2="0%" id="linearGradient-1">
+            <stop stop-color="#F5515F" offset="0%"></stop>
+            <stop stop-color="#FF0000" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Web" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-Copy-4" transform="translate(-885.000000, -633.000000)">
+            <g id="log_in_error_icon" transform="translate(885.000000, 633.000000)">
+                <circle id="Oval" fill="url(#linearGradient-1)" cx="75.5" cy="75.5" r="75.5"></circle>
+                <path d="M121.305855,75.0834621 L121.305855,75.1970384 C121.305855,78.4047082 118.705525,81.0050384 115.497855,81.0050384 L34.7826451,81.0050384 C31.5749753,81.0050384 28.9746451,78.4047082 28.9746451,75.1970384 L28.9746451,75.0834621 C28.9746451,71.8757923 31.5749753,69.2754621 34.7826451,69.2754621 L115.497855,69.2754621 C118.705525,69.2754621 121.305855,71.8757923 121.305855,75.0834621 Z" id="Combined-Shape" fill="#FFFFFF" transform="translate(75.140250, 75.140250) rotate(-45.000000) translate(-75.140250, -75.140250) "></path>
+                <path d="M121.305855,75.0834621 L121.305855,75.1970384 C121.305855,78.4047082 118.705525,81.0050384 115.497855,81.0050384 L34.7826451,81.0050384 C31.5749753,81.0050384 28.9746451,78.4047082 28.9746451,75.1970384 L28.9746451,75.0834621 C28.9746451,71.8757923 31.5749753,69.2754621 34.7826451,69.2754621 L115.497855,69.2754621 C118.705525,69.2754621 121.305855,71.8757923 121.305855,75.0834621 Z" id="Combined-Shape-Copy" fill="#FFFFFF" transform="translate(75.140250, 75.140250) rotate(-135.000000) translate(-75.140250, -75.140250) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

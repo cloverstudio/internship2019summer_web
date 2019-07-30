@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="151px" height="151px" viewBox="0 0 151 151" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>log_in_checkmark_icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="99.1470026%" y1="99.1470026%" x2="0%" y2="3.33066907e-14%" id="linearGradient-1">
+            <stop stop-color="#89E239" offset="0%"></stop>
+            <stop stop-color="#49BA1B" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Web" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-Copy-3" transform="translate(-885.000000, -698.000000)">
+            <g id="log_in_checkmark_icon" transform="translate(885.000000, 698.000000)">
+                <circle id="Oval" fill="url(#linearGradient-1)" cx="75.5" cy="75.5" r="75.5"></circle>
+                <path d="M40.5275642,80.6016339 L115.376713,80.6016339 C118.584383,80.6016339 121.184713,83.2019641 121.184713,86.4096339 L121.184713,86.5232102 C121.184713,89.73088 118.584383,92.3312102 115.376713,92.3312102 L34.7195642,92.3312102 L34.6615032,92.3312102 C31.4538334,92.3312102 28.8535032,89.73088 28.8535032,86.5232102 L28.8535032,49.0882548 C28.8535032,45.880585 31.4538334,43.2802548 34.6615032,43.2802548 L34.7195642,43.2802548 C37.9272341,43.2802548 40.5275642,45.880585 40.5275642,49.0882548 L40.5275642,80.6016339 Z" id="Combined-Shape" fill="#FFFFFF" transform="translate(75.019108, 67.805732) rotate(-45.000000) translate(-75.019108, -67.805732) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

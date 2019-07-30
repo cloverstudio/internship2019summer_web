@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="22px" viewBox="0 0 14 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>back_icon</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Web" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-Copy-12" transform="translate(-420.000000, -73.000000)" fill="#0076FF">
+            <path d="M427.175777,88.4516395 L437.382674,88.4516395 C438.449155,88.4516395 439.313708,89.3161931 439.313708,90.382674 C439.313708,91.4491549 438.449155,92.3137085 437.382674,92.3137085 L425.244743,92.3137085 C424.178262,92.3137085 423.313708,91.4491549 423.313708,90.382674 L423.313708,78.244743 C423.313708,77.1782621 424.178262,76.3137085 425.244743,76.3137085 C426.311224,76.3137085 427.175777,77.1782621 427.175777,78.244743 L427.175777,88.4516395 Z" id="back_icon" transform="translate(431.313708, 84.313708) rotate(-315.000000) translate(-431.313708, -84.313708) "></path>
+        </g>
+    </g>
+</svg>

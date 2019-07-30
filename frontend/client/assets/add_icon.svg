@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="225px" height="225px" viewBox="0 0 225 225" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>add_icon</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Web" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-Copy-14" transform="translate(-464.000000, -133.000000)" fill="#0076FF">
+            <path d="M584,238.5 L682,238.5 C685.865993,238.5 689,241.634007 689,245.5 C689,249.365993 685.865993,252.5 682,252.5 L584,252.5 L584,351 C584,354.865993 580.865993,358 577,358 C573.134007,358 570,354.865993 570,351 L570,252.5 L471,252.5 C467.134007,252.5 464,249.365993 464,245.5 C464,241.634007 467.134007,238.5 471,238.5 L570,238.5 L570,140 C570,136.134007 573.134007,133 577,133 C580.865993,133 584,136.134007 584,140 L584,238.5 Z" id="add_icon"></path>
+        </g>
+    </g>
+</svg>

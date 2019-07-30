@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {Component} from 'react';
 import logo from './logo.svg';
 import Routes from './Routes';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.css';
+//import './styles/_bootstrap.scss';
+
 
 class App extends Component {
   render (){
