@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
 import Routes from './Routes';
-import './App.css';
 import Register from './components/Register';
 //import './styles/_bootstrap.scss';
 
@@ -18,4 +16,3 @@ class App extends Component {
 }
 
 export default App;
-ReactDOM.render(<App />, document.getElementById('root'));

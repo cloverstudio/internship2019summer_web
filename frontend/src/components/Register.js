@@ -1,6 +1,10 @@
 import React, { Component } from "react";
+import Header from './layout/Header';
+import Footer from './layout/Footer';
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
-import "./Register.css";
+import "./Register.scss";
+import { Link } from 'react-router-dom';
+
 
 export default class Register extends Component {
     constructor(props) {
@@ -31,7 +35,9 @@ export default class Register extends Component {
     render() {
         return (
           <div className="Register" style={{textAlign: "center"}}>
+            <Header />
             <p>Dobro dosli i jos bolje se snasli!</p>
+            <h5>Prijavite se putem OIB-a</h5>
             <form onSubmit={this.handleSubmit}>
               <FormGroup controlId="oib" bsSize="large">
                 <FormLabel>OIB:</FormLabel>
@@ -67,11 +73,11 @@ export default class Register extends Component {
                 block
                 bsSize="large"
                 disabled={!this.validateForm()}
-                type="submit"
-              >
-                Login
+                type="submit">
+                Registriraj me
               </Button>
             </form>
+            <Footer />
           </div>
         );
       }
