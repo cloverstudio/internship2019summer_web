@@ -1,17 +1,21 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
+import ReactDOM from 'react-dom';
 import Routes from './Routes';
 import './App.css';
+import Register from './components/Register';
 //import './styles/_bootstrap.scss';
 
 
 class App extends Component {
-  render (){
-    return (<p>Hello world</p>);
+  render() {
+    return (
+      <div>
+        <Register />
+      </div>
+    )
     
   }
-    
- 
 }
 
 export default App;
+ReactDOM.render(<App />, document.getElementById('root'));
