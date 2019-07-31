@@ -4,7 +4,7 @@ import Footer from './layout/Footer';
 import MainScreen from './MainScreen';
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import "../styles/Register.scss";
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 export default class Register extends Component {
     constructor(props) {
@@ -79,8 +79,10 @@ export default class Register extends Component {
                 </Button>
               </form>
               <Footer />
-              <Route path="/Register" component={Register} exact/> 
-              <Route path="/MainScren" component={MainScreen}/>  
+              <Switch>
+                <Route path="/Register" component={Register} exact/> 
+                <Route path="/MainScren" component={MainScreen}/> 
+              </Switch>
             </div> 
            </Router>
         );
