@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
-import './Login.css';
+import './Login.scss';
 import Footer from './layout/Footer';
 import Header from './layout/Header';
+import { Link } from 'react-router-dom';
 /* get implementacija, validacija uvjeti (duljina usernamea, passworda, provjera emaila kako napravit) */
 
 
@@ -35,10 +36,11 @@ export class Login extends Component {
         return (
             
             <React.Fragment>
-                <Header/>
-                <p>Dobro došli nazad!</p>
-                <p>Molimo vas, upišite tražene podatke kako bi pristupili usluzi koju nudimo.</p>
+                
                 <div className="Login">
+                    <Header/>
+                    <p>Dobro došli nazad!</p>
+                    <p>Molimo vas, upišite tražene podatke kako bi pristupili usluzi koju nudimo.</p>
                     
                     <form onSubmit={this.handleSubmit}>
 
@@ -73,8 +75,10 @@ export class Login extends Component {
                         </Button>
 
                     </form>
+                    <Footer/>
                 </div>
-                <Footer/>
+                
+                
             </React.Fragment>
         )
     }
