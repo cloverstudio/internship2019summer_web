@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Routes from './Routes';
+import Routes from './components/Routes';
 import Register from './components/Register';
 //import './styles/_bootstrap.scss';
 
