@@ -8,3 +8,5 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 </Router>
 */
+
+{/* <Route path="/register" exact component={Register} /> */}

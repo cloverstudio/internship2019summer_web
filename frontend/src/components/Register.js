@@ -30,20 +30,24 @@ export default class Register extends Component {
 
     render() {
         return (
-          <div className="Register">
+          <div className="Register" style={{textAlign: "center"}}>
+            <p>Dobro dosli i jos bolje se snasli!</p>
             <form onSubmit={this.handleSubmit}>
               <FormGroup controlId="oib" bsSize="large">
-                <FormLabel>OIB</FormLabel>
+                <FormLabel>OIB:</FormLabel>
                 <FormControl
+                  required
                   autoFocus
+                  maxLength = "11"
                   type="text"
                   value={this.state.oib}
                   onChange={this.handleChange}
                 />
               </FormGroup>
               <FormGroup controlId="email" bsSize="large">
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Email:</FormLabel>
                 <FormControl
+                  required
                   autoFocus
                   type="email"
                   value={this.state.email}
@@ -51,8 +55,9 @@ export default class Register extends Component {
                 />
               </FormGroup>
               <FormGroup controlId="password" bsSize="large">
-                <FormLabel>Password</FormLabel>
+                <FormLabel>Lozinka:</FormLabel>
                 <FormControl
+                  required
                   value={this.state.password}
                   onChange={this.handleChange}
                   type="password"
