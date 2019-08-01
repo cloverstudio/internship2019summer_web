@@ -3,8 +3,7 @@ import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import './Login.scss';
 import Footer from './layout/Footer';
 import Header from './layout/Header';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import MainScreen from './MainScreen';
+import {BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
 import axios from 'axios';
 /* get implementacija, validacija uvjeti (duljina usernamea, passworda, provjera emaila kako napravit) */
 
@@ -25,8 +24,8 @@ export default class Login extends Component {
       this.getUser();
     }
 
-    getUser(){
-      axios.get('https://api.randomuser.me/')
+    async getUser(){
+      await axios.get('https://api.randomuser.me/')
       .then(response => 
         response.data.results.map(user => ({
           name: console.log(user.name.first),
@@ -65,7 +64,7 @@ export default class Login extends Component {
 
           <Router>
             
-            <React.Fragment>
+            <div className="wrapper">
                 
                 <div className="Login">
                     <Header/>
@@ -101,18 +100,21 @@ export default class Login extends Component {
                         disabled={!this.validateForm()}
                         type="submit"
                         >
-                        Login                
+                        Prijavi me
+                        <Redirect to ="/MainScreen"/>            
                         </Button>
-                        <div>{this.getUser}</div>
+
+                        <Link to = "/Register" className="link">Registriraj se putem OIB-a</Link>
+                        
 
                     </form>
                     
                 </div>
                 
               <Footer/>
-            <Route path ="/MainScreen" exact component={MainScreen} />
+            
 
-            </React.Fragment>
+              </div>
 
             </Router>
         )
