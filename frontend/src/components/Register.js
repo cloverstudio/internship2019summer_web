@@ -4,7 +4,8 @@ import Footer from './layout/Footer';
 import MainScreen from './MainScreen';
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import "../styles/Register.scss";
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import axios from "axios";
 
 export default class Register extends Component {
     constructor(props) {
@@ -13,28 +14,72 @@ export default class Register extends Component {
       this.state = {
         oib: "",
         email: "",
-        password: ""
+        password: "",
+        //redirect
+        redirect: false 
       };
     }
 
-    validateForm() {
-        return this.state.email.length > 0 && this.state.password.length > 0;
+    setRedirect = () => {
+      this.setState({
+        redirect: true
+      })
+    }    //redirect
+
+
+    renderRedirect = () => {
+      if (this.state.redirect) {
+        return <Redirect to='/MainScreen' />
       }
+    }  // treba prepraviti
+
+
+          // API poziv
+    async componentDidMount() {
+        this.getUser();
+    }
+
+    async getUser(){
+      await axios.get("https://api.randomuser.me/")
+      .then(response =>
+        response.data.results.map(user => ({
+          email: console.log(user.email),
+          password: console.log (user.login.password)
+        }))
+      )
+    }
     
-      handleChange = event => {
+    handleChange = event => {
         this.setState({
           [event.target.id]: event.target.value
         });
       }
     
-      handleSubmit = event => {
-        event.preventDefault();
+    handleSubmit = event => {
+      event.preventDefault();
+      const data = new FormData (event.target);
+      fetch('api/form-submit-url', {
+        method: 'POST',
+        body: data
       }
+      );
+      console.log('success');
+    }
+          // API poziv
 
+    validateForm() {
+      return this.state.email.length > 0 && this.state.password.length > 0;
+    }
 
     render() {
+      if (this.state.redirect) {
+        return <Redirect to='/MainScreen' />
+      }
+
         return (
+          
           <Router>
+            <React.Fragment>
              <div className="Register" style={{textAlign: "center"}}>
               <Header />
               <p>Dobro dosli i jos bolje se snasli!</p>
@@ -70,20 +115,21 @@ export default class Register extends Component {
                     type="password"
                   />
                 </FormGroup>
-                <Button
-                  block
-                  bsSize="large"
-                  disabled={!this.validateForm()}
-                  type="submit">
-                  Registriraj me
-                </Button>
+                <div>
+                  {this.renderRedirect()}
+                  <button 
+                    block
+                    bsSize="large"
+                    disabled={!this.validateForm()}
+                    type="submit"
+                    onClick={this.setRedirect}>Registriraj me
+                  </button>
+                </div>
               </form>
               <Footer />
-              <Switch>
-                <Route path="/Register" component={Register} exact/> 
-                <Route path="/MainScren" component={MainScreen}/> 
-              </Switch>
+              <Route path="/MainScren" component={MainScreen}/>
             </div> 
+            </React.Fragment>
            </Router>
         );
       }
