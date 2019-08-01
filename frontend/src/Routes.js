@@ -1,13 +1,17 @@
-/*
-import React from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
-import Login from "./containers/Login";
+import React, {Component} from 'react';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import Login from "./components/Login";
+import MainScreen from './components/MainScreen';
 
+export default class Routes extends Component{
+    render(){
+        return(
+            <Router>
+                <Switch>
+                    <Route path="/" component={Login} />
+                    <Route path="/MainScreen" exact component={MainScreen}/>
+                </Switch>
+            </Router>
+        )}
+}
 
-<Router>
-    <Route path ="/" render = {<p>Test</p>}/>
-    <Route path ="/signup" component = {Signup}/>
-    <Route path="/login" exact component={Login} />
-
-</Router>
-*/

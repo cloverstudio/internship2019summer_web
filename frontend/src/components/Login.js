@@ -3,17 +3,38 @@ import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import './Login.scss';
 import Footer from './layout/Footer';
 import Header from './layout/Header';
-import { Link } from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import MainScreen from './MainScreen';
+import axios from 'axios';
 /* get implementacija, validacija uvjeti (duljina usernamea, passworda, provjera emaila kako napravit) */
 
 
-export class Login extends Component {
+export default class Login extends Component {
     constructor(props){
         super(props);
             this.state = {
             email: "",
-            password: ""
+            password: "",
+            submitted: false,
+            loading: true,
+            error: ''
         };
+    }
+
+    async componentDidMount(){
+      this.getUser();
+    }
+
+    getUser(){
+      axios.get('https://api.randomuser.me/')
+      .then(response => 
+        response.data.results.map(user => ({
+          name: console.log(user.name.first),
+          email: console.log(user.email),
+          password: console.log(user.login.password)
+        }))
+        )
+        
     }
 
     validateForm() {
@@ -30,10 +51,19 @@ export class Login extends Component {
     
       handleSubmit = event => {
         event.preventDefault();
+        const data = new FormData (event.target);
+        fetch('api/form-submit-url', {
+          method: 'POST',
+          body: data
+        }
+        );
+        console.log('success');
       }
 
     render() {
         return (
+
+          <Router>
             
             <React.Fragment>
                 
@@ -73,15 +103,19 @@ export class Login extends Component {
                         >
                         Login                
                         </Button>
+                        <div>{this.getUser}</div>
 
                     </form>
-                    <Footer/>
+                    
                 </div>
                 
-                
+              <Footer/>
+            <Route path ="/MainScreen" exact component={MainScreen} />
+
             </React.Fragment>
+
+            </Router>
         )
     }
 }
 
-export default Login

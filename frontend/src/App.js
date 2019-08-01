@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
-import Routes from './Routes';
 import Login from './components/Login';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import MainScreen from './components/MainScreen';
+import Routes from './Routes';
 //import './styles/_bootstrap.scss';
 
 
 class App extends Component {
   render (){
-    return (<Login/>);
-    
+    return (
+      <Routes/>
+    );
   }
-    
- 
 }
 
 export default App;
