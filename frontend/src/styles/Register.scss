@@ -1,21 +1,41 @@
 @media all and (min-width: 480px) {
-    .Register {
-      padding: 60px 0;
+    .register {
+      padding: 20px;
     }
   
-    .Register form {
+    .register form {
       margin: 0 auto;
       max-width: 320px;
     }
   } 
 
-// .Register {
+.register {
+  background-color: #DCDCDC;  
+}
+
+.white-container {
+  border-radius: 5%;
+  padding: 20px;
+  background-color: white;
+  max-width: 530px;
+  margin: auto;
+}
+
+.register-btn {
+  color: white;
+  background: rgb(16,65,160);
+  background: linear-gradient(90deg, rgba(16,65,160,1) 0%, rgba(17,93,185,1) 35%, rgba(13,122,214,1) 100%);
+  width: 160px;
+  display: inline-block;
+  margin-left: 25%;
   
-// }
+}
 
-// .btn {
+Footer {
+  text-align: center;
+}
 
-// }
-
-
+.form-info {
+  margin-bottom: 25px;
+}
 

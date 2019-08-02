@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Header from './layout/Header';
 import Footer from './layout/Footer';
 import MainScreen from './MainScreen';
-import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { Card, Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import "../styles/Register.scss";
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import axios from "axios";
@@ -77,59 +77,76 @@ export default class Register extends Component {
         return (
           
           <Router>
-            <React.Fragment>
-             <div className="Register" style={{textAlign: "center"}}>
-              <Header />
-              <p>Dobro dosli i jos bolje se snasli!</p>
-              <h5>Prijavite se putem OIB-a </h5>
-              <form onSubmit={this.handleSubmit}>
-                <FormGroup controlId="oib" bsSize="large">
-                  <FormLabel>OIB:</FormLabel>
-                  <FormControl
-                    required
-                    autoFocus
-                    maxLength = "11"
-                    type="text"
-                    value={this.state.oib}
-                    onChange={this.handleChange}
-                  />
-                </FormGroup>
-                <FormGroup controlId="email" bsSize="large">
-                  <FormLabel>Email:</FormLabel>
-                  <FormControl
-                    required
-                    autoFocus
-                    type="email"
-                    value={this.state.email}
-                    onChange={this.handleChange}
-                  />
-                </FormGroup>
-                <FormGroup controlId="password" bsSize="large">
-                  <FormLabel>Lozinka:</FormLabel>
-                  <FormControl
-                    required
-                    value={this.state.password}
-                    onChange={this.handleChange}
-                    type="password"
-                  />
-                </FormGroup>
-                <div>
-                  {this.renderRedirect()}
-                  <Button 
-                    size="sm"
-                    bsClass= "RegisterBtn"
-                    variant="primary"
-                    block
-                    disabled={!this.validateForm()}
-                    type="submit"
-                    onClick={this.setRedirect}>Registriraj me
-                  </Button>
+             <div className="register">
+              <div className="white-container">
+                <div className="main-info" style={{textAlign: "center"}}>
+                  <Header />
+                  <div className="main-text" style={{marginTop: "20px"}}>
+                    <p style={{margin: "0px", fontSize: "23px"}}>
+                      Dobro došli i još se bolje snašli!
+                    </p>
+                    <p style={{fontWeight: "bold"}}>
+                      Prijavite se putem OIB-a 
+                    </p>
+                  </div>                
                 </div>
-              </form>
-              <Footer />
-              <Route path="/MainScren" component={MainScreen}/>
+                <div className="form-info">
+                  <form onSubmit={this.handleSubmit} className="name-form">
+
+                    <FormGroup controlId="oib" bsSize="large">
+                      <FormLabel>OIB:</FormLabel>
+                      <FormControl
+                        required
+                        autoFocus
+                        maxLength = "11"
+                        type="text"
+                        value={this.state.oib}
+                        onChange={this.handleChange}
+                      />
+
+                    </FormGroup>
+                    <FormGroup controlId="email" bsSize="small">
+                      <FormLabel>Email:</FormLabel>
+                      <FormControl
+                        required
+                        autoFocus
+                        type="email"
+                        value={this.state.email}
+                        onChange={this.handleChange}
+                      />
+
+                    </FormGroup>
+                    <FormGroup controlId="password" bsSize="large">
+                      <FormLabel>Lozinka:</FormLabel>
+                      <FormControl
+                        required
+                        value={this.state.password}
+                        onChange={this.handleChange}
+                        type="password"
+                      />
+
+                    </FormGroup>
+                    <div className="register-btn">
+                      {this.renderRedirect()}
+                      <Button 
+                        style={{fontWeight: "bold"}}
+                        size="sm"
+                        // bsClass= "RegisterBtn"
+                        variant="primary"
+                        block
+                        disabled={!this.validateForm()}
+                        type="submit"
+                        onClick={this.setRedirect}>Registriraj me
+                      </Button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div className="footer-info" style={{textAlign: "center", marginTop: "20px"}}>
+                <Footer />
+                <Route path="/MainScren" component={MainScreen}/>
+              </div>
             </div> 
-            </React.Fragment>
            </Router>
         );
       }
