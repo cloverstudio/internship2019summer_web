@@ -119,9 +119,10 @@ export default class Login extends Component {
                         Prijavi me                             
                         </Button>
 
-                        <Link to = "/Register" className="link">Registriraj se putem OIB-a</Link>
+                        
                         
                       </div>
+                      <Link to = "/Register" className="link">Registriraj se putem OIB-a</Link>
                     </form>
                     
                 </div>
