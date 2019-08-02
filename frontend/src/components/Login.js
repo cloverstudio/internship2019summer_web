@@ -14,21 +14,34 @@ export default class Login extends Component {
             this.state = {
             email: "",
             password: "",
-            redirect: false,
+            redirectMainScreen: false,
+            redirectRegister: false,
             error: ''
         };
     }
 
-    setRedirect = () => {
+    setRedirectMainScreen = () => {
       this.setState({
-        redirect: true
+        redirectMainScreen: true,
+        
       })
-    }    //redirect
+    }
+    setRedirectRegister = () => {
+      this.setState({
+        redirectRegister: true,
+      })
+    }  
 
 
     renderRedirect = () => {
-      if (this.state.redirect) {
+      if (this.state.redirectMainScreen) {
         return <Redirect to='/MainScreen' />
+      }
+    }
+
+    renderRedirectToRegister = () => {
+      if (this.state.redirectRegister) {
+        return <Redirect to='/Register' />
       }
     }
 
@@ -72,8 +85,11 @@ export default class Login extends Component {
       }
 
     render() {
-      if (this.state.redirect) {
+      if (this.state.redirectMainScreen) {
         return <Redirect to='/MainScreen' />
+      }
+      if (this.state.redirectRegister) {
+        return <Redirect to='/Register' />
       }
         return (
 
@@ -114,7 +130,7 @@ export default class Login extends Component {
                         bsSize="large"
                         disabled={!this.validateForm()}
                         type="submit"
-                        onClick = {this.setRedirect}
+                        onClick = {this.setRedirectMainScreen}
                         >
                         Prijavi me                             
                         </Button>
@@ -122,7 +138,7 @@ export default class Login extends Component {
                         
                         
                       </div>
-                      <Link to = "/Register" className="link">Registriraj se putem OIB-a</Link>
+                      <Link to = "/Register" className="link" onClick={this.setRedirectRegister}>Registriraj se putem OIB-a</Link>
                     </form>
                     
                 </div>
