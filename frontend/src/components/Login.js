@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
-import './Login.scss';
+import '../styles/Login.scss';
 import Footer from './layout/Footer';
 import Header from './layout/Header';
 import {BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
@@ -14,10 +14,22 @@ export default class Login extends Component {
             this.state = {
             email: "",
             password: "",
-            submitted: false,
-            loading: true,
+            redirect: false,
             error: ''
         };
+    }
+
+    setRedirect = () => {
+      this.setState({
+        redirect: true
+      })
+    }    //redirect
+
+
+    renderRedirect = () => {
+      if (this.state.redirect) {
+        return <Redirect to='/MainScreen' />
+      }
     }
 
     async componentDidMount(){
@@ -60,6 +72,9 @@ export default class Login extends Component {
       }
 
     render() {
+      if (this.state.redirect) {
+        return <Redirect to='/MainScreen' />
+      }
         return (
 
           <Router>
@@ -68,13 +83,13 @@ export default class Login extends Component {
                 
                 <div className="Login">
                     <Header/>
-                    <p>Dobro došli nazad!</p>
-                    <p>Molimo vas, upišite tražene podatke kako bi pristupili usluzi koju nudimo.</p>
+                    <p className="heading">Dobro došli nazad!</p>
+                    <p className="msg">Molimo vas, upišite tražene podatke kako bi pristupili usluzi koju nudimo.</p>
                     
                     <form onSubmit={this.handleSubmit}>
-
+                    <div className="form-info">
                         <FormGroup controlId="email" bsSize="large">
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel>email</FormLabel>
                         <FormControl
                         autoFocus
                         type="email"
@@ -85,7 +100,7 @@ export default class Login extends Component {
                         </FormGroup>
                     
                         <FormGroup controlId="password" bsSize="large">
-                        <FormLabel>Password</FormLabel>
+                        <FormLabel>Lozinka</FormLabel>
                         <FormControl
                         required
                         value={this.state.password}
@@ -99,14 +114,14 @@ export default class Login extends Component {
                         bsSize="large"
                         disabled={!this.validateForm()}
                         type="submit"
+                        onClick = {this.setRedirect}
                         >
-                        Prijavi me
-                        <Redirect to ="/MainScreen"/>            
+                        Prijavi me                             
                         </Button>
 
                         <Link to = "/Register" className="link">Registriraj se putem OIB-a</Link>
                         
-
+                      </div>
                     </form>
                     
                 </div>
