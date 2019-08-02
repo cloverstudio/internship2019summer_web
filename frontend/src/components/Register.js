@@ -15,23 +15,21 @@ export default class Register extends Component {
         oib: "",
         email: "",
         password: "",
-        //redirect
-        redirect: false 
+        redirect: false
       };
     }
-
+        //redirect
     setRedirect = () => {
       this.setState({
         redirect: true
       })
-    }    //redirect
-
+    }    
 
     renderRedirect = () => {
       if (this.state.redirect) {
         return <Redirect to='/MainScreen' />
       }
-    }  // treba prepraviti
+    }     //redirect
 
 
           // API poziv
@@ -83,7 +81,7 @@ export default class Register extends Component {
              <div className="Register" style={{textAlign: "center"}}>
               <Header />
               <p>Dobro dosli i jos bolje se snasli!</p>
-              <h5>Prijavite se putem OIB-a</h5>
+              <h5>Prijavite se putem OIB-a </h5>
               <form onSubmit={this.handleSubmit}>
                 <FormGroup controlId="oib" bsSize="large">
                   <FormLabel>OIB:</FormLabel>
@@ -117,13 +115,15 @@ export default class Register extends Component {
                 </FormGroup>
                 <div>
                   {this.renderRedirect()}
-                  <button 
+                  <Button 
+                    size="sm"
+                    bsClass= "RegisterBtn"
+                    variant="primary"
                     block
-                    bsSize="large"
                     disabled={!this.validateForm()}
                     type="submit"
                     onClick={this.setRedirect}>Registriraj me
-                  </button>
+                  </Button>
                 </div>
               </form>
               <Footer />
