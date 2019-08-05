@@ -2,10 +2,13 @@ import React, { Component } from "react";
 import Header from './layout/Header';
 import Footer from './layout/Footer';
 import MainScreen from './MainScreen';
+import icon_hidden from '../assets/log_in_lozinka_hiden_icon.svg';
+import icon_show from '../assets/log_in_lozinka_icon.svg';
 import { Card, Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import "../styles/Register.scss";
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import axios from "axios";
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+
 
 export default class Register extends Component {
     constructor(props) {
@@ -15,9 +18,16 @@ export default class Register extends Component {
         oib: "",
         email: "",
         password: "",
-        redirect: false
+        redirect: false,
+        passwordShow: false,
       };
     }
+
+    togglePasswordVisibility = () => {
+      const { passwordShow } = this.state;
+      this.setState({ passwordShow : !passwordShow });
+    }
+
         //redirect
     setRedirect = () => {
       this.setState({
@@ -69,23 +79,26 @@ export default class Register extends Component {
       return this.state.email.length > 0 && this.state.password.length > 0;
     }
 
+
     render() {
       if (this.state.redirect) {
         return <Redirect to='/MainScreen' />
       }
+      
+      const { passwordShow } = this.state;
 
         return (
           
           <Router>
              <div className="register">
               <div className="white-container">
-                <div className="main-info" style={{textAlign: "center"}}>
+                <div className="main-info" style={{textAlign: 'center'}}>
                   <Header />
-                  <div className="main-text" style={{marginTop: "20px"}}>
-                    <p style={{margin: "0px", fontSize: "23px"}}>
+                  <div className="main-text" style={{marginTop: '20px'}}>
+                    <p style={{margin: '0px', fontSize: '23px'}}>
                       Dobro došli i još se bolje snašli!
                     </p>
-                    <p style={{fontWeight: "bold"}}>
+                    <p style={{fontWeight: 'bold'}}>
                       Prijavite se putem OIB-a 
                     </p>
                   </div>                
@@ -93,7 +106,7 @@ export default class Register extends Component {
                 <div className="form-info">
                   <form onSubmit={this.handleSubmit} className="name-form">
 
-                    <FormGroup controlId="oib" bsSize="large">
+                    <FormGroup controlId="oib" bssize="large">
                       <FormLabel>OIB:</FormLabel>
                       <FormControl
                         required
@@ -103,9 +116,9 @@ export default class Register extends Component {
                         value={this.state.oib}
                         onChange={this.handleChange}
                       />
-
                     </FormGroup>
-                    <FormGroup controlId="email" bsSize="small">
+
+                    <FormGroup controlId="email" bssize="small">
                       <FormLabel>Email:</FormLabel>
                       <FormControl
                         required
@@ -114,22 +127,27 @@ export default class Register extends Component {
                         value={this.state.email}
                         onChange={this.handleChange}
                       />
-
                     </FormGroup>
-                    <FormGroup controlId="password" bsSize="large">
+
+                    <FormGroup controlId="password" bssize="large">
                       <FormLabel>Lozinka:</FormLabel>
-                      <FormControl
+                      <div className="password-container">
+                      <FormControl 
+                        style={{paddingRight: '30px'}}
+                        placeholder= ""
                         required
                         value={this.state.password}
                         onChange={this.handleChange}
-                        type="password"
+                        type={passwordShow ? "text" : "password"} 
                       />
-
+                      <img className="password-icon" onClick={this.togglePasswordVisibility} src = {icon_show} />
+                      </div>
                     </FormGroup>
+
                     <div className="register-btn">
                       {this.renderRedirect()}
                       <Button 
-                        style={{fontWeight: "bold"}}
+                        style={{fontWeight: 'bold'}}
                         size="sm"
                         // bsClass= "RegisterBtn"
                         variant="primary"
@@ -142,12 +160,13 @@ export default class Register extends Component {
                   </form>
                 </div>
               </div>
-              <div className="footer-info" style={{textAlign: "center", marginTop: "20px"}}>
+              <div className="footer-info" style={{textAlign: 'center', marginTop: '20px'}}>
                 <Footer />
                 <Route path="/MainScren" component={MainScreen}/>
               </div>
             </div> 
            </Router>
+
         );
       }
     }
