@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Header from './layout/Header';
 import Footer from './layout/Footer';
 import MainScreen from './MainScreen';
+import MiddleScreen from './MiddleScreen';
 import icon_hidden from '../assets/log_in_lozinka_hiden_icon.svg';
 import icon_show from '../assets/log_in_lozinka_icon.svg';
 import { Card, Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
@@ -82,7 +83,7 @@ export default class Register extends Component {
 
     render() {
       if (this.state.redirect) {
-        return <Redirect to='/MainScreen' />
+        return <Redirect to='/MiddleScreen' />
       }
       
       const { passwordShow } = this.state;
@@ -90,7 +91,7 @@ export default class Register extends Component {
         return (
           
           <Router>
-             <div className="register">
+             <div className="gray-container">
               <div className="white-container">
                 <div className="main-info" style={{textAlign: 'center'}}>
                   <Header />
@@ -162,7 +163,7 @@ export default class Register extends Component {
               </div>
               <div className="footer-info" style={{textAlign: 'center', marginTop: '20px'}}>
                 <Footer />
-                <Route path="/MainScren" component={MainScreen}/>
+                <Route path="/MiddleScren" component={MainScreen}/>
               </div>
             </div> 
            </Router>

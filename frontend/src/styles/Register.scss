@@ -9,8 +9,9 @@
     }
   } 
 
-.register {
-  background-color: #DCDCDC;  
+.gray-container {
+  background-color: #e7e7e7;
+  padding: 20px;  
 }
 
 .white-container {
@@ -29,7 +30,6 @@
   display: inline-block;
   margin-left: 25%;
   margin-top: 20px;
-  
 }
 
 Footer {
@@ -40,12 +40,12 @@ Footer {
   margin-bottom: 25px;
 }
 
-.password-container {
-  position: relative;
+.name-form {
+  margin: 20px;
 }
 
-password-container{
-  color: aqua;
+.password-container {
+  position: relative;
 }
 
 .password-icon {
