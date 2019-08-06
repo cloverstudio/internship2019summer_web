@@ -3,7 +3,7 @@ import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import '../styles/Login.scss';
 import Footer from './layout/Footer';
 import Header from './layout/Header';
-import {BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, Link, Redirect} from 'react-router-dom';
 import axios from 'axios';
 /* get implementacija, validacija uvjeti (duljina usernamea, passworda, provjera emaila kako napravit) */
 
@@ -17,8 +17,12 @@ export default class Login extends Component {
             redirectMainScreen: false,
             redirectRegister: false,
             error: ''
+
         };
+        
     }
+
+    
 
     setRedirectMainScreen = () => {
       this.setState({
@@ -126,6 +130,7 @@ export default class Login extends Component {
                         </FormGroup>
 
                         <Button
+                        className="btn-login"
                         block
                         bsSize="large"
                         disabled={!this.validateForm()}
@@ -142,8 +147,10 @@ export default class Login extends Component {
                     </form>
                     
                 </div>
+
+                <footer><Footer/></footer>
                 
-              <Footer/>
+              
             
 
               </div>
