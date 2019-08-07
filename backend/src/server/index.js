@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const session = require('express-session');
 const bodyParser = require('body-parser');
+const config = require('./config');
 
 const passport = require('passport');
 
@@ -11,7 +12,7 @@ require('./middlewares/passport')(passport);
 
 require('dotenv').config();
 
-const port = process.env.PORT;
+const port = config.PORT;
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())

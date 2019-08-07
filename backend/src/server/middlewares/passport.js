@@ -2,9 +2,8 @@ const Person = require('../models/Person');
 const LocalStrategy = require('passport-local').Strategy;
 const passportJWT = require('passport-jwt');
 const JWTStrategy = passportJWT.Strategy;
-const bcrypt = require('bcrypt-nodejs');
 const secret = require('../config');
-const passport = require('passport');
+const consts = require('../lib/consts');
 
 module.exports = function (passport) {
     passport.use(new LocalStrategy({
@@ -12,26 +11,20 @@ module.exports = function (passport) {
         passwordField: 'password',
     }, async (email, password, done) => {
         try {
-            await Person.query().findOne({
+            let user = await Person.query().findOne({
                 email: email
-            }).then(user => {
-                if(!user) {
-                    return done(null, false, { "error_code":1000, "error_description":"Krivi email!" });
-                }
-                else {
-                    bcrypt.compare(password, user.password, (err, isMatch) => {
-                        if (err) throw err;
-                        if (isMatch) {
-                            return done(null, user);
-                        } else {
-                            return done(null, false, { "error_code":1000, "error_description":"Krivi email!" });
-                        }
-                    });
-                }
-            })       
-        } catch (error) {
-            done(error);
-        }
+            })
+            if(!user) {
+                return done(null, false, { "error_code": consts.responseErrorLoginWrongEmail.error_code, "error_description": consts.responseErrorLoginWrongEmail.error_decription });
+            }
+            else if (password == user.password){
+                return done(null, user);
+            } else {
+                return done(null, false, { "error_code": consts.responseErrorLoginWrongPassword.error_code, "error_description": consts.responseErrorLoginWrongPassword.error_decription });
+            }          
+        } catch(err) {
+            done(err)
+        }  
     }));
 
     passport.use(new JWTStrategy({
@@ -42,7 +35,6 @@ module.exports = function (passport) {
         /* if (Date.now() > jwtPayload.expires) {
         return done('jwt expired');
         } */
-
             return done(null, jwtPayload);
         }
     ));
