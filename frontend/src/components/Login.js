@@ -5,7 +5,6 @@ import Footer from './layout/Footer';
 import Header from './layout/Header';
 import {BrowserRouter as Router, Link, Redirect} from 'react-router-dom';
 import axios from 'axios';
-/* get implementacija, validacija uvjeti (duljina usernamea, passworda, provjera emaila kako napravit) */
 
 
 export default class Login extends Component {
@@ -20,9 +19,7 @@ export default class Login extends Component {
 
         };
         
-    }
-
-    
+    }    
 
     setRedirectMainScreen = () => {
       this.setState({
