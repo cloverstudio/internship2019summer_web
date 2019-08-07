@@ -4,7 +4,7 @@ import Register from './components/Register';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import MainScreen from './components/MainScreen';
 import Routes from './Routes';
-//import './styles/_bootstrap.scss';
+import "./styles/main.scss"
 
 class App extends Component {
   render() {

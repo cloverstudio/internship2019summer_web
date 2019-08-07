@@ -5,10 +5,19 @@ import icon_checkmark from '../assets/log_in_checkmark_icon.svg';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 
+
+
 class MiddleScreen extends Component {
 
     render() {
+      
+  //  SETTIMEOUT() ??
+
+  //loginsucceed name
+
+
       return (
+       
         <Router>
           <div className="middle-screen-container gray-container">
             <div className="white-container">
