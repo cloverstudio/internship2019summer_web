@@ -8,9 +8,44 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 
 
 class MiddleScreen extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+        redirect: false
+
+    }
+  }
+
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/MainScreen' />
+    }
+  }  
+
+  
+  // setTimeout(setRedirect = () => {
+  //   this.setState({
+  //     redirect: true
+  //   }), 3000);
+  // }
 
     render() {
+      if (this.state.redirect) {
+        return <Redirect to='/MainScreen' />
+      }
+
+
+      // setTimeout(this.renderRedirect(), 3000);
+
       
+
   //  SETTIMEOUT() ??
 
   //loginsucceed name
@@ -44,7 +79,8 @@ class MiddleScreen extends Component {
         </Router>
         )
     }
-}
+    
+  }
 
 
 export default MiddleScreen;
