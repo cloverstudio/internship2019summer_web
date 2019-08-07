@@ -15,9 +15,39 @@ export default class Login extends Component {
             password: "",
             redirectMainScreen: false,
             redirectRegister: false,
-            error: ''
+            error: '',
+            rememberMe: false,
+            token: '',
+            user: {
+              id: 2323,
+               name: 'djuro'
+             },
         };
     }
+
+     // Local Storage
+  handleFormSubmit = () => {
+    const { user, rememberMe, token } = this.state;
+    localStorage.setItem('rememberMe', rememberMe);
+    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('token', token);
+
+    console.log('user', JSON.parse(localStorage.getItem("user")))
+  };
+
+      // remember me checkbox
+  handleChange = event => {
+    const target = event.target;
+    this.setState({
+      [target.id]: target.type === "checkbox" ? target.checked : target.value
+    });
+  }
+
+         // password visibility
+  togglePasswordVisibility = () => {
+    const { passwordShow } = this.state;
+    this.setState({ passwordShow: !passwordShow });
+  }
 
     setRedirectMainScreen = () => {
       this.setState({
@@ -74,14 +104,19 @@ export default class Login extends Component {
     
       handleSubmit = event => {
         event.preventDefault();
-        const data = new FormData (event.target);
-        fetch('api/form-submit-url', {
-          method: 'POST',
-          body: data
-        }
-        );
-        console.log('success');
-      }
+    const data = new FormData(event.target);
+    axios.post('api/form-submit-url', {
+      data
+    })
+    .then(response => {
+      console.log('success',data);
+      this.handleFormSubmit()
+      this.setRedirect();
+    })
+    .catch(e=> {
+      console.log('err',e);
+    });
+  }
 
     render() {
       if (this.state.redirectMainScreen) {
@@ -90,6 +125,7 @@ export default class Login extends Component {
       if (this.state.redirectRegister) {
         return <Redirect to='/Register' />
       }
+
         return (
 
           <Router>
@@ -124,11 +160,14 @@ export default class Login extends Component {
                         />
                         </FormGroup>
 
-                        <Form.Group controlId="rememberMe">
-                          <div sm={{ span: 10, offset: 2 }}>
-                            <Form.Check label="Zapamti me" />
-                          </div>
-                        </Form.Group>
+                        <FormGroup>
+                          <input
+                            id='rememberMe'
+                            type="checkbox"
+                            checked={this.state.rememberMe}
+                            onChange={this.handleChange} />
+                            &nbsp;Zapamti me
+                        </FormGroup>
 
                         <Button
                         block
@@ -140,7 +179,6 @@ export default class Login extends Component {
                         Prijavi me                             
                         </Button>
 
-                        
                         
                       </div>
                       <Link to = "/Register" className="link" onClick={this.setRedirectRegister}>Registriraj se putem OIB-a</Link>

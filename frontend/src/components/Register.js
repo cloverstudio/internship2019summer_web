@@ -20,21 +20,31 @@ export default class Register extends Component {
       redirect: false,
       passwordShow: false,
       rememberMe: false,
+      token: "",
       user: {
         id: 2323,
         name: 'djuro'
-      }
+      },
     };
   }
 
-
+        // Local Storage
   handleFormSubmit = () => {
-    const { user, rememberMe } = this.state;
+    const { user, rememberMe, token } = this.state;
     localStorage.setItem('rememberMe', rememberMe);
     localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('token', token);
 
     console.log('user', JSON.parse(localStorage.getItem("user")))
   };
+
+      // remember me checkbox
+  handleChange = event => {
+    const target = event.target;
+    this.setState({
+      [target.id]: target.type === "checkbox" ? target.checked : target.value
+    });
+  }
 
          // password visibility
   togglePasswordVisibility = () => {
@@ -53,8 +63,7 @@ export default class Register extends Component {
     if (this.state.redirect) {
       return <Redirect to='/MiddleScreen' />
     }
-  }     //redirect
-
+  }  
 
         // API poziv
   async componentDidMount() {
@@ -70,16 +79,8 @@ export default class Register extends Component {
         }))
       )
   }
-////
-  handleChange = event => {
 
-    const target = event.target;
-
-    this.setState({
-      [target.id]: target.type == "checkbox" ? target.checked : target.value
-    });
-  }
-
+  /////
   handleSubmit = event => {
     event.preventDefault();
     const data = new FormData(event.target);
@@ -94,10 +95,8 @@ export default class Register extends Component {
     .catch(e=> {
       console.log('err',e);
     });
+ }
 /////
-
-  }
-        // API poziv
 
   validateForm() {
     return this.state.email.length > 0 && this.state.password.length > 0;
