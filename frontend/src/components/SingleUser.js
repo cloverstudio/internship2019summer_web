@@ -1,12 +1,16 @@
 import React, { Component } from 'react'
 
-export default class SingleUser extends Component {
-    render() {
+const SingleUser = ({name, email, img}) =>{
         return (
             <div>
-                <p>korisnik</p>
-                
+                <img src={img} alt=""/>
+                <div>
+                    <h2>{name}</h2>
+                    <p>{email}</p>
+                </div>
             </div>
-        )
-    }
+        );
 }
+
+
+export default SingleUser;

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
-import '../styles/Login.scss';
 import Footer from './layout/Footer';
 import Header from './layout/Header';
 import {BrowserRouter as Router, Link, Redirect} from 'react-router-dom';

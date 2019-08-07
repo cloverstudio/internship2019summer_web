@@ -4,7 +4,7 @@ const ProfileInfo = ( {name, email, oib, img} ) => {
     
     return(
         <div>
-            <img src={img}/>
+            <img src={img} alt=""/>
             <h2>{name}</h2>
             <p>{email}</p>
              <p>{oib}</p>

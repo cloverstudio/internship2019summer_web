@@ -3,7 +3,6 @@ import Header from './layout/Header';
 import Footer from './layout/Footer';
 import MainScreen from './MainScreen';
 import { Card, Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
-import "../styles/Register.scss";
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import axios from "axios";
 

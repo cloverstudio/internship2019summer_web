@@ -1,16 +1,24 @@
 import React, { Component } from 'react'
 import SingleUser from './SingleUser';
 
-export class UserList extends Component {
-    render() {
-        return (
-            <div>
-                <SingleUser/>
-            </div>
-        )
+const UserList = ({userprofile}) =>{
+    return(
+    <div>{
+        userprofile.map((user, i)=>{
+            return(
+                <SingleUser
+                key={i}
+                id = {userprofile[i].id}
+                name = {userprofile[i].name}
+                email = {userprofile[i].email}
+                />
+            );
+        })
     }
+    </div>
+    )
 }
 
-export default UserList
+export default UserList;
 
 
