@@ -1,6 +1,6 @@
 const knexConfig = require('./knexfile');
 
-const db_host =  knexConfig.locdevelopmental.connection.host;
+const db_host =  knexConfig.development.connection.host;
 const db_user = knexConfig.development.connection.user;
 const db_password = knexConfig.development.connection.password;
 const db_name = knexConfig.development.connection.database;
