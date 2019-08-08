@@ -14,6 +14,7 @@ module.exports = {
         db_password,
         db_name
     },
-    JWT_SECRET
+    JWT_SECRET,
+    PORT
     
-}
+};
