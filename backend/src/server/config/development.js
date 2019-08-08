@@ -6,8 +6,6 @@ const db_password = knexConfig.development.connection.password;
 const db_name = knexConfig.development.connection.database;
 JWT_SECRET='jsonwebtokensecretwordabc';
 PORT = 8080;
-console.log('knexfile' +knexfile)
-console.log(db_host + 'db_host')
 module.exports = {
     database: {
         db_host,
