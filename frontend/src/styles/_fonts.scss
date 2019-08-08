@@ -1,0 +1,12 @@
+@font-face{
+    font-family: 'Avenir';
+    src: url(../assets/fonts/AvenirLTStd-Book) format(woff);
+}
+
+@font-face{
+    font-family: 'American Typewriter';
+    src: url(../assets/fonts/ufonts.com_american-typewriter.woff) format(woff);
+}
+
+$avenir: 'Avenir', sans-serif;
+$american-typewriter: 'American Typewriter', serif;
