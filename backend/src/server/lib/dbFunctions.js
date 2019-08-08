@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const secret = require('../config');
 const consts = require('./consts');
-
+console.log(config)
 knex = Knex({
     client: 'mysql',
     useNullAsDefault: true,
