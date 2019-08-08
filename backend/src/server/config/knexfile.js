@@ -6,7 +6,8 @@ module.exports = {
       host: '172.26.14.199',
       user: 'root',
       password: '!@Antonio22',
-      database: 'mojgrad'
+      database: 'mojgrad',
+      port: 3306
     },
     migrations: {
       tableName: 'knex_migrations',
