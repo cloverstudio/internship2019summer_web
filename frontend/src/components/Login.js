@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, FormGroup, FormControl, FormLabel, Form } from "react-bootstrap";
+import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import Footer from './layout/Footer';
 import Header from './layout/Header';
 import {BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
@@ -17,11 +17,11 @@ export default class Login extends Component {
             redirectRegister: false,
             error: '',
             rememberMe: false,
-            token: '',
+            token: "",
             user: {
               id: 2323,
-               name: 'djuro'
-             },
+              name: 'djuro'
+            },
         };
     }
 

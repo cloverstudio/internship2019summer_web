@@ -14,6 +14,11 @@ export default class Routes extends Component{
                     <Route exact path="/Register" component={Register} />
                     <Route exact path="/MainScreen"  component={MainScreen}/>
                     <Route exact path="/MiddleScreen"  component={MiddleScreen}/>
+                    {/* <Route exact path="/Requests"  component={Requests}/>
+                    <Route exact path="/Profile"  component={Profile}/>
+                    <Route exact path="/Logout"  component={Logout}/> */}
+
+                    
                 </Switch>
             </Router>
         )}

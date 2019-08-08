@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import Header from './layout/Header';
 import Footer from './layout/Footer';
-import MiddleScreen from './MiddleScreen';
-import icon_hidden from '../assets/log_in_lozinka_hiden_icon.svg';
+// import icon_hidden from '../assets/log_in_lozinka_hiden_icon.svg';
 import icon_show from '../assets/log_in_lozinka_icon.svg';
-import { Card, Button, FormGroup, FormControl, FormLabel, Form } from "react-bootstrap";
 import axios from "axios";
+import { Card, Button, FormGroup, FormControl, FormLabel, Form } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 
@@ -17,7 +16,7 @@ export default class Register extends Component {
       oib: "",
       email: "",
       password: "",
-      redirect: false,
+      redirectToMiddle: false,
       passwordShow: false,
       rememberMe: false,
       token: "",
@@ -53,14 +52,14 @@ export default class Register extends Component {
   }
 
         //redirect
-  setRedirect = () => {
+  setRedirectToMiddle = () => {
     this.setState({
-      redirect: true
+      redirectToMiddle: true
     })
   }
 
-  renderRedirect = () => {
-    if (this.state.redirect) {
+  renderRedirectToMiddle = () => {
+    if (this.state.redirectToMiddle) {
       return <Redirect to='/MiddleScreen' />
     }
   }  
@@ -90,7 +89,7 @@ export default class Register extends Component {
     .then(response => {
       console.log('success',data);
       this.handleFormSubmit()
-      this.setRedirect();
+      this.setRedirectToMiddle();
     })
     .catch(e=> {
       console.log('err',e);
@@ -104,7 +103,7 @@ export default class Register extends Component {
 
 
   render() {
-    if (this.state.redirect) {
+    if (this.state.redirectToMiddle) {
       return <Redirect to='/MiddleScreen' />
     }
 
@@ -166,8 +165,10 @@ export default class Register extends Component {
                   </div>
                 </FormGroup>
 
-                <FormGroup>
+                <FormGroup style={{textAlign: 'center', fontSize: '18px'}}>
                   <input
+                    className="remember-me"
+                    style={{textAlign: 'center'}}
                     id='rememberMe'
                     type="checkbox"
                     checked={this.state.rememberMe}
@@ -176,7 +177,7 @@ export default class Register extends Component {
                 </FormGroup>
 
                 <div className="register-btn">
-                  {this.renderRedirect()}
+                  {this.renderRedirectToMiddle()}
                   <Button
                     style={{ fontWeight: 'bold' }}
                     size="sm"
@@ -185,7 +186,7 @@ export default class Register extends Component {
                     block
                     disabled={!this.validateForm()}
                     type="submit"
-                    onClick= {this.setRedirect}
+                    onClick= {this.setRedirectToMiddle}
                   >Registriraj me
                       </Button>
                 </div>

@@ -7,6 +7,10 @@ import nav_users_selected_icon from '../assets/nav_users_selected_icon.svg';
 import { Nav, NavItem, NavLink } from 'reactstrap';
 
 export default class SideBar extends Component {
+
+
+
+
     render (){
         return(
        <div className="sidebar-container">
@@ -32,7 +36,7 @@ export default class SideBar extends Component {
 
                     <NavItem style= {{display: 'flex'}}>
                         <img style= {{maxWidth: '20px'}} alt= "profile photo" src = {nav_users_selected_icon}/>
-                        <NavLink href="/Profil">
+                        <NavLink href="/Profile">
                             Profil
                         </NavLink>
                     </NavItem>
@@ -41,7 +45,10 @@ export default class SideBar extends Component {
                 <div className="bar-logout-container">
                     <NavItem style= {{display: 'flex'}}>
                         <img style= {{maxWidth: '20px'}} alt= "profile photo" src = {nav_users_selected_icon} />
-                        <NavLink href="/Logout">
+                        <NavLink 
+                            href="/"
+    
+                            >
                             Odjavi me
                         </NavLink>
                     </NavItem>

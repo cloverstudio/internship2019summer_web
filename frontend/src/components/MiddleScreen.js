@@ -12,9 +12,27 @@ class MiddleScreen extends Component {
     super(props);
 
     this.state = {
-        redirect: false
+        redirect: false,
+        time: 5
 
     }
+  }
+
+  componentDidMount(prevProps) {
+    
+    const timer = setInterval(() => {
+
+      this.setState({
+        time: this.state.time - 1
+      });
+
+      if(this.state.time <= 0){
+        this.setRedirect();
+        clearInterval(timer);
+      }
+         
+    },1000);
+
   }
 
   setRedirect = () => {
@@ -29,24 +47,10 @@ class MiddleScreen extends Component {
     }
   }  
 
-  
-  // setTimeout(setRedirect = () => {
-  //   this.setState({
-  //     redirect: true
-  //   }), 3000);
-  // }
-
     render() {
       if (this.state.redirect) {
         return <Redirect to='/MainScreen' />
       }
-
-
-      // setTimeout(this.renderRedirect(), 3000);
-
-      
-
-  //  SETTIMEOUT() ??
 
   //loginsucceed name
 
@@ -69,7 +73,8 @@ class MiddleScreen extends Component {
                   podatke s aplikacijom.
                 </p>
                 <img style= {{maxWidth: "200px"}} alt= "checkmark icon" src = {icon_checkmark}/>
-                <p style={{marginTop: '35px'}}>
+                <p 
+                style={{marginTop: '35px'}}>
                   3 sec...
                 </p>
               </div>
