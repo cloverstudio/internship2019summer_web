@@ -11,6 +11,7 @@ const routes = require('./routes/index');
 require('./middlewares/passport')(passport);
 
 require('dotenv').config();
+console.log(process.env)
 
 const port = config.PORT;
 
