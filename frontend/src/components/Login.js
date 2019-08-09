@@ -14,22 +14,52 @@ export default class Login extends Component {
             password: "",
             redirectMainScreen: false,
             redirectRegister: false,
-            error: ''
-
+            error: '',
+            rememberMe: false,
+            token: "",
+            user: {
+              id: 2323,
+              name: 'djuro'
+            },
         };
         
     }    
 
+     // Local Storage
+  handleFormSubmit = () => {
+    const { user, rememberMe, token } = this.state;
+    localStorage.setItem('rememberMe', rememberMe);
+    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('token', token);
+
+    console.log('user', JSON.parse(localStorage.getItem("user")))
+  };
+
+      // remember me checkbox
+  handleChange = event => {
+    const target = event.target;
+    console.log(event);
+    this.setState({
+      [target.id]: target.type === "checkbox" ? target.checked : target.value
+    });
+  }
+
+         // password visibility
+  togglePasswordVisibility = () => {
+    const { passwordShow } = this.state;
+    this.setState({ passwordShow: !passwordShow });
+  }
+
     setRedirectMainScreen = () => {
       this.setState({
         redirectMainScreen: true,
-        
       })
     }
     setRedirectRegister = () => {
       this.setState({
         redirectRegister: true,
       })
+
     }  
 
 
@@ -46,6 +76,7 @@ export default class Login extends Component {
     }
 
     async componentDidMount(){
+      console.log("login",this.state);
       this.getUser();
     }
 
@@ -75,14 +106,21 @@ export default class Login extends Component {
     
       handleSubmit = event => {
         event.preventDefault();
-        const data = new FormData (event.target);
-        fetch('https://intern2019dev.clover.studio/users/login', {
-          method: 'POST',
-          body: data
-        }
-        );
-        console.log('success');
-      }
+
+    const data = new FormData(event.target);
+    axios.post('api/form-submit-url', {
+      data
+    })
+    .then(response => {
+      console.log('success',data);
+      this.handleFormSubmit()
+      this.setRedirect();
+    })
+    .catch(e=> {
+      console.log('err',e);
+    });
+  }
+
 
     render() {
       if (this.state.redirectMainScreen) {
@@ -91,6 +129,7 @@ export default class Login extends Component {
       if (this.state.redirectRegister) {
         return <Redirect to='/Register' />
       }
+
         return (
 
           <Router>
@@ -125,6 +164,15 @@ export default class Login extends Component {
                         />
                         </FormGroup>
 
+                        <FormGroup>
+                          <input
+                            id='rememberMe'
+                            type="checkbox"
+                            checked={this.state.rememberMe}
+                            onClick={this.handleChange} />
+                            &nbsp;Zapamti me
+                        </FormGroup>
+
                         <Button
                         className="btn-login"
                         block
@@ -136,7 +184,6 @@ export default class Login extends Component {
                         Prijavi me                             
                         </Button>
 
-                        
                         
                       </div>
                       <Link to = "/Register" className="link" onClick={this.setRedirectRegister}>Registriraj se putem OIB-a</Link>
@@ -155,4 +202,3 @@ export default class Login extends Component {
         )
     }
 }
-

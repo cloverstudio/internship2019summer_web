@@ -9,8 +9,9 @@
     }
   } 
 
-.register {
-  background-color: #DCDCDC;  
+.gray-container {
+  background-color: #e7e7e7;
+  padding: 20px;  
 }
 
 .white-container {
@@ -28,14 +29,23 @@
   width: 160px;
   display: inline-block;
   margin-left: 25%;
-  
-}
-
-Footer {
-  text-align: center;
+  margin-top: 20px;
 }
 
 .form-info {
-  margin-bottom: 25px;
+  margin: 20px;
 }
 
+.name-form {
+  margin: 30px;
+}
+
+.password-container {
+  position: relative;
+}
+
+.password-icon {
+  position: absolute;
+  right: 5px;
+  top: 9px;
+}
