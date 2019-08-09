@@ -43,4 +43,10 @@ router.post('/register', (req, res) => {
     dbFunctions.addNewUser(user.firstName, user.lastName, user.email, user.oib, user.password, res, req);
  });
 
+ router.post('/newUser', (req, res) => {
+    let user = req.body;
+
+    dbFunctions.adminAddNewUser(user.firstName, user.lastName, user.email, user.oib, user.password, res);
+})
+
  module.exports = router;
