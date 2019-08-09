@@ -12,16 +12,16 @@ export default class SideBar extends Component {
         super(props);
           this.state = {
               RedirectLogin: false,
-                user: {
-                    id: 2323,
-                    name: 'djuro'
-                },
+                // user: {
+                //     id: 2323,
+                //     name: 'djuro'
+                // },
         };
     }
 
     componentDidMount() {
         if(!localStorage.getItem('user')){
-            this.renderRedirect();
+            this.setRedirectLogin();
         } else {
             console.log('Using data from localStorage');
         }
@@ -42,6 +42,11 @@ export default class SideBar extends Component {
       }
       
     render (){
+
+      // if (this.state.RedirectLogin) {
+      //   localStorage.clear();
+      //   return <Redirect to='/'/> 
+      // }
 
         return(
           <div className="sidebar-container">

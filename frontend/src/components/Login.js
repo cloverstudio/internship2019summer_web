@@ -38,6 +38,7 @@ export default class Login extends Component {
       // remember me checkbox
   handleChange = event => {
     const target = event.target;
+    console.log(event);
     this.setState({
       [target.id]: target.type === "checkbox" ? target.checked : target.value
     });
@@ -52,7 +53,6 @@ export default class Login extends Component {
     setRedirectMainScreen = () => {
       this.setState({
         redirectMainScreen: true,
-        
       })
     }
     setRedirectRegister = () => {
@@ -75,6 +75,7 @@ export default class Login extends Component {
     }
 
     async componentDidMount(){
+      console.log("login",this.state);
       this.getUser();
     }
 
@@ -165,7 +166,7 @@ export default class Login extends Component {
                             id='rememberMe'
                             type="checkbox"
                             checked={this.state.rememberMe}
-                            onChange={this.handleChange} />
+                            onClick={this.handleChange} />
                             &nbsp;Zapamti me
                         </FormGroup>
 

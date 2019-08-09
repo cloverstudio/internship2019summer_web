@@ -6,7 +6,9 @@ import no_content_icon from '../assets/no_content_icon.svg';
 
 export default class MainScreen extends Component {
     render (){
+        
         return(
+
         <div className="main-container" style={{display:'flex'}} >
                 <SideBar />
             <div className="no-news-container">

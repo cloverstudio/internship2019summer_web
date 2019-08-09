@@ -20,10 +20,10 @@ export default class Register extends Component {
       passwordShow: false,
       rememberMe: false,
       token: "",
-      user: {
-        id: 2323,
-        name: 'djuro'
-      },
+      // user: {
+      //   id: 2323,
+      //   name: 'djuro'
+      // },
     };
   }
 
@@ -40,6 +40,7 @@ export default class Register extends Component {
       // remember me checkbox
   handleChange = event => {
     const target = event.target;
+    console.log(target);
     this.setState({
       [target.id]: target.type === "checkbox" ? target.checked : target.value
     });
@@ -65,37 +66,12 @@ export default class Register extends Component {
   }  
 
         // API poziv
-  async componentDidMount() {
-    this.getUser();
-  }
 
-  async getUser() {
-    await axios.get("https://api.randomuser.me/")
-      .then(response =>
-        response.data.results.map(user => ({
-          email: console.log(user.email),
-          password: console.log(user.login.password)
-        }))
-      )
-  }
 
-  /////
-  handleSubmit = event => {
-    event.preventDefault();
-    const data = new FormData(event.target);
-    axios.post('api/form-submit-url', {
-      data
-    })
-    .then(response => {
-      console.log('success',data);
-      this.handleFormSubmit()
-      this.setRedirectToMiddle();
-    })
-    .catch(e=> {
-      console.log('err',e);
-    });
- }
-/////
+    // .catch(e=> {
+    //   console.log('err',e);
+    // });
+ 
 
   validateForm() {
     return this.state.email.length > 0 && this.state.password.length > 0;
@@ -136,6 +112,7 @@ export default class Register extends Component {
                     type="text"
                     value={this.state.oib}
                     onChange={this.handleChange}
+                    onChange={this.handleSubmit}
                   />
                 </FormGroup>
 
