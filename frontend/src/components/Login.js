@@ -76,7 +76,7 @@ export default class Login extends Component {
       handleSubmit = event => {
         event.preventDefault();
         const data = new FormData (event.target);
-        fetch('api/form-submit-url', {
+        fetch('https://intern2019dev.clover.studio/users/login', {
           method: 'POST',
           body: data
         }

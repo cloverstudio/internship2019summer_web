@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Search from './layout/Search';
 import UserList from './UserList';
+import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import NewUserUI from './layout/NewUserUI';
+import {Redirect} from 'react-router-dom';
+import AddNewUser from './AddNewUser';
 import axios from 'axios';
 
 
@@ -10,9 +14,24 @@ export class Users extends Component {
         super()
         this.state = {
             userprofile: [],
-            searchfield: ''
+            searchfield: '',
+            redirectAddUser: false
         }
     }
+
+    setRedirectAddNewUser = () => {
+        this.setState({
+          redirectAddUser: true,
+        })
+      }  
+
+    renderRedirect = () => {
+        if (this.state.redirectAddUser) {
+          return <Redirect to='/AddNewUser' />
+        }
+      }
+
+ 
 
 
     async componentDidMount(){
@@ -32,15 +51,27 @@ export class Users extends Component {
         
 
     render() {
+        if (this.state.redirectAddUser) {
+            return <Redirect to='/AddNewUser' />
+          }
+
         const {userprofile, searchfield} = this.state;
+        console.log(userprofile);
+        console.log(searchfield);
         const filteredUsers = userprofile.filter(user => {
-            return  user.name.toLowerCase().includes(searchfield.toLowerCase())
+            let pattern = "^"+ searchfield;
+            const regex = new RegExp(pattern, "i")
+            console.log(user);
+            return regex.test(user.name);
         })
 
 
         return (
             <div>
                 <Search searchChange = {this.onSearchChange}/>
+                <Button onClick = {this.setRedirectAddNewUser}>
+                    <NewUserUI />
+                </Button>
                 <UserList userprofile = {filteredUsers}/>
             </div>
         )

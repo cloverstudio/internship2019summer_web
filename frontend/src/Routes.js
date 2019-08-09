@@ -6,6 +6,7 @@ import Register from './components/Register';
 import Requests from './components/Requests';
 import Users from './components/Users';
 import Profile from './components/Profile';
+import AddNewUser from './components/AddNewUser';
 
 export default class Routes extends Component{
     render(){
@@ -18,6 +19,7 @@ export default class Routes extends Component{
                     <Route exact path="/Requests"  component={Requests}/>
                     <Route exact path="/Users"  component={Users}/>
                     <Route exact path="/Profile"  component={Profile}/>
+                    <Route exact path="/AddNewUser" component={AddNewUser}/>
                 </Switch>
             </Router>
         )}

@@ -32,19 +32,7 @@ export default class Register extends Component {
 
 
           // API poziv
-    async componentDidMount() {
-        this.getUser();
-    }
 
-    async getUser(){
-      await axios.get("https://api.randomuser.me/")
-      .then(response =>
-        response.data.results.map(user => ({
-          email: console.log(user.email),
-          password: console.log (user.login.password)
-        }))
-      )
-    }
     
     handleChange = event => {
         this.setState({
@@ -52,16 +40,20 @@ export default class Register extends Component {
         });
       }
     
-    handleSubmit = event => {
+    handleSubmit = async (event) => {
+      console.log('x');
       event.preventDefault();
-      const data = new FormData (event.target);
-      fetch('api/form-submit-url', {
+      await axios.post('https://intern2019dev.clover.studio/users/register', {
         method: 'POST',
-        body: data
+        body: JSON.stringify({
+          oib: this.state.oib,
+          email: this.state.email,
+          password: this.state.password
+        
+        }) 
       }
       );
-      console.log('success');
-    }
+      }
           // API poziv
 
     validateForm() {
@@ -90,7 +82,7 @@ export default class Register extends Component {
                   </div>                
                 </div>
                 <div className="form-info">
-                  <form onSubmit={this.handleSubmit} className="name-form">
+                  <form  className="name-form">
 
                     <FormGroup controlId="oib" bsSize="large">
                       <FormLabel>OIB:</FormLabel>
@@ -135,7 +127,7 @@ export default class Register extends Component {
                         block
                         disabled={!this.validateForm()}
                         type="submit"
-                        onClick={this.setRedirect}>Registriraj me
+                        onClick={this.handleSubmit}>Registriraj me
                       </Button>
                     </div>
                   </form>

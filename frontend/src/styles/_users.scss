@@ -1,3 +1,4 @@
+@import './fonts';
 
 .user{
     max-width: 30%;
@@ -14,4 +15,36 @@
 .user-info{
     padding-left: 20px;
     padding-top: 10px;
+}
+.user-info > h2{
+    font-family: $american-typewriter-bold;
+}
+.user-info > p{
+    font-family: $avenir;
+}
+
+.btn-new-user{
+    display: flex;
+    width: 20%;
+    background: #0076ff;
+    color: white;
+    font-size: 1.2rem;
+    align-content: center;
+    justify-content: center;
+    font-family: $american-typewriter-bold;
+}
+.btn-new-user > svg {
+    max-width: 50px;
+    max-height: 50px;
+    fill: white;
+}
+
+.new-user-form{
+    max-width: 30%;
+    border-radius: 5px;
+    
+}
+
+.new-user-form > h3 {
+
 }
