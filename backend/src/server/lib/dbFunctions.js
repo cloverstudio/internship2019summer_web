@@ -43,7 +43,7 @@ module.exports = {
                 });
 
                 const payload = {
-                    email: insertedUser.email
+                    email: findNewUser.email
                 };
 
                 req.login(payload, {session: false}, (error) => {
