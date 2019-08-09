@@ -29,7 +29,7 @@ module.exports = {
             .orWhere({ oib:oib });
 
             if(user.length == 0) {
-                let insertedUser = await Person.query().insertGraph({
+                let newUser = await Person.query().insertGraph({
                     firstName: firstName,
                     lastName: lastName,
                     email: email,
@@ -37,6 +37,11 @@ module.exports = {
                     oib: oib,
                     password: password
                 })
+
+                let findNewUser = await Person.query().findOne({
+                    email: email
+                });
+
                 const payload = {
                     email: insertedUser.email
                 };
@@ -51,7 +56,7 @@ module.exports = {
             
                     /** assign  jwt to the cookie */
                     res.cookie('jwt', jwt, { httpOnly: true, secure: true });
-                    return res.json({ 'email': insertedUser.email})
+                    return res.json({ 'user': newUser });
                 });
             } else if (user[0].oib == oib){
                 return res.json({ "error_code": consts.responseErrorRegisterOIBAlreadyExists.error_code, "error_description": consts.responseErrorRegisterOIBAlreadyExists.error_decription });

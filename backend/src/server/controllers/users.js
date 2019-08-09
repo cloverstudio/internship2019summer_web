@@ -5,9 +5,6 @@ const secret = require('../config');
 const express = require('express');
 const router = express.Router();
 
-router.get('/login', (req,res) => {
-    res.send('hello world');
-})
 router.post('/login', (req, res) => {
     passport.authenticate(
         'local',
@@ -34,7 +31,7 @@ router.post('/login', (req, res) => {
 
                 /** assign jwt to the cookie */
                 res.cookie('jwt', jwt, { httpOnly: true, secure: true });
-                res.json({ 'email': user.email})
+                res.json({ 'user': user })
             });
         },
       )(req, res);
