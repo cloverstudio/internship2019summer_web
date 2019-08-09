@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
+import Login from './components/Login';
+import Register from './components/Register';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import MainScreen from './components/MainScreen';
 import Routes from './Routes';
-import './App.css';
 //import './styles/_bootstrap.scss';
 
-
 class App extends Component {
-  render (){
-    return (<p>Hello world</p>);
-    
+  render() {
+    return (
+      <Routes />
+    );
   }
-    
- 
 }
 
 export default App;

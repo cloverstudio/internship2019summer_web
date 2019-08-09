@@ -31,7 +31,7 @@ router.post('/login', (req, res) => {
 
                 /** assign jwt to the cookie */
                 res.cookie('jwt', jwt, { httpOnly: true, secure: true });
-                res.json({ 'email': user.email})
+                res.json({ 'user': user })
             });
         },
       )(req, res);
