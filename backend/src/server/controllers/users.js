@@ -11,7 +11,9 @@ router.post('/login', (req, res) => {
         { session: false },
         (error, user, info) => {
             if (error || !user) {
-                return res.json({ info });
+                return res.json({ 'data': {
+                    'error': info
+                }});
             }
     
             /** JWT result (message) */
@@ -28,10 +30,13 @@ router.post('/login', (req, res) => {
     
                 /** generate a signed json web token and return it in the response */
                 const token = jwt.sign(JSON.stringify(payload), secret.JWT_SECRET);
+                user.jwt = token;
 
                 /** assign jwt to the cookie */
                 res.cookie('jwt', jwt, { httpOnly: true, secure: true });
-                res.json({ 'user': user })
+                res.json({ 'data': {
+                    'user': user 
+                }});
             });
         },
       )(req, res);
