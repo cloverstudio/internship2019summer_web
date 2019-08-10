@@ -14,6 +14,10 @@ module.exports = {
     responseErrorRegisterEmailAlreadyExists: {
         error_code: '1003',
         error_decription: 'Email se već koristi!'
+    },
+    responseErrorForbbidenAccess: {
+        error_code: '1004',
+        error_decription: 'Neovlašten pristup'
     }
     
 }

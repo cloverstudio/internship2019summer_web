@@ -46,7 +46,13 @@ router.post('/register', (req, res) => {
  router.post('/newUser', (req, res) => {
     let user = req.body;
 
-    dbFunctions.adminAddNewUser(user.firstName, user.lastName, user.email, user.oib, user.password, res);
-})
+    dbFunctions.adminAddNewUser(user.firstName, user.lastName, user.email, user.oib, user.password, user.adminEmail, res);
+});
+
+router.get('/allUsers/:searchBy?', (req, res) => {
+    let findBy = req.params.searchBy;
+    dbFunctions.sendUsersList(req.body.email, res, findBy);
+
+});
 
  module.exports = router;
