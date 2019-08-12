@@ -17,7 +17,20 @@ knex = Knex({
     }
 })
 
-Model.knex(knex); 
+Model.knex(knex);
+
+async function isAdmin(email) {
+    let user = await knex('persons')
+    .where({ email: email }); 
+
+    if (user.length == 0) {
+        return false;
+    } else if ( user[0].personsRoleId != 1) {
+        return false;
+    } else {
+        return true;
+    }
+}
 
 async function addTokenToResponse(user, req, res, email, password) {
     const payload = {
@@ -27,7 +40,7 @@ async function addTokenToResponse(user, req, res, email, password) {
     
     req.login(payload, {session: false}, (error) => {
         if (error) {
-            res.json({ error });
+            res.status(500).res.json({ error });
         }
 
         /** generate a signed json web token and return it in the response */
@@ -37,7 +50,7 @@ async function addTokenToResponse(user, req, res, email, password) {
         if (user.error) {
             /** assign  jwt to the cookie */
             res.cookie('jwt', jwt, { httpOnly: true, secure: true });
-            return res.json({ 'data': user });
+            return res.status(500).res.json({ 'data': user });
         } else {
             user.jwt = token;
             res.json ({ 'data': {
@@ -82,16 +95,71 @@ module.exports = {
         });
         
     },
-    async adminAddNewUser(firstName, lastName, email, oib, password, res) {     
+    async adminAddNewUser(firstName, lastName, email, oib, password, adminEmail, res) {     
         let data = await insterNewUser(firstName, lastName, email, oib, password, res);
-        if (data.error) {
-            return res.json({
+        if (!await isAdmin(adminEmail)) {
+            res.json({ data: {
+                'error': {
+                    'error_code': consts.responseErrorForbbidenAccess.error_code,
+                    'error_descripption': consts.responseErrorForbbidenAccess.error_decription
+                }
+            }});
+        } else if (data.error) {
+            res.json({
                 'data': data
-            })
+            });
         } else {
             res.json({ 'data': {
                 'user': data
             }});
+        }  
+    },
+    async sendUsersList(email, res, findBy) {
+        if(await isAdmin(email) && findBy) {
+            let allUsers = await knex('persons')
+            .where('firstName', 'like', `%${findBy}%`)
+            .orWhere('lastName', 'like', `%${findBy}%`)
+            .orWhere('oib', 'like', `%${findBy}%`)
+            .orWhere('email', 'like', `%${findBy}%`)
+
+            res.json({ 'data': allUsers});           
+        }
+        else if (await isAdmin(email) && !findBy) {
+            let allUsers = await knex('persons');
+
+            res.json({ 'data': {
+                'user': allUsers 
+            }});
+        }
+        else {
+            res.json({ 'data': {
+                'error': {
+                    'error_code': consts.responseErrorForbbidenAccess.error_code,
+                    'error_descripption': consts.responseErrorForbbidenAccess.error_decription
+                }
+            }});
+        }
+    },
+    async getUserDetails(id, res) {
+        let user = await knex('persons')
+        .where({ ID: id });
+
+        if (await user.length > 0) {
+            res.json({ 'data': {
+                'user': {
+                    'firstName': user[0].firstName,
+                    'lastName': user[0].lastName,
+                    'oib': user[0].oib,
+                    'email': user[0].email
+                }
+            }})
+        } else {
+            res.json({ 'data': {
+                'error': {
+                    'error_code': consts.responseErrorUserDetailUnknownId.error_code,
+                    'error_description': consts.responseErrorUserDetailUnknownId.error_decription,
+                }
+            }})
         }
     }
 }
