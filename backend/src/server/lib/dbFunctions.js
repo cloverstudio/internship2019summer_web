@@ -21,7 +21,7 @@ Model.knex(knex);
 
 async function isAdmin(email) {
     let user = await knex('persons')
-    .where({ email: email }); 
+    .where({ email: email });
 
     if (user.length == 0) {
         return false;
@@ -37,7 +37,7 @@ async function addTokenToResponse(user, req, res, email, password) {
         email: email,
         password: password
     };
-    
+
     req.login(payload, {session: false}, (error) => {
         if (error) {
             res.json({ error });
@@ -85,17 +85,17 @@ async function insterNewUser(firstName, lastName, email, oib, password, res) {
 }
 
 module.exports = {
-    addNewUser(firstName, lastName, email, oib, password, res, req) {     
+    addNewUser(firstName, lastName, email, oib, password, res, req) {
         insterNewUser(firstName, lastName, email, oib, password, res)
         .then(user => {
             addTokenToResponse(user, req, res, email, password);
-        })      
+        })
         .catch(err => {
         console.error(err);
         });
-        
+
     },
-    async adminAddNewUser(firstName, lastName, email, oib, password, adminEmail, res) {     
+    async adminAddNewUser(firstName, lastName, email, oib, password, adminEmail, res) {
         let data = await insterNewUser(firstName, lastName, email, oib, password, res);
         if (!await isAdmin(adminEmail)) {
             res.json({ data: {
@@ -112,7 +112,7 @@ module.exports = {
             res.json({ 'data': {
                 'user': data
             }});
-        }  
+        }
     },
     async sendUsersList(email, res, findBy) {
         if(await isAdmin(email) && findBy) {
@@ -122,13 +122,13 @@ module.exports = {
             .orWhere('oib', 'like', `%${findBy}%`)
             .orWhere('email', 'like', `%${findBy}%`)
 
-            res.json({ 'data': allUsers});           
+            res.json({ 'data': allUsers});
         }
         else if (await isAdmin(email) && !findBy) {
             let allUsers = await knex('persons');
 
             res.json({ 'data': {
-                'user': allUsers 
+                'user': allUsers
             }});
         }
         else {
@@ -143,7 +143,7 @@ module.exports = {
     async getUserDetails(id, res) {
         let user = await knex('persons')
         .where({ ID: id });
-        
+
         if (await user.length > 0) {
             res.json({ 'data': {
                 'user': {
@@ -163,5 +163,3 @@ module.exports = {
         }
     }
 }
-
-    
