@@ -40,7 +40,7 @@ async function addTokenToResponse(user, req, res, email, password) {
     
     req.login(payload, {session: false}, (error) => {
         if (error) {
-            res.status(500).json({ error });
+            res.json({ error });
         }
 
         /** generate a signed json web token and return it in the response */
@@ -50,7 +50,7 @@ async function addTokenToResponse(user, req, res, email, password) {
         if (user.error) {
             /** assign  jwt to the cookie */
             res.cookie('jwt', jwt, { httpOnly: true, secure: true });
-            return res.status(500).json({ 'data': user });
+            return res.json({ 'data': user });
         } else {
             user.jwt = token;
             res.json ({ 'data': {
