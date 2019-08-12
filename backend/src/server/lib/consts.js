@@ -18,6 +18,10 @@ module.exports = {
     responseErrorForbbidenAccess: {
         error_code: '1004',
         error_decription: 'Neovlašten pristup'
+    },
+    responseErrorUserDetailUnknownId: {
+        error_code: '1005',
+        error_decription: 'Ne postoji korisnik za traženi ID'
     }
     
 }

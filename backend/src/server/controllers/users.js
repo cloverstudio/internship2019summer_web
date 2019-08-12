@@ -55,4 +55,8 @@ router.get('/allUsers/:searchBy?', (req, res) => {
 
 });
 
+router.get('/details', (req, res) => {
+    dbFunctions.getUserDetails(req.body.id, res);
+})
+
  module.exports = router;

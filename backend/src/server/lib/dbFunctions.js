@@ -139,6 +139,28 @@ module.exports = {
                 }
             }});
         }
+    },
+    async getUserDetails(id, res) {
+        let user = await knex('persons')
+        .where({ ID: id });
+        
+        if (await user.length > 0) {
+            res.json({ 'data': {
+                'user': {
+                    'firstName': user[0].firstName,
+                    'lastName': user[0].lastName,
+                    'oib': user[0].oib,
+                    'email': user[0].email
+                }
+            }})
+        } else {
+            res.json({ 'data': {
+                'error': {
+                    'error_code': consts.responseErrorUserDetailUnknownId.error_code,
+                    'error_description': consts.responseErrorUserDetailUnknownId.error_decription,
+                }
+            }})
+        }
     }
 }
 
