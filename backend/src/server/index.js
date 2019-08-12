@@ -3,6 +3,9 @@ const app = express();
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const config = require('./config');
+const cors = require('cors');
+
+app.use(cors());
 
 const passport = require('passport');
 
