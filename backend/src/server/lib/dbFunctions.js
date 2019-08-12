@@ -5,6 +5,7 @@ const config = require('../config/index');
 const jwt = require('jsonwebtoken');
 const secret = require('../config');
 const consts = require('./consts');
+const jwt_decode = require('jwt-decode');
 
 knex = Knex({
     client: 'mysql',
@@ -18,6 +19,16 @@ knex = Knex({
 })
 
 Model.knex(knex);
+
+async function checkTokenavailability(token) {
+    let decodedValue = jwt_decode(token);
+
+    if (Date.now() >= decodedValue.expires) {
+        return false;
+    } else {
+        return decodedValue.email;
+    }
+}
 
 async function isAdmin(email) {
     let user = await knex('persons')
@@ -35,7 +46,8 @@ async function isAdmin(email) {
 async function addTokenToResponse(user, req, res, email, password) {
     const payload = {
         email: email,
-        password: password
+        password: password,
+        expires: Date.now() + parseInt(developData.JWT_EXPIRATION_MS)
     };
 
     req.login(payload, {session: false}, (error) => {
@@ -95,9 +107,10 @@ module.exports = {
         });
 
     },
-    async adminAddNewUser(firstName, lastName, email, oib, password, adminEmail, res) {
+    async adminAddNewUser(firstName, lastName, email, oib, password, token, res) {
+        let mailFromToken = await checkTokenavailability(token);
         let data = await insterNewUser(firstName, lastName, email, oib, password, res);
-        if (!await isAdmin(adminEmail)) {
+        if (!await isAdmin(mailFromToken)) {
             res.json({ data: {
                 'error': {
                     'error_code': consts.responseErrorForbbidenAccess.error_code,
@@ -114,8 +127,9 @@ module.exports = {
             }});
         }
     },
-    async sendUsersList(email, res, findBy) {
-        if(await isAdmin(email) && findBy) {
+    async sendUsersList(token, res, findBy) {
+        let mailFromToken = await checkTokenavailability(token);
+        if(await isAdmin(mailFromToken) && findBy) {
             let allUsers = await knex('persons')
             .where('firstName', 'like', `%${findBy}%`)
             .orWhere('lastName', 'like', `%${findBy}%`)
@@ -124,7 +138,7 @@ module.exports = {
 
             res.json({ 'data': allUsers});
         }
-        else if (await isAdmin(email) && !findBy) {
+        else if (await isAdmin(mailFromToken) && !findBy) {
             let allUsers = await knex('persons');
 
             res.json({ 'data': {
@@ -140,7 +154,8 @@ module.exports = {
             }});
         }
     },
-    async getUserDetails(id, res) {
+    async getUserDetails(id, token, res) {
+        let email = await checkTokenavailability(token);
         let user = await knex('persons')
         .where({ ID: id });
 

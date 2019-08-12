@@ -1,7 +1,7 @@
 const passport = require('passport');
 const dbFunctions = require('../lib/dbFunctions');
 const jwt = require('jsonwebtoken');
-const secret = require('../config');
+const developData = require('../config');
 const express = require('express');
 const router = express.Router();
 
@@ -19,7 +19,8 @@ router.post('/login', (req, res) => {
             /** JWT result (message) */
             const payload = {
                 email: user.email,
-                //expires: Date.now() + parseInt(process.env.JWT_EXPIRATION_MS),
+                password: password,
+                expires: Date.now() + parseInt(developData.JWT_EXPIRATION_MS),
             };
     
             /** assigns payload to req.user */
@@ -29,7 +30,7 @@ router.post('/login', (req, res) => {
                 }
     
                 /** generate a signed json web token and return it in the response */
-                const token = jwt.sign(JSON.stringify(payload), secret.JWT_SECRET);
+                const token = jwt.sign(JSON.stringify(payload), developData.JWT_SECRET);
                 user.jwt = token;
 
                 /** assign jwt to the cookie */
@@ -51,17 +52,17 @@ router.post('/register', (req, res) => {
  router.post('/newUser', (req, res) => {
     let user = req.body;
 
-    dbFunctions.adminAddNewUser(user.firstName, user.lastName, user.email, user.oib, user.password, user.adminEmail, res);
+    dbFunctions.adminAddNewUser(user.firstName, user.lastName, user.email, user.oib, user.password, req.body.token, res);
 });
 
 router.get('/allUsers/:searchBy?', (req, res) => {
     let findBy = req.params.searchBy;
-    dbFunctions.sendUsersList(req.body.email, res, findBy);
+    dbFunctions.sendUsersList(req.body.token, res, findBy);
 
 });
 
 router.get('/details', (req, res) => {
-    dbFunctions.getUserDetails(req.body.id, res);
+    dbFunctions.getUserDetails(req.body.id, req.body.token, res);
 })
 
  module.exports = router;
