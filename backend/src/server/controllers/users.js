@@ -52,17 +52,17 @@ router.post('/register', (req, res) => {
  router.post('/newUser', (req, res) => {
     let user = req.body;
 
-    dbFunctions.adminAddNewUser(user.firstName, user.lastName, user.email, user.oib, user.password, req.body.token, res);
+    dbFunctions.adminAddNewUser(user.firstName, user.lastName, user.email, user.oib, user.password, req.headers.token, res);
 });
 
 router.get('/allUsers/:searchBy?', (req, res) => {
     let findBy = req.params.searchBy;
-    dbFunctions.sendUsersList(req.body.token, res, findBy);
+    dbFunctions.sendUsersList(req.headers.token, res, findBy);
 
 });
 
 router.get('/details', (req, res) => {
-    dbFunctions.getUserDetails(req.body.id, req.body.token, res);
+    dbFunctions.getUserDetails(req.body.id, req.headers.token, res);
 })
 
  module.exports = router;
