@@ -15,12 +15,12 @@ module.exports = function (passport) {
                 email: email
             })
             if(!user) {
-                return done(null, false, { "error_code": consts.responseErrorLoginWrongEmail.error_code, "error_description": consts.responseErrorLoginWrongEmail.error_decription });
+                return done(null, false, { "error_code": consts.responseErrorLoginWrongEmail.error_code, "error_description": consts.responseErrorLoginWrongEmail.error_description });
             }
             else if (password == user.password){
                 return done(null, user);
             } else {
-                return done(null, false, { "error_code": consts.responseErrorLoginWrongPassword.error_code, "error_description": consts.responseErrorLoginWrongPassword.error_decription });
+                return done(null, false, { "error_code": consts.responseErrorLoginWrongPassword.error_code, "error_description": consts.responseErrorLoginWrongPassword.error_description });
             }          
         } catch(err) {
             done(err)
@@ -32,9 +32,6 @@ module.exports = function (passport) {
         secretOrKey: secret.JWT_SECRET,
         },
         (jwtPayload, done) => {
-        /* if (Date.now() > jwtPayload.expires) {
-        return done('jwt expired');
-        } */
             return done(null, jwtPayload);
         }
     ));

@@ -3,7 +3,7 @@ const { Model } = require('objection');
 const Knex = require('knex');
 const config = require('../config/index');
 const jwt = require('jsonwebtoken');
-const secret = require('../config');
+const developData = require('../config');
 const consts = require('./consts');
 const jwt_decode = require('jwt-decode');
 
@@ -20,9 +20,21 @@ knex = Knex({
 
 Model.knex(knex);
 
-async function checkTokenavailability(token) {
-    let decodedValue = jwt_decode(token);
+async function findAllUsers() {
+    let allUsers = await knex('persons');
+    return allUsers;
+}
 
+async function findAllUsersById(id) {
+    let user = await knex('persons')
+    .where({ ID: id });
+
+    return user;
+}
+
+async function checkTokenAvailability(token) {
+    let decodedValue = jwt_decode(token);
+    
     if (Date.now() >= decodedValue.expires) {
         return false;
     } else {
@@ -42,38 +54,69 @@ async function isAdmin(email) {
         return true;
     }
 }
+    
+async function userDidNotPassSecuriityCheck(token, res) {
+    let mailFromToken = await checkTokenAvailability(token);
 
-async function addTokenToResponse(user, req, res, email, password) {
+    //if token is no longer valid
+    if(!mailFromToken) {
+        res.status(440).json({ 'data': {
+            'error': {
+                'error_code': consts.responseErrorExpiredToken.error_code,
+                'error_description': consts.responseErrorExpiredToken.error_description
+            }
+        }})
+    }
+    //user has no admin rights
+    else if (!await isAdmin(mailFromToken)) {
+        res.json({ 'data': {
+            'error': {
+                'error_code': consts.responseErrorForbbidenAccess.error_code,
+                'error_descripption': consts.responseErrorForbbidenAccess.error_description
+            }
+        }});
+    } else {
+        return false;
+    }
+}
+
+async function addTokenToResponse(user, req, res) {
     const payload = {
-        email: email,
-        password: password,
-        expires: Date.now() + parseInt(developData.JWT_EXPIRATION_MS)
+        email: user.email,
+        password: user.password,
+        expires: Date.now() + parseInt(developData.JWT_EXPIRATIONTIME)
     };
 
     req.login(payload, {session: false}, (error) => {
         if (error) {
-            res.json({ error });
+            return{ error };
         }
 
         /** generate a signed json web token and return it in the response */
-        const token = jwt.sign(JSON.stringify(payload), secret.JWT_SECRET);
-
+        const token = jwt.sign(JSON.stringify(payload), developData.JWT_SECRET);
         //add token to user obj
         if (user.error) {
+            console.log('error user' + user)
             /** assign  jwt to the cookie */
             res.cookie('jwt', jwt, { httpOnly: true, secure: true });
-            return res.json({ 'data': user });
+            return { 'data': user };
         } else {
             user.jwt = token;
-            res.json ({ 'data': {
-                'user': user
-            }});
 
         }
     });
 }
 
-async function insterNewUser(firstName, lastName, email, oib, password, res) {
+async function findAllUsersBy(findBy) {
+    let allUsers = await knex('persons')
+    .where('firstName', 'like', `%${findBy}%`)
+    .orWhere('lastName', 'like', `%${findBy}%`)
+    .orWhere('oib', 'like', `%${findBy}%`)
+    .orWhere('email', 'like', `%${findBy}%`)
+
+    return allUsers;
+}
+async function insertNewUser(firstName, lastName, email, oib, password,) {
     let user = await knex('persons')
     .where({ email:email })
     .orWhere({ oib:oib });
@@ -87,94 +130,21 @@ async function insterNewUser(firstName, lastName, email, oib, password, res) {
             oib: oib,
             password: password
         })
-        return user ;
+        return user;
 
     } else if (user[0].oib == oib){
-        return {error: { "error_code": consts.responseErrorRegisterOIBAlreadyExists.error_code, "error_description": consts.responseErrorRegisterOIBAlreadyExists.error_decription }};
+        return {error: { "error_code": consts.responseErrorRegisterOIBAlreadyExists.error_code, "error_description": consts.responseErrorRegisterOIBAlreadyExists.error_description }};
     } else {
-        return {error: {"error_code": consts.responseErrorRegisterEmailAlreadyExists.error_code, "error_description": consts.responseErrorRegisterEmailAlreadyExists.error_decription }};
+        return {error: {"error_code": consts.responseErrorRegisterEmailAlreadyExists.error_code, "error_description": consts.responseErrorRegisterEmailAlreadyExists.error_description }};
     }
 }
 
 module.exports = {
-    addNewUser(firstName, lastName, email, oib, password, res, req) {
-        insterNewUser(firstName, lastName, email, oib, password, res)
-        .then(user => {
-            addTokenToResponse(user, req, res, email, password);
-        })
-        .catch(err => {
-        console.error(err);
-        });
-
-    },
-    async adminAddNewUser(firstName, lastName, email, oib, password, token, res) {
-        let mailFromToken = await checkTokenavailability(token);
-        let data = await insterNewUser(firstName, lastName, email, oib, password, res);
-        if (!await isAdmin(mailFromToken)) {
-            res.json({ data: {
-                'error': {
-                    'error_code': consts.responseErrorForbbidenAccess.error_code,
-                    'error_descripption': consts.responseErrorForbbidenAccess.error_decription
-                }
-            }});
-        } else if (data.error) {
-            res.json({
-                'data': data
-            });
-        } else {
-            res.json({ 'data': {
-                'user': data
-            }});
-        }
-    },
-    async sendUsersList(token, res, findBy) {
-        let mailFromToken = await checkTokenavailability(token);
-        if(await isAdmin(mailFromToken) && findBy) {
-            let allUsers = await knex('persons')
-            .where('firstName', 'like', `%${findBy}%`)
-            .orWhere('lastName', 'like', `%${findBy}%`)
-            .orWhere('oib', 'like', `%${findBy}%`)
-            .orWhere('email', 'like', `%${findBy}%`)
-
-            res.json({ 'data': allUsers});
-        }
-        else if (await isAdmin(mailFromToken) && !findBy) {
-            let allUsers = await knex('persons');
-
-            res.json({ 'data': {
-                'user': allUsers
-            }});
-        }
-        else {
-            res.json({ 'data': {
-                'error': {
-                    'error_code': consts.responseErrorForbbidenAccess.error_code,
-                    'error_descripption': consts.responseErrorForbbidenAccess.error_decription
-                }
-            }});
-        }
-    },
-    async getUserDetails(id, token, res) {
-        let email = await checkTokenavailability(token);
-        let user = await knex('persons')
-        .where({ ID: id });
-
-        if (await user.length > 0) {
-            res.json({ 'data': {
-                'user': {
-                    'firstName': user[0].firstName,
-                    'lastName': user[0].lastName,
-                    'oib': user[0].oib,
-                    'email': user[0].email
-                }
-            }})
-        } else {
-            res.json({ 'data': {
-                'error': {
-                    'error_code': consts.responseErrorUserDetailUnknownId.error_code,
-                    'error_description': consts.responseErrorUserDetailUnknownId.error_decription,
-                }
-            }})
-        }
-    }
+    insertNewUser,
+    userDidNotPassSecuriityCheck,
+    addTokenToResponse,
+    findAllUsersBy,
+    checkTokenAvailability,
+    findAllUsers,
+    findAllUsersById
 }
