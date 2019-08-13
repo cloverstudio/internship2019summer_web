@@ -25,7 +25,7 @@ module.exports = {
     },
     responseErrorExpiredToken: {
         error_code: '1006',
-        error_description: 'Sesija je istekla, potrebno se je ponovno prijaviti.'
+        error_description: 'Sesija je istekla, potrebno se ponovno prijaviti.'
     }
     
 }

@@ -21,7 +21,7 @@ router.post('/login', (req, res) => {
             const payload = {
                 email: user.email,
                 password: user.password,
-                expires: Date.now() + parseInt(developData.JWT_EXPIRATION_MS),
+                expires: Date.now() + parseInt(developData.JWT_EXPIRATIONTIME),
             };
     
             /** assigns payload to req.user */
@@ -84,7 +84,7 @@ router.post('/register', async (req, res) => {
 router.get('/allUsers/:searchBy?', async (req, res) => {
     let findBy = req.params.searchBy;
 
-    let securityCheck = await dbFunctions.userDidNotPassSecuriityCheck(req.headers.token, res);
+    let securityCheck = await dbFunctions.userDidNotPassSecuriityCheck(req.headers.authorization.split(" ")[1], res);
     
     if(!securityCheck && findBy) {
         let data = await dbFunctions.findAllUsersBy(findBy);
