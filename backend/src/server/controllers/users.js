@@ -84,7 +84,7 @@ router.post('/register', async (req, res) => {
 router.get('/allUsers/:searchBy?', async (req, res) => {
     let findBy = req.params.searchBy;
 
-    let securityCheck = await dbFunctions.userDidNotPassSecuriityCheck(req.headers.authorization.split(" ")[1], res);
+    let securityCheck = await dbFunctions.userDidNotPassSecuriityCheck(req.headers.token, res);
     
     if(!securityCheck && findBy) {
         let data = await dbFunctions.findAllUsersBy(findBy);
