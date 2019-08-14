@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 function Footer() {
         return <p style={{fontSize: '14px', marginBottom: '0px', marginTop: '15PX' ,textAlign: 'center'}}>

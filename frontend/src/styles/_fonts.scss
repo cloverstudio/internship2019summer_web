@@ -1,12 +1,23 @@
+
 @font-face{
     font-family: 'Avenir';
     src: url(../assets/fonts/AvenirLTStd-Book.woff) format(woff);
 }
 
-@font-face{
+@font-face {
     font-family: 'American Typewriter Bold';
-    src: local('American Typewriter Bold'), url(../assets/fonts/ufonts.com_american-typewriter-bold.woff), format(woff);
+    font-style: normal;
+    font-weight: normal;
+    src: local('American Typewriter Bold'), url('../assets/fonts/ufonts.com_american-typewriter-bold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'American Typewriter Light';
+    font-style: normal;
+    font-weight: normal;
+    src: local('American Typewriter Light'), url('../assets/fonts/ufonts.com_american-typewriter-light.woff') format('woff');
 }
 
 $avenir: 'Avenir', sans-serif;
 $american-typewriter-bold: 'American Typewriter Bold', serif;
+$american-typewriter-light: 'American Typewriter Light', serif;

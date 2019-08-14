@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import SingleUser from './SingleUser';
 
 const UserList = ({userprofile}) =>{
@@ -9,7 +9,8 @@ const UserList = ({userprofile}) =>{
                 <SingleUser
                 key={i}
                 id = {userprofile[i].id}
-                name = {userprofile[i].name}
+                firstName = {userprofile[i].firstName}
+                lastName = {userprofile[i].lastName}
                 email = {userprofile[i].email}
                 />
             );

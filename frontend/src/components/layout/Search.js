@@ -1,16 +1,18 @@
 import React from 'react';
 import search_icon from '../../assets/search_icon.svg';
+import {Col, FormGroup, FormControl} from 'react-bootstrap';
 
 const Search = ({searchChange}) => {
     return(
-        <div>
-            <input 
+        <Col>
+            <FormControl 
             type="search"
             placeholder="Pretraživanje korisnika"
             onChange = {searchChange}
             src ={search_icon}/>
-        </div>
+        </Col>
     );
 }
+
 
 export default Search;

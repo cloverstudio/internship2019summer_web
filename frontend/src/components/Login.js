@@ -4,6 +4,8 @@ import Footer from './layout/Footer';
 import Header from './layout/Header';
 import {BrowserRouter as Router, Link, Redirect} from 'react-router-dom';
 import axios from 'axios';
+import md5 from 'md5';
+import consts from '../lib/const';
 
 
 export default class Login extends Component {
@@ -77,20 +79,9 @@ export default class Login extends Component {
 
     async componentDidMount(){
       console.log("login",this.state);
-      this.getUser();
     }
 
-    async getUser(){
-      await axios.get('https://api.randomuser.me/')
-      .then(response => 
-        response.data.results.map(user => ({
-          name: console.log(user.name.first),
-          email: console.log(user.email),
-          password: console.log(user.login.password)
-        }))
-        )
-        
-    }
+   
 
     validateForm() {
         return this.state.email.length > 0 && this.state.password.length > 0;
@@ -104,22 +95,50 @@ export default class Login extends Component {
         });
       }
     
-      handleSubmit = event => {
+      handleSubmit = async (event) => {
         event.preventDefault();
-
-    const data = new FormData(event.target);
-    axios.post('api/form-submit-url', {
-      data
-    })
-    .then(response => {
-      console.log('success',data);
-      this.handleFormSubmit()
-      this.setRedirect();
-    })
-    .catch(e=> {
-      console.log('err',e);
-    });
+        console.log('x');
+        event.preventDefault();
+        await fetch('https://intern2019dev.clover.studio/users/login', {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, method: 'POST',
+          body: JSON.stringify({
+            email: this.state.email,
+            password: md5(this.state.password),
+            crossDomain : true,
+            xhrFields: {
+              withCredentials: true
+          }
+          })
+        }).then(async (response) =>{
+           const json = await response.json();
+           console.log(json);
+           console.log(json.data.error)
+           if(json.data.error){
+             return this.checkIfError(json)
+           }else{
+             const user = json.data.user;
+             const jwt = json.data.user.jwt;
+             console.log(jwt);
+             localStorage.setItem('user',JSON.stringify(user));
+             localStorage.setItem('token',jwt);
+             return this.setRedirectMainScreen();
+           }
+      }
+        ).catch(e=>{
+          console.log(e)
+        })
   }
+
+  checkIfError = (json) =>{
+    if(json.data.error.error_code == consts.errorEmail){
+      return console.log('Oib se vec koristi');
+    }else if(json.data.error.error_code == consts.errorPassword){
+      return console.log('email se vec koristi')
+    }
+    }
 
 
     render() {
@@ -179,7 +198,7 @@ export default class Login extends Component {
                         bsSize="large"
                         disabled={!this.validateForm()}
                         type="submit"
-                        onClick = {this.setRedirectMainScreen}
+                        onClick = {this.handleSubmit}
                         >
                         Prijavi me                             
                         </Button>

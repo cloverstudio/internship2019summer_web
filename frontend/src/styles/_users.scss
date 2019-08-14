@@ -1,9 +1,13 @@
 @import './fonts';
 
+
+
+//singleuser.js
 .user{
-    max-width: 30%;
+    max-width: 43%;
     display: flex;
     margin: 15px;
+    border-radius: 2px;
 }
 
 .profile-photo{
@@ -16,35 +20,58 @@
     padding-left: 20px;
     padding-top: 10px;
 }
-.user-info > h2{
+.user-info > h3{
     font-family: $american-typewriter-bold;
+    margin-bottom: 0;
 }
 .user-info > p{
-    font-family: $avenir;
+    font-family: $american-typewriter-light;
+    color: grey;
+    margin-bottom: 0;
 }
 
+
+//users.js
 .btn-new-user{
     display: flex;
-    width: 20%;
+    width: 30%;
     background: #0076ff;
     color: white;
     font-size: 1.2rem;
     align-content: center;
     justify-content: center;
-    font-family: $american-typewriter-bold;
+    font-family: 'American Typewriter Bold', serif;
 }
 .btn-new-user > svg {
-    max-width: 50px;
-    max-height: 50px;
-    fill: white;
+    max-width: 20px;
+    max-height: 20px;
+    fill: currentColor;
 }
 
+
+
+//AddNewUser.js
 .new-user-form{
-    max-width: 30%;
+    width: 50%;
     border-radius: 5px;
     
 }
 
-.new-user-form > h3 {
+.new-user-form{
+    margin-left: 20px;
+}
+.return{
+    background: #e7e7e7;
+    border: none;
+    font-family: $american-typewriter-bold;
+    color: #0076ff;
+    display: flex;
+}
+.heading-new-user{
+    display: flex;
+    font-family: $american-typewriter-bold;
+}
 
+.label-custom{
+    font-family: $avenir;
 }

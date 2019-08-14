@@ -69,6 +69,13 @@ export default class SideBar extends Component {
                       </NavLink>
                   </NavItem>
 
+                  <NavItem style= {{display: 'flex', marginBottom: '20px'}}>
+                      <img style= {{maxWidth: '20px'}} alt= "request icon" src = {nav_requests_selected_icon} />
+                      <NavLink href="/Users">
+                          Korisnici
+                      </NavLink>
+                  </NavItem>
+
                   <NavItem style= {{display: 'flex'}}>
                       <img style= {{maxWidth: '20px'}} alt= "profile photo" src = {nav_users_selected_icon}/>
                       <NavLink href="/Profile">

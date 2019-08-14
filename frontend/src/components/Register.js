@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import Header from './layout/Header';
 import Footer from './layout/Footer';
-import { Card, Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import {  Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { BrowserRouter as Redirect } from 'react-router-dom';
 // import icon_hidden from '../assets/log_in_lozinka_hiden_icon.svg';
 import icon_show from '../assets/log_in_lozinka_icon.svg';
 import axios from "axios";
-
+import md5 from 'md5';
+import consts from '../lib/const';
 
 export default class Register extends Component {
   constructor(props) {
@@ -65,17 +66,45 @@ export default class Register extends Component {
     handleSubmit = async (event) => {
       console.log('x');
       event.preventDefault();
-      await axios.post('https://intern2019dev.clover.studio/users/register', {
-        method: 'POST',
+      await fetch('https://intern2019dev.clover.studio/users/register',  {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, method: 'POST',
         body: JSON.stringify({
           oib: this.state.oib,
           email: this.state.email,
-          password: this.state.password
-        
-        }) 
+          password: md5(this.state.password),
+          crossDomain : true,
+          xhrFields: {
+            withCredentials: true
+    }
+        })
       }
-      );
+      ).then(async (response)  => {
+         const json = await response.json();
+      console.log(json);
+      console.log(json.data.error)
+      if(json.data.error){
+        return this.checkIfError(json)
+      }else{
+        return this.setRedirectToMiddle();
       }
+      }
+      ).catch(e=>{
+        console.log('err',e);
+      })
+      }
+
+      checkIfError = (json) =>{
+        if(json.data.error.error_code == consts.errorOIBInUse){
+          return console.log('Oib se vec koristi');
+        }else if(json.data.error.error_code == consts.errorEmailInUse){
+          return console.log('email se vec koristi')
+        }
+        }
+      
+      
           // API poziv
 
   setRedirectToMiddle = () => {
@@ -138,9 +167,7 @@ export default class Register extends Component {
                     maxLength="11"
                     type="text"
                     value={this.state.oib}
-                    onChange={this.handleChange}
-                    onChange={this.handleSubmit}
-                  />
+                    onChange={this.handleChange}                  />
                 </FormGroup>
 
                 <FormGroup controlId="email" bssize="small">

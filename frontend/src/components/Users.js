@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import Search from './layout/Search';
 import UserList from './UserList';
-import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
-import NewUserUI from './layout/NewUserUI';
+import { Button } from "react-bootstrap";
 import {Redirect} from 'react-router-dom';
-import AddNewUser from './AddNewUser';
+import {Row, Container} from 'react-bootstrap';
+import add_icon from '../assets/add_icon.svg';
 import axios from 'axios';
+//import apis from '../lib/api/api';
 
 
 export class Users extends Component {
@@ -15,7 +16,14 @@ export class Users extends Component {
         this.state = {
             userprofile: [],
             searchfield: '',
-            redirectAddUser: false
+            redirectAddUser: false,
+            jwt: localStorage.getItem('token')
+        }
+    }
+
+    componentWillMount(){
+        if(!localStorage.getItem('token')){
+           return <Redirect to ="/"/>
         }
     }
 
@@ -25,23 +33,37 @@ export class Users extends Component {
         })
       }  
 
-    renderRedirect = () => {
+    renderRedirectAddNewUser = () => {
         if (this.state.redirectAddUser) {
           return <Redirect to='/AddNewUser' />
         }
       }
 
- 
-
 
     async componentDidMount(){
-        await axios.get('https://jsonplaceholder.typicode.com/users')
-        .then ( response => response.data.sort(function(a,b){
-            if(a.name < b.name) { return -1; }
-            if(a.name > b.name) { return 1; }
+        await fetch('https://intern2019dev.clover.studio/users/allUsers/' ,{
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'token': this.state.jwt
+              }, method: 'GET',
+            })
+        .then (async (response) => { 
+            const json = await response.json();
+            const mapUsers = json.data.user.map(user => {
+                return user;
+            })
+            mapUsers.sort(function(a,b){
+            if(!a.firstName && b.firstName) {return 1;}
+            if(a.firstName && !b.firstName) {return -1;}
+            if(!a.firstName && !b.firstName) {return 1;}
+            
+            if(a.firstName.toLowerCase() < b.firstName.toLowerCase()) { return -1; }
+            if(a.firstName.toLowerCase() > b.firstName.toLowerCase()) { return 1; }
             return 0;
-        }))
-        .then(users => this.setState({ userprofile: users }))
+        })
+        this.setState({userprofile: mapUsers})
+        })
         }
 
     onSearchChange = (event) => {
@@ -57,25 +79,32 @@ export class Users extends Component {
 
         const {userprofile, searchfield} = this.state;
         console.log(userprofile);
-        console.log(searchfield);
         const filteredUsers = userprofile.filter(user => {
             let pattern = "^"+ searchfield;
             const regex = new RegExp(pattern, "i")
-            console.log(user);
-            return regex.test(user.name);
+            return regex.test(user.firstName);
         })
 
 
         return (
             <div>
-                <Search searchChange = {this.onSearchChange}/>
-                <Button onClick = {this.setRedirectAddNewUser}>
-                    <NewUserUI />
-                </Button>
+                <Container style={{margin:"0"}}>
+                    <Row>
+                    <Search searchChange = {this.onSearchChange}/>
+                    <Button className="btn-new-user col"
+                    onClick = {this.setRedirectAddNewUser}>
+                        <svg>
+                            <use>{add_icon}</use>
+                        </svg>
+                        Kreiraj Korisnika
+                    </Button>
+                    </Row>
+                </Container>
                 <UserList userprofile = {filteredUsers}/>
             </div>
         )
     }
 }
+
 
 export default Users

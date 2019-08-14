@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl, FormLabel, Row } from "react-bootstrap";
 import {Redirect} from 'react-router-dom';
-import {ToastsContainer, ToastsStore} from 'react-toasts';
+import swal from 'sweetalert';
+import md5 from 'md5';
 
 
 export class AddNewUser extends Component {
@@ -9,9 +10,13 @@ export class AddNewUser extends Component {
     constructor(props){
         super(props);
         this.state = {
+            name: "",
             email: "",
             password: "",
             oib: "",
+            firstName: '',
+            lastName: '',
+            jwt: localStorage.getItem('token'),
             error: "",
             redirectToUsers: false
         }
@@ -39,16 +44,45 @@ export class AddNewUser extends Component {
         });
     }
 
-    handleSubmit = event => {
+    handleSubmit = async (event) => {
         event.preventDefault();
-        const data = new FormData (event.target);
-        fetch('api/form-submit-url', {
+        this.separateName(this.state.name);
+        await fetch('https://intern2019dev.clover.studio/users/newUser', {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'token': this.state.jwt
+          },
           method: 'POST',
-          body: data
-        }
-        );
-        console.log('success');
-      }
+          body: JSON.stringify({
+            email: this.state.email,
+            password: md5(this.state.password),
+            oib: this.state.oib,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            crossDomain : true,
+            xhrFields: {
+              withCredentials: true
+            }
+          })
+          }).then(async (response) =>{
+            const json = await response.json();
+            console.log(json);
+            swal("Uspješno!", "Korisnik će na svoju email adresu dobiti podatke koji su potrebni za prjavu na sustav Moj Grad", "success");
+            return this.setRedirectUsers();
+            }
+            ).catch(e=>{
+              console.log(e);
+              swal("Greška!", "Korisnik nije kreiran", "error");
+            })
+          }
+
+          separateName = name =>{
+              const splitString = name.split(' ');
+              console.log(splitString);
+              this.state.firstName = splitString[0].trim();
+              this.state.lastName = splitString[1];
+          }
 
     render() {
       if (this.state.redirectToUsers) {
@@ -57,12 +91,18 @@ export class AddNewUser extends Component {
    
         return (
             <div className="new-user-form">
-                <Button onClick= {this.setRedirectUsers}>Vrati se</Button>
-                <h3>Kreiraj novog korisnika</h3>
+                <Row>
+                  <Button 
+                  className = "return"
+                  onClick= {this.setRedirectUsers}>
+                  Vrati se
+                  </Button>
+                <h3 className="heading-new-user">Kreiraj korisnika</h3>
+                </Row>
 
-                <form onSubmit={this.handleSubmit}>
+                <form >
                 <FormGroup controlId="profilePhoto" bsSize="large">
-                <FormLabel>Profilna slika</FormLabel>
+                <FormLabel bsClass="custom-label">Profilna slika</FormLabel>
                 <img src=""/>
                 </FormGroup>
 
@@ -116,11 +156,11 @@ export class AddNewUser extends Component {
                 block
                 disabled = {!this.validateForm()}
                 type = "submit"
-                onClick = {() => ToastsStore.success("Uspješno!!")}
+                onClick = {this.handleSubmit}
                 >
                 Kreiraj korisnika
                 </Button>
-                <ToastsContainer store={ToastsStore} />
+                
 
                 </form>
 
