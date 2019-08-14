@@ -152,9 +152,11 @@ router.get('/allUsers/:searchBy?', async (req, res) => {
     let securityCheck = await userDidNotPassSecuriityCheck(req.headers.token, res);
     
     if(!securityCheck && findBy) {
-        let data = await dbFunctions.findAllUsersBy(findBy);
+        let user = await dbFunctions.findAllUsersBy(findBy);
 
-        return res.json({ data });
+        return res.json({ 'data': {
+            'user': user
+        }});
     }
     else if (!securityCheck && !findBy) {
         let allUsers = await dbFunctions.findAllUsers();
