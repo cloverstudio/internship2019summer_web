@@ -52,13 +52,25 @@ async function findAllUsersBy(findBy) {
 
     return allUsers;
 }
-async function insertNewUser(firstName, lastName, email, oib, password,) {
+
+async function userAlreadyExists(email, oib) {
     let user = await knex('persons')
     .where({ email:email })
     .orWhere({ oib:oib });
 
-    if(user.length == 0) {
-        let user = await Person.query().insertGraph({
+    if (user.length == 0) {
+        return false;
+    } else if (user[0].oib == oib){
+        return {error: { "error_code": consts.responseErrorRegisterOIBAlreadyExists.error_code, "error_description": consts.responseErrorRegisterOIBAlreadyExists.error_description }};
+    } else {
+        return {error: {"error_code": consts.responseErrorRegisterEmailAlreadyExists.error_code, "error_description": consts.responseErrorRegisterEmailAlreadyExists.error_description }};
+    }
+}
+async function insertNewUser(firstName, lastName, email, oib, password,) {
+    let user = await userAlreadyExists(email, oib);
+
+    if (!user) {
+        let newUser = await Person.query().insertGraph({
             firstName: firstName,
             lastName: lastName,
             email: email,
@@ -66,12 +78,24 @@ async function insertNewUser(firstName, lastName, email, oib, password,) {
             oib: oib,
             password: password
         })
-        return user;
+        return newUser;
 
-    } else if (user[0].oib == oib){
-        return {error: { "error_code": consts.responseErrorRegisterOIBAlreadyExists.error_code, "error_description": consts.responseErrorRegisterOIBAlreadyExists.error_description }};
     } else {
-        return {error: {"error_code": consts.responseErrorRegisterEmailAlreadyExists.error_code, "error_description": consts.responseErrorRegisterEmailAlreadyExists.error_description }};
+        return user;
+    }
+}
+
+async function updateUser(firstName, lastName, email, oib, password, image, id) {
+    let user = await userAlreadyExists(email, oib);
+
+    if (!user) {
+        await knex('persons')
+        .where({ ID: id })
+        .update({ firstName: firstName, lastName: lastName, email: email, oib: oib, password: password, image: `uploads/photos/${image}` });
+
+        return 'uspješno izmijenjeno';
+    } else {
+        return user;
     }
 }
 
@@ -80,5 +104,6 @@ module.exports = {
     isAdmin,
     findAllUsersBy,
     findAllUsers,
-    findAllUsersById
+    findAllUsersById,
+    updateUser
 }

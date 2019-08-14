@@ -6,7 +6,7 @@ const express = require('express');
 const router = express.Router();
 const consts = require('../lib/consts');
 const jwt_decode = require('jwt-decode');
-
+const upload = require('../middlewares/multer');
 
 function checkTokenAvailability(token) {
     let decodedValue = jwt_decode(token);
@@ -204,6 +204,25 @@ router.get('/details', async (req, res) => {
 router.post('/logout', (req, res) => {
     let token = req.headers.token;
     jwt_decode(token).expires = null;
+})
+
+router.put('/newUser', upload.single('photo'), async (req, res) => {
+    let user = req.body;
+    let securityCheck = await userDidNotPassSecuriityCheck(req.headers.token, res);
+    let data = await dbFunctions.updateUser(user.firstName, user.lastName, user.email, user.oib, user.password, req.file.filename, user.id);
+
+    if (!securityCheck && data.error) {
+        res.json({
+            'data': data
+        });
+    }
+    else if (!securityCheck) {
+        res.json({ 'data': {
+            'user': data
+        }});
+    } else {
+        res.json(securityCheck);
+    }
 })
 
  module.exports = router;
