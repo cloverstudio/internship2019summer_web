@@ -6,6 +6,8 @@ const express = require('express');
 const router = express.Router();
 const consts = require('../lib/consts');
 const jwt_decode = require('jwt-decode');
+const path = require('path');
+const upload = require('../middlewares/multer');
 
 
 function checkTokenAvailability(token) {
@@ -126,13 +128,13 @@ router.post('/register', async (req, res) => {
     }       
  });
 
- router.post('/newUser', async (req, res) => {
+ router.post('/newUser', upload.single('photo'), async (req, res) => {
     let user = req.body;
 
-    let data = await dbFunctions.insertNewUser(user.firstName, user.lastName, user.email, user.oib, user.password);
+    let data = await dbFunctions.insertNewUser(user.firstName, user.lastName, user.email, user.oib, user.password, req.file.filename);
     let securityCheck = await userDidNotPassSecuriityCheck(req.headers.token, res);
 
-    // if email/oib are taken
+    //if email/oib are taken
     if (!securityCheck && data.error) {
         res.json({
             'data': data

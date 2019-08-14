@@ -52,7 +52,7 @@ async function findAllUsersBy(findBy) {
 
     return allUsers;
 }
-async function insertNewUser(firstName, lastName, email, oib, password,) {
+async function insertNewUser(firstName, lastName, email, oib, password, photoName) {
     let user = await knex('persons')
     .where({ email:email })
     .orWhere({ oib:oib });
@@ -64,7 +64,8 @@ async function insertNewUser(firstName, lastName, email, oib, password,) {
             email: email,
             personsRoleId: 2,
             oib: oib,
-            password: password
+            password: password,
+            image: `uploads/photos/${photoName}`
         })
         return user;
 
