@@ -1,11 +1,9 @@
 const Person = require('../models/Person');
-const personTable = require('../db/migrations/personTable');
 const { Model } = require('objection');
 const Knex = require('knex');
 const config = require('../config/index');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const secret = require('../config');
+const consts = require('./consts');
+
 
 knex = Knex({
     client: 'mysql',
@@ -18,60 +16,94 @@ knex = Knex({
     }
 })
 
-Model.knex(knex); 
+Model.knex(knex);
 
-module.exports = {
-    addNewUser(firstName, lastName, email, oib, password, res, req) {  
+async function findAllUsers() {
+    let allUsers = await knex('persons');
+    return allUsers;
+}
 
-        async function insterNewUser() {
-            await bcrypt.hash(password, 10)
-            .then(async hashPassword => {
-            await knex('persons')
-            .where({ email:email })
-            .orWhere({ oib:oib })
-            .then(async user => {
-                if(user.length == 0) {
-                    await Person.query().insertGraph({
-                        firstName: firstName,
-                        lastName: lastName,
-                        email: email,
-                        personsRoleId: 2,
-                        oib: oib,
-                        password: hashPassword
-                    }).then(user => {
-                        const payload = {
-                            email: user.email,
-                        };
-                        req.login(payload, {session: false}, (error) => {
-                            if (error) {
-                                res.status(400).send({ error });
-                        }
-                
-                        /** generate a signed json web token and return it in the response */
-                        const token = jwt.sign(JSON.stringify(payload), secret.JWT_SECRET);
-                
-                        /** assign  jwt to the cookie */
-                        res.cookie('jwt', jwt, { httpOnly: true, secure: true });
-                        res.send({ 'email': user.email})
-                        });
-                    })
-                }else if (user[0].oib == oib){
-                    res.json({ "error_code":1002, "error_description":"OIB se već koristi!"});
-                } else {
-                    res.json({"error_code":1003, "error_description":"Email se već koristi!"});
-                }
-            })
+async function findAllUsersById(id) {
+    let user = await knex('persons')
+    .where({ ID: id });
 
-            })
-        }
+    return user;
+}
+
+async function isAdmin(email) {
+    let user = await knex('persons')
+    .where({ email: email });
+
+    if (user.length == 0) {
+        return false;
+    } else if ( user[0].personsRoleId != 1) {
+        return false;
+    } else {
+        return true;
+    }
+}
     
-        personTable()
-        .then(() => insterNewUser())
-        .catch(err => {
-        console.error(err);
-        });
-        
+async function findAllUsersBy(findBy) {
+    let allUsers = await knex('persons')
+    .where('firstName', 'like', `%${findBy}%`)
+    .orWhere('lastName', 'like', `%${findBy}%`)
+    .orWhere('oib', 'like', `%${findBy}%`)
+    .orWhere('email', 'like', `%${findBy}%`)
+
+    return allUsers;
+}
+
+async function userAlreadyExists(email, oib) {
+    let user = await knex('persons')
+    .where({ email:email })
+    .orWhere({ oib:oib });
+
+    if (user.length == 0) {
+        return false;
+    } else if (user[0].oib == oib){
+        return {error: { "error_code": consts.responseErrorRegisterOIBAlreadyExists.error_code, "error_description": consts.responseErrorRegisterOIBAlreadyExists.error_description }};
+    } else {
+        return {error: {"error_code": consts.responseErrorRegisterEmailAlreadyExists.error_code, "error_description": consts.responseErrorRegisterEmailAlreadyExists.error_description }};
+    }
+}
+async function insertNewUser(firstName, lastName, email, oib, password,) {
+    let user = await userAlreadyExists(email, oib);
+
+    if (!user) {
+        let newUser = await Person.query().insertGraph({
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            personsRoleId: 2,
+            oib: oib,
+            password: password
+        })
+        return newUser;
+
+    } else {
+        return user;
     }
 }
 
-    
+async function updateUser(firstName, lastName, email, oib, password, image, id) {
+    let user = await userAlreadyExists(email, oib);
+
+    if (!user) {
+        await knex('persons')
+        .where({ ID: id })
+        .update({ firstName: firstName, lastName: lastName, email: email, oib: oib, password: password, image: `uploads/photos/${image}` });
+
+        return 'uspješno izmijenjeno';
+    } else {
+        return user;
+    }
+}
+
+module.exports = {
+    insertNewUser,
+    isAdmin,
+    findAllUsersBy,
+    findAllUsers,
+    findAllUsersById,
+    updateUser
+}
