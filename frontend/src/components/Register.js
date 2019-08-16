@@ -112,7 +112,6 @@ export default class Register extends Component {
                     type="text"
                     value={this.state.oib}
                     onChange={this.handleChange}
-                    onChange={this.handleSubmit}
                   />
                 </FormGroup>
 
