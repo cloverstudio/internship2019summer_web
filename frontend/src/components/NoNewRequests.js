@@ -45,6 +45,8 @@ export default class NoNewRequests extends Component {
             </div>
             <div>
               <Button
+              className="new-request"
+              style= {{width: '250px', padding: '15px', fontSize: 'x-large', fontWeight: '700' }}
               onClick={this.renderRedirect()}
               href="/Requests"
               >
