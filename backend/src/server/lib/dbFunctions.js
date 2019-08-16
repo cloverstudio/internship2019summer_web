@@ -18,6 +18,13 @@ knex = Knex({
 
 Model.knex(knex);
 
+async function findUserID(email) {
+    let userId = await knex('persons')
+    .where({ email: email})
+
+    return userId[0].ID;
+}
+
 async function findAllUsers() {
     let allUsers = await knex('persons');
     return allUsers;
@@ -100,11 +107,25 @@ async function updateUser(firstName, lastName, email, oib, password, image, id) 
     }
 }
 
+async function newRequest(title, type, location_latitude, location_longitude, message, userId) {
+    await knex('requests')
+    .insert({ 
+        Title: title,
+        Request_type: type,
+        location_latitude: location_latitude,
+        location_longitude: location_longitude,
+        message: message,
+        userID: userId
+     })
+}
+
 module.exports = {
     insertNewUser,
     isAdmin,
     findAllUsersBy,
     findAllUsers,
     findAllUsersById,
-    updateUser
+    updateUser,
+    findUserID,
+    newRequest
 }
