@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import SideBar from './SideBar';
 import no_content_icon from '../assets/no_content_icon.svg'; 
 
-
-
 export default class MainScreen extends Component {
     render (){
         
