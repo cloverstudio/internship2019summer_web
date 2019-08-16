@@ -6,9 +6,7 @@ const express = require('express');
 const router = express.Router();
 const consts = require('../lib/consts');
 const jwt_decode = require('jwt-decode');
-const path = require('path');
 const upload = require('../middlewares/multer');
-
 
 function checkTokenAvailability(token) {
     let decodedValue = jwt_decode(token);
@@ -83,20 +81,20 @@ router.post('/login', async (req, res) => {
                     'error': info
                 }});
             }
-    
+
             /** JWT result (message) */
             const payload = {
                 email: user.email,
                 password: user.password,
                 expires: Date.now() + parseInt(developData.JWT_EXPIRATIONTIME),
             };
-    
+
             /** assigns payload to req.user */
             req.login(payload, {session: false}, (error) => {
                 if (error) {
                     res.json({ error });
                 }
-    
+
                 /** generate a signed json web token and return it in the response */
                 const token = jwt.sign(JSON.stringify(payload), developData.JWT_SECRET);
 
@@ -104,7 +102,7 @@ router.post('/login', async (req, res) => {
                 /** assign jwt to the cookie */
                 res.cookie('jwt', jwt, { httpOnly: true, secure: true });
                 res.json({ 'data': {
-                    'user': user 
+                    'user': user
                 }});
             });
         },
@@ -122,10 +120,10 @@ router.post('/register', async (req, res) => {
             res.json({ 'data': {
                 'user': response
             }});
-        } 
+        }
     } catch (err) {
         console.log(err);
-    }       
+    }
  });
 
  router.post('/newUser', upload.single('photo'), async (req, res) => {
@@ -152,11 +150,13 @@ router.post('/register', async (req, res) => {
 router.get('/allUsers/:searchBy?', async (req, res) => {
     let findBy = req.params.searchBy;
     let securityCheck = await userDidNotPassSecuriityCheck(req.headers.token, res);
-    
-    if(!securityCheck && findBy) {
-        let data = await dbFunctions.findAllUsersBy(findBy);
 
-        return res.json({ data });
+    if(!securityCheck && findBy) {
+        let user = await dbFunctions.findAllUsersBy(findBy);
+
+        return res.json({ 'data': {
+            'user': user
+        }});
     }
     else if (!securityCheck && !findBy) {
         let allUsers = await dbFunctions.findAllUsers();
@@ -170,7 +170,7 @@ router.get('/allUsers/:searchBy?', async (req, res) => {
     }
 });
 
-router.get('/details', async (req, res) => { 
+router.get('/details', async (req, res) => {
     let isLoggedIn = await checkTokenAvailability(req.headers.token);
 
     let user = await dbFunctions.findAllUsersById(req.body.id);
@@ -204,6 +204,25 @@ router.get('/details', async (req, res) => {
 router.post('/logout', (req, res) => {
     let token = req.headers.token;
     jwt_decode(token).expires = null;
+})
+
+router.put('/newUser', upload.single('photo'), async (req, res) => {
+    let user = req.body;
+    let securityCheck = await userDidNotPassSecuriityCheck(req.headers.token, res);
+    let data = await dbFunctions.updateUser(user.firstName, user.lastName, user.email, user.oib, user.password, req.file.filename, user.id);
+
+    if (!securityCheck && data.error) {
+        res.json({
+            'data': data
+        });
+    }
+    else if (!securityCheck) {
+        res.json({ 'data': {
+            'user': data
+        }});
+    } else {
+        res.json(securityCheck);
+    }
 })
 
  module.exports = router;
