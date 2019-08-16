@@ -1,0 +1,91 @@
+@import './fonts';
+
+
+
+//singleuser.js
+.user{
+    max-width: 43%;
+    display: flex;
+    margin: 15px;
+    border-radius: 2px;
+}
+
+.profile-photo{
+    max-width: 150px;
+    border-radius: 10px;
+    padding-left: 20px;
+}
+
+.user-info{
+    padding-left: 20px;
+    padding-top: 10px;
+}
+.user-info > h3{
+    font-family: $american-typewriter-bold;
+    margin-bottom: 0;
+}
+.user-info > p{
+    font-family: $american-typewriter-light;
+    color: grey;
+    margin-bottom: 0;
+}
+
+
+//users.js
+.btn-new-user{
+    display: flex;
+    width: 30%;
+    background: #0076ff;
+    color: white;
+    font-size: 1.2rem;
+    align-content: center;
+    justify-content: center;
+    font-family: 'American Typewriter Bold', serif;
+}
+.btn-new-user > svg {
+    max-width: 20px;
+    max-height: 20px;
+    fill: currentColor;
+}
+
+
+
+//AddNewUser.js
+.new-user-form{
+    width: 40%;
+    border-radius: 5px;
+    margin-left: 20px;
+    
+}
+
+.return{
+    background: #e7e7e7;
+    border: none;
+    font-family: $american-typewriter-bold;
+    color: #0076ff;
+    display: flex;
+    margin-left: 15px;
+    margin-right: 0;
+}
+.heading-new-user{
+    display: flex;
+    font-family: $american-typewriter-bold;
+    margin-left: 100px;
+}
+
+.label-custom{
+    font-family: $avenir-book;
+}
+
+.new-user-form-container{
+    padding-top: 30px;
+}
+.add-user-photo{
+    display: flex;
+
+}
+
+.add-user-photo > img {
+    border-radius: 20px;
+    display: flex;
+}
