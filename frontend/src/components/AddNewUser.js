@@ -3,6 +3,7 @@ import { Button, FormGroup, FormControl, FormLabel, Row } from "react-bootstrap"
 import {Redirect} from 'react-router-dom';
 import swal from 'sweetalert';
 import md5 from 'md5';
+import upload_photo_icon from '../assets/upload_photo_icon.svg'
 
 
 export class AddNewUser extends Component {
@@ -100,11 +101,15 @@ export class AddNewUser extends Component {
                 <h3 className="heading-new-user">Kreiraj korisnika</h3>
                 </Row>
 
-                <form >
+                <form>
+                <div className="new-user-form-container">
+                
+                <div className="add-user-photo">
                 <FormGroup controlId="profilePhoto" bsSize="large">
                 <FormLabel bsClass="custom-label">Profilna slika</FormLabel>
-                <img src=""/>
+                <img src={upload_photo_icon} style={{display:"flex"}}/>
                 </FormGroup>
+                </div>
 
                 <FormGroup controlId="name" bsSize="large">
                 <FormLabel>Ime i prezime</FormLabel>
@@ -160,6 +165,7 @@ export class AddNewUser extends Component {
                 >
                 Kreiraj korisnika
                 </Button>
+                </div>
                 
 
                 </form>

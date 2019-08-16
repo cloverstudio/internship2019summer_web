@@ -50,6 +50,7 @@ export class Users extends Component {
             })
         .then (async (response) => { 
             const json = await response.json();
+            console.log(json);
             const mapUsers = json.data.user.map(user => {
                 return user;
             })

@@ -1,7 +1,9 @@
 
-@font-face{
-    font-family: 'Avenir';
-    src: url(../assets/fonts/AvenirLTStd-Book.woff) format(woff);
+@font-face {
+    font-family: 'Avenir LT Std 45 Book';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Avenir LT Std 45 Book'), url('../assets/fonts/AvenirLTStd-Book.woff') format('woff');
 }
 
 @font-face {
@@ -18,6 +20,6 @@
     src: local('American Typewriter Light'), url('../assets/fonts/ufonts.com_american-typewriter-light.woff') format('woff');
 }
 
-$avenir: 'Avenir', sans-serif;
+$avenir-book: 'Avenir LT Std 45 Book', sans-serif;
 $american-typewriter-bold: 'American Typewriter Bold', serif;
 $american-typewriter-light: 'American Typewriter Light', serif;
