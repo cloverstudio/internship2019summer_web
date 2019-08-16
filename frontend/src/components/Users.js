@@ -17,9 +17,12 @@ export class Users extends Component {
             userprofile: [],
             searchfield: '',
             redirectAddUser: false,
-            jwt: localStorage.getItem('token')
+            jwt: localStorage.getItem('token'),
+            letterList: []
         }
     }
+
+
 
     componentWillMount(){
         if(!localStorage.getItem('token')){
@@ -62,10 +65,23 @@ export class Users extends Component {
             if(a.firstName.toLowerCase() < b.firstName.toLowerCase()) { return -1; }
             if(a.firstName.toLowerCase() > b.firstName.toLowerCase()) { return 1; }
             return 0;
+
         })
+            const letters = [];
+            mapUsers.forEach(user =>{
+                if(typeof user.firstName !==  typeof null){
+                     letters.push(user.firstName.substring(0, 1));}
+                console.log(letters); 
+            const uniqueLetters = [...new Set(letters)];
+            console.log(uniqueLetters);
+            this.setState({letterList: uniqueLetters})
+        })
+        
         this.setState({userprofile: mapUsers})
         })
         }
+
+        
 
     onSearchChange = (event) => {
         this.setState({ searchfield: event.target.value })
@@ -101,7 +117,10 @@ export class Users extends Component {
                     </Button>
                     </Row>
                 </Container>
-                <UserList userprofile = {filteredUsers}/>
+                <UserList
+                userprofile = {filteredUsers}
+                letterList ={this.state.letterList}
+                />
             </div>
         )
     }
