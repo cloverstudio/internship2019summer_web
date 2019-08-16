@@ -8,8 +8,7 @@ export class Requests extends Component {
         <div style={{display:'flex'}}>
            <SideBar />
             <div className="requests-container-gray">
-              <NewRequest/>
-              <NewRequest/>
+              <NewRequest />
 
             </div>      
         </div>
