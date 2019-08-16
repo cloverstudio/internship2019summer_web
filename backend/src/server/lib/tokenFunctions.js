@@ -2,6 +2,7 @@ const consts = require('../lib/consts');
 const jwt_decode = require('jwt-decode');
 const jwt = require('jsonwebtoken');
 const developData = require('../config');
+const dbFunctions = require('../lib/dbFunctions');
 
 function checkTokenAvailability(token) {
     let decodedValue = jwt_decode(token);

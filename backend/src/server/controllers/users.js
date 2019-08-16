@@ -1,7 +1,5 @@
 const passport = require('passport');
 const dbFunctions = require('../lib/dbFunctions');
-const jwt = require('jsonwebtoken');
-const developData = require('../config');
 const express = require('express');
 const router = express.Router();
 const consts = require('../lib/consts');

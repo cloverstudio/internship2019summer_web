@@ -7,9 +7,7 @@ const consts = require('../lib/consts');
 
 router.post('/new', async (req, res) => {
     let data = req.body;
-
     let isLoggedIn = await tokenFunction.checkTokenAvailability(req.headers.token);
-    let userId = await dbFunction.findUserID(jwt_decode(req.headers.token).email);
 
     if(!isLoggedIn) {
         res.status(440).json({ 'data': {
@@ -18,10 +16,11 @@ router.post('/new', async (req, res) => {
                 'error_description': consts.responseErrorExpiredToken.error_description
             }
         }})
+    } else {
+        let userId = await dbFunction.findUserID(jwt_decode(req.headers.token).email);
+        dbFunction.newRequest(data.title, data.Request_type, data.location_latitude, data.location_longitude, data.message, userId);
+        res.status(200).json('ok!');
     }
-    dbFunction.newRequest(data.title, data.Request_type, data.location_latitude, data.location_longitude, data.message, userId);
-
-    res.status(200).json('ok!');
 
 })
 

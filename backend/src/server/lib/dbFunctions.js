@@ -21,7 +21,6 @@ Model.knex(knex);
 async function findUserID(email) {
     let userId = await knex('persons')
     .where({ email: email})
-
     return userId[0].ID;
 }
 
