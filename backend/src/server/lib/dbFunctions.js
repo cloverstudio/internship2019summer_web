@@ -97,7 +97,7 @@ async function updateUser(userObj, imagePath, id) {
     if (userObj.email || userObj.oib) { // if oib or email are going to be updated, first check if they are available
         user = await userAlreadyExists(userObj.email, userObj.oib);
     }
-    if (fileName) {
+    if (imagePath) {
         userObj.image = imagePath; //add image path to user object
     }
     let userObjKeys = Object.keys(userObj);
