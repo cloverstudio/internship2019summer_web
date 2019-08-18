@@ -92,7 +92,7 @@ async function insertNewUser(firstName, lastName, email, oib, password, photoNam
     }
 }
 
-async function updateUser(userObj, imagePath, id) {
+async function updateUser(userObj, imagePath) {
     let user = false;
     if (userObj.email || userObj.oib) { // if oib or email are going to be updated, first check if they are available
         user = await userAlreadyExists(userObj.email, userObj.oib);
@@ -105,7 +105,7 @@ async function updateUser(userObj, imagePath, id) {
     if (!user) {
         for (let i = 0; i < userObjKeys.length; i++) {
             await knex('persons')
-            .where({ ID: id })
+            .where({ ID: userObj.id })
             .update({ [userObjKeys[i]]: userObj[userObjKeys[i]] });
         }
         return 'updated!';

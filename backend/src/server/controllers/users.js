@@ -128,8 +128,7 @@ router.post('/logout', (req, res) => {
 
 router.put('/newUser', upload.single('photo'), async (req, res) => {
     let token = req.headers.token;
-    let securityCheck = await tokenFunctions.userDidNotPassSecuriityCheck(token, res);
-    let id = dbFunctions.findUserID(jwt_decode(token).email);
+    let securityCheck = false//await tokenFunctions.userDidNotPassSecuriityCheck(token, res);
     let file = req.file || false;
     let imagePath = undefined;
 
@@ -137,7 +136,7 @@ router.put('/newUser', upload.single('photo'), async (req, res) => {
         imagePath = `uploads/photos/${file.filename}`
     }
 
-    let data = await dbFunctions.updateUser(req.body, imagePath, id);
+    let data = await dbFunctions.updateUser(req.body, imagePath);
 
     if (!securityCheck && data.error) {
         res.json({
