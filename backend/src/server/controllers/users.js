@@ -60,7 +60,7 @@ router.post('/register', async (req, res) => {
             'user': data
         }});
     } else {
-        res.send(440).json(securityCheck);
+        res.status(440).json(securityCheck);
     }
 });
 
@@ -141,7 +141,7 @@ router.put('/newUser', upload.single('photo'), async (req, res) => {
             'user': data
         }});
     } else {
-        res.send(440).json(securityCheck);
+        res.status(440).json(securityCheck);
     }
 })
 
