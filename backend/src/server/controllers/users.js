@@ -128,7 +128,14 @@ router.post('/logout', (req, res) => {
 router.put('/newUser', upload.single('photo'), async (req, res) => {
     let user = req.body;
     let securityCheck = await tokenFunctions.userDidNotPassSecuriityCheck(req.headers.token, res);
-    let fileName = req.file.filename || undefined;
+    let file = req.file;
+    let fileName = undefined;
+    
+    if (file) {
+        fileName = file.filename;
+    }
+
+
     let data = await dbFunctions.updateUser(user.firstName, user.lastName, user.email, user.oib, user.password, fileName, user.id);
 
     if (!securityCheck && data.error) {
