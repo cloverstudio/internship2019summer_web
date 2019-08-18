@@ -62,7 +62,7 @@ async function findAllUsersBy(findBy) {
 async function userAlreadyExists(email, oib) {
     let user = await knex('persons')
     .where({ email:email || null })
-    .orWhere({ oib:oib });
+    .orWhere({ oib:oib || null });
 
     if (user.length == 0) {
         return false;
