@@ -83,7 +83,7 @@ router.get('/allUsers/:searchBy?', async (req, res) => {
         }});
     }
     else {
-        res.send(440).json(securityCheck)
+        res.status(440).json(securityCheck)
     }
 });
 
@@ -121,12 +121,15 @@ router.get('/details', async (req, res) => {
 router.post('/logout', (req, res) => {
     let token = req.headers.token;
     jwt_decode(token).expires = null;
+
+    res.json('success!');
 })
 
 router.put('/newUser', upload.single('photo'), async (req, res) => {
     let user = req.body;
     let securityCheck = await tokenFunctions.userDidNotPassSecuriityCheck(req.headers.token, res);
-    let data = await dbFunctions.updateUser(user.firstName, user.lastName, user.email, user.oib, user.password, req.file.filename, user.id);
+    let fileName = req.file.filename || undefined;
+    let data = await dbFunctions.updateUser(user.firstName, user.lastName, user.email, user.oib, user.password, fileName, user.id);
 
     if (!securityCheck && data.error) {
         res.json({
