@@ -61,7 +61,7 @@ async function findAllUsersBy(findBy) {
 
 async function userAlreadyExists(email, oib) {
     let user = await knex('persons')
-    .where({ email:email })
+    .where({ email:email || null })
     .orWhere({ oib:oib });
 
     if (user.length == 0) {
@@ -92,15 +92,23 @@ async function insertNewUser(firstName, lastName, email, oib, password, photoNam
     }
 }
 
-async function updateUser(firstName, lastName, email, oib, password, image, id) {
-    let user = await userAlreadyExists(email, oib);
+async function updateUser(userObj, imagePath, id) {
+    let user = false;
+    if (userObj.email || userObj.oib) { // if oib or email are going to be updated, first check if they are available
+        user = await userAlreadyExists(userObj.email, userObj.oib);
+    }
+    if (fileName) {
+        userObj.image = imagePath; //add image path to user object
+    }
+    let userObjKeys = Object.keys(userObj);
 
     if (!user) {
-        await knex('persons')
-        .where({ ID: id })
-        .update({ firstName: firstName, lastName: lastName, email: email, oib: oib, password: password, image: `uploads/photos/${image}` });
-
-        return 'uspješno izmijenjeno';
+        for (let i = 0; i < userObjKeys.length; i++) {
+            await knex('persons')
+            .where({ ID: id })
+            .update({ [userObjKeys[i]]: userObj[userObjKeys[i]] });
+        }
+        return 'updated!';
     } else {
         return user;
     }

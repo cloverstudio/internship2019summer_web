@@ -6,6 +6,7 @@ const consts = require('../lib/consts');
 const jwt_decode = require('jwt-decode');
 const upload = require('../middlewares/multer');
 const tokenFunctions = require('../lib/tokenFunctions');
+const path = require('path');
 
 router.post('/login', async (req, res) => {
     passport.authenticate(
@@ -126,17 +127,17 @@ router.post('/logout', (req, res) => {
 })
 
 router.put('/newUser', upload.single('photo'), async (req, res) => {
-    let user = req.body;
-    let securityCheck = await tokenFunctions.userDidNotPassSecuriityCheck(req.headers.token, res);
-    let file = req.file;
-    let fileName = undefined;
-    
+    let token = req.headers.token;
+    let securityCheck = await tokenFunctions.userDidNotPassSecuriityCheck(token, res);
+    let id = dbFunctions.findUserID(token);
+    let file = req.file || false;
+    let imagePath = undefined;
+
     if (file) {
-        fileName = file.filename;
+        imagePath = `uploads/photos/${file.filename}`
     }
 
-
-    let data = await dbFunctions.updateUser(user.firstName, user.lastName, user.email, user.oib, user.password, fileName, user.id);
+    let data = await dbFunctions.updateUser(req.body, imagePath, id);
 
     if (!securityCheck && data.error) {
         res.json({
