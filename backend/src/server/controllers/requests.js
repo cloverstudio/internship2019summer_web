@@ -4,10 +4,17 @@ const dbFunction = require('../lib/dbFunctions');
 const jwt_decode = require('jwt-decode');
 const tokenFunction = require('../lib/tokenFunctions');
 const consts = require('../lib/consts');
+const upload = require('../middlewares/multer');
 
-router.post('/new', async (req, res) => {
+router.post('/new', upload.single('photo'), async (req, res) => {
     let data = req.body;
     let isLoggedIn = await tokenFunction.checkTokenAvailability(req.headers.token);
+    let file = req.file || undefined;
+    let imagePath = undefined;
+
+    if (file) {
+        imagePath = `uploads/photos/${file.filename}`;
+    }
 
     if(!isLoggedIn) {
         res.status(440).json({ 'data': {
@@ -18,7 +25,7 @@ router.post('/new', async (req, res) => {
         }})
     } else {
         let userId = await dbFunction.findUserID(jwt_decode(req.headers.token).email);
-        dbFunction.newRequest(data.title, data.Request_type, data.location_latitude, data.location_longitude, data.message, userId);
+        dbFunction.newRequest(data, userId, imagePath);
         res.status(200).json('ok!');
     }
 

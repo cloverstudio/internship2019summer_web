@@ -93,6 +93,7 @@ async function insertNewUser(firstName, lastName, email, oib, password, photoNam
 }
 
 async function updateUser(userObj, imagePath) {
+
     let user = false;
     if (userObj.email || userObj.oib) { // if oib or email are going to be updated, first check if they are available
         user = await userAlreadyExists(userObj.email, userObj.oib);
@@ -103,27 +104,37 @@ async function updateUser(userObj, imagePath) {
     let userObjKeys = Object.keys(userObj);
 
     if (!user) {
+        let updateData = {};
         for (let i = 0; i < userObjKeys.length; i++) {
-            await knex('persons')
-            .where({ ID: userObj.id })
-            .update({ [userObjKeys[i]]: userObj[userObjKeys[i]] });
+            updateData[userObjKeys[i]] = userObj[userObjKeys[i]];
         }
+        
+        await knex('persons')
+        .where({ ID: userObj.id })
+        .update(updateData);
+
         return 'updated!';
     } else {
         return user;
     }
 }
 
-async function newRequest(title, type, location_latitude, location_longitude, message, userId) {
+async function newRequest(requestObj, userId, imagePath) {
+    if (imagePath) {
+        requestObj.image = imagePath;
+    }
+
     await knex('requests')
     .insert({ 
-        Title: title,
-        Request_type: type,
-        location_latitude: location_latitude,
-        location_longitude: location_longitude,
-        message: message,
-        userID: userId
-     })
+        Title: requestObj.title,
+        Request_type: requestObj.Request_type,
+        location_latitude: requestObj.location_latitude,
+        location_longitude: requestObj.location_longitude,
+        message: requestObj.message,
+        userID: userId,
+        image: requestObj.image,
+        createdAt: Date.now()
+     });
 }
 
 module.exports = {
