@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Redirect} from 'react-router-dom';
-import moj_grad_logo from '../assets/moj_grad_logo.svg';
-import nav_news_selected_icon from '../assets/nav_news_selected_icon.svg';
-import nav_requests_selected_icon from '../assets/nav_requests_selected_icon.svg'; 
-import nav_users_selected_icon from '../assets/nav_users_selected_icon.svg';
+import moj_grad_logo from '../../assets/moj_grad_logo.svg';
+import nav_news_selected_icon from '../../assets/nav_news_selected_icon.svg';
+import nav_requests_selected_icon from '../../assets/nav_requests_selected_icon.svg'; 
+import nav_users_selected_icon from '../../assets/nav_users_selected_icon.svg';
 
 import { Nav, NavItem, NavLink } from 'reactstrap';
 
@@ -70,7 +70,7 @@ export default class SideBar extends Component {
                   </NavItem>
 
                   <NavItem style= {{display: 'flex', marginBottom: '20px'}}>
-                      <img style= {{maxWidth: '20px'}} alt= "request icon" src = {nav_requests_selected_icon} />
+                      <img style= {{maxWidth: '20px'}} alt= "request icon" src = {nav_users_selected_icon} />
                       <NavLink href="/Users">
                           Korisnici
                       </NavLink>

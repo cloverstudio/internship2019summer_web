@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SideBar from './SideBar';
+import SideBar from './layout/SideBar';
 import no_content_icon from '../assets/no_content_icon.svg'; 
 import {  Button} from "react-bootstrap";
 import {BrowserRouter as Redirect} from 'react-router-dom';
@@ -7,28 +7,7 @@ import {BrowserRouter as Redirect} from 'react-router-dom';
 
 
 export default class NoNewRequests extends Component {
-  constructor(props){
-    super(props);
-      this.state = {
-          RedirectRequests: false,
-
-        };
-      }
-
-
-  setRedirectLogin = () => {
-    this.setState({
-      RedirectRequests: true,
-    })
-  }  
-
-  renderRedirect = () => {
-    if (this.state.RedirectRequests) {
-      return <Redirect to='/Requests'/> 
-       
-    }
-  }
-
+  
     render (){
         
         return(
@@ -47,8 +26,7 @@ export default class NoNewRequests extends Component {
               <Button
               className="new-request"
               style= {{width: '250px', padding: '15px', fontSize: 'x-large', fontWeight: '700' }}
-              onClick={this.renderRedirect()}
-              href="/Requests"
+              href="/NewRequest"
               >
                 Novi Zahtjev
               </Button>
