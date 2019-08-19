@@ -20,17 +20,17 @@ export default class NoNewRequests extends Component {
                 <p style={{fontSize: '60px', fontWeight: '600'}}> 
                     Niti jedan zahtjev<br></br> 
                     još nije poslan!
-                </p>   
+                </p>  
+                <div>
+                  <Button
+                  className="new-request"
+                  style= {{width: '250px', padding: '15px', fontSize: 'x-large', fontWeight: '700' }}
+                  href="/NewRequest"
+                  >
+                    Novi Zahtjev
+                  </Button>
+                </div> 
             </div>
-            <div>
-              <Button
-              className="new-request"
-              style= {{width: '250px', padding: '15px', fontSize: 'x-large', fontWeight: '700' }}
-              href="/NewRequest"
-              >
-                Novi Zahtjev
-              </Button>
-            </div> 
           </div>
         </div>
 

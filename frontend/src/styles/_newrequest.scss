@@ -1,4 +1,41 @@
 .new-request-white-container {
     background-color: white;
+    padding: 50px;
+    height: 90vh;
+}
 
-  }
+.dropdown-btn Button{
+    background: #e7e7e7;
+    color: #0076ff;
+}
+
+.outlined-btn {
+    background: white;
+    color: #007bff;
+}
+
+.two-btns-request {
+    position: absolute;
+    bottom: 6%;
+    left: 45%;
+    margin: 15px
+}
+
+.row {
+    display: table;
+    width: 100%; /*Optional*/
+    table-layout: fixed; /*Optional*/
+    border-spacing: 10px; /*Optional*/
+}
+
+.column {
+    display: table-cell
+}
+
+.btn-back {
+    background: #e7e7e7;
+    color: black;
+    margin: 10px;
+    padding: 5px;
+    border: none;
+}
