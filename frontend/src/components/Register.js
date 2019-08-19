@@ -21,10 +21,6 @@ export default class Register extends Component {
       passwordShow: false,
       rememberMe: false,
       token: "",
-      // user: {
-      //   id: 2323,
-      //   name: 'djuro'
-      // },
     };
   }
 
@@ -54,15 +50,6 @@ export default class Register extends Component {
   }
 
         //redirect
-
-
-    
-    handleChange = event => {
-        this.setState({
-          [event.target.id]: event.target.value
-        });
-      }
-    
     handleSubmit = async (event) => {
       console.log('x');
       event.preventDefault();
@@ -117,14 +104,7 @@ export default class Register extends Component {
     if (this.state.redirectToMiddle) {
       return <Redirect to='/MiddleScreen' />
     }
-  }  
-
-        // API poziv
-
-
-    // .catch(e=> {
-    //   console.log('err',e);
-    // });
+  }
  
 
 

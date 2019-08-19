@@ -82,18 +82,10 @@ export default class Login extends Component {
     }
 
    
-
     validateForm() {
         return this.state.email.length > 0 && this.state.password.length > 0;
       }
 
-
-    //Update the state when the user types something into fields
-      handleChange = event => {
-        this.setState({
-          [event.target.id]: event.target.value
-        });
-      }
     
       handleSubmit = async (event) => {
         event.preventDefault();
