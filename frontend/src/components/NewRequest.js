@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SideBar from './layout/SideBar';
+import MapContainer from './MapContainer';
 import { Form, Button, FormGroup, FormControl, FormLabel, Label, FormText } from "react-bootstrap";
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
@@ -11,6 +12,7 @@ export default class NewRequest extends Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       naslov: "",
+      poruka: "",
       dropdownOpen: false
     };
   }
@@ -46,19 +48,10 @@ export default class NewRequest extends Component {
                     <p style={{textAlign: 'center'}}>Molimo vas, upišite tražene podatke kako bismo mogli zaprimiti zahtjev.</p>
                   </div>
 
-                  {/* <Form.Group id="naslov">
-                    <p>Naslov:</p>
-                    <Form.Control 
-                        required
-                        type="text" 
-                        placeholder="" 
-                        value={this.state.naslov}
-                    />
-                  </Form.Group> */}
-
                   <FormGroup controlId="naslov" bssize="large">
                     <FormLabel>Naslov:</FormLabel>
                     <FormControl
+                      className="border-none"
                       required
                       type="text"
                       placeholder="" 
@@ -70,38 +63,48 @@ export default class NewRequest extends Component {
                   <Form.Group>
                     <div className="type-files-location-container row" style= {{display: 'table'}}>
                       
-                          <div className="type-container column">
-                            <p>Tip:</p>
-                            <Dropdown className="dropdown-btn" isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                              <DropdownToggle caret>
-                                Kvar
-                              </DropdownToggle>
-                              <DropdownMenu>
-                                <DropdownItem>Prijedlog</DropdownItem>
-                              </DropdownMenu>
-                            </Dropdown>
-                          </div>
+                          <div className="type-files-container column">
+                            <Form.Group style={{ marginBottom: '50px'}}>
+                              <p>Tip zahtjeva:</p>
+                              
+                                <select id="selector" name="tip">
+                                <option value="kv">Kvar</option>
+                                <option value="pr">Prijedlog</option>
+                                </select>
+                              
+                            </Form.Group>
 
-                          <div className="files-container column">
                             <FormGroup>
-                              <FormLabel for="exampleFile" action="intern2019.def.clover.studio/requests/new" method="POST" enctype="multipart/form-data"
+                              <FormLabel htmlFor="exampleFile" action="intern2019.def.clover.studio/requests/new" method="POST" encType="multipart/form-data"
                               >Datoteka: <br></br></FormLabel>
                               <input type="file" name="photo" id="exampleFile" />
                             </FormGroup>     
                           </div>
-                    
+                            
 
                       <div className="location-container column">
                           <p>Lokacija:</p>
+                          <div className="map-container" style= {{height: '200px', width: '350px'}}>
+                            <MapContainer />
+                          </div>
 
                       </div>
                     
                     </div>
                   </Form.Group>
 
-                  <Form.Group>
-                    <p>Poruka:</p>
-                    <Form.Control type="text" placeholder="" />
+                  <Form.Group controlId="poruka">
+                    <FormLabel>Poruka:</FormLabel>
+                    <Form.Control 
+                      required
+                      placeholder=""
+                      type="text" 
+                      as="textarea" 
+                      rows="2"
+                      value={this.state.poruka}
+                      onChange={this.handleChange}
+
+                    />
                   </Form.Group>
 
                   <div className="two-btns-request">

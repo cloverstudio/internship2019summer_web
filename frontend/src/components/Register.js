@@ -142,6 +142,7 @@ export default class Register extends Component {
                 <FormGroup controlId="oib" bssize="large">
                   <FormLabel>OIB:</FormLabel>
                   <FormControl
+                    className="border-none"
                     required
                     autoFocus
                     maxLength="11"
@@ -155,6 +156,7 @@ export default class Register extends Component {
                 <FormGroup controlId="email" bssize="small">
                   <FormLabel>Email:</FormLabel>
                   <FormControl
+                    className="border-none"
                     required
                     autoFocus
                     type="email"
@@ -167,6 +169,7 @@ export default class Register extends Component {
                   <FormLabel>Lozinka:</FormLabel>
                   <div className="password-container">
                     <FormControl
+                      className="border-none"
                       style={{ paddingRight: '30px' }}
                       placeholder=""
                       required
