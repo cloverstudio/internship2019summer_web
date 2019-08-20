@@ -54,7 +54,7 @@ router.put('/edit', upload.single('photo'), async (req,res) => {
 })
 
 router.get('/myRequests/:findBy?', async (req,res) => {
-    let token = req.headers.authorization.split(" ")[1];
+    let token = req.headers.token
     let userId = await dbFunction.findUserID(jwt_decode(token).email);
     let isLoggedIn = await tokenFunction.checkTokenAvailability(token);
     let searchTerm = req.params.findBy || undefined;
