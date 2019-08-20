@@ -53,5 +53,32 @@ router.put('/edit', upload.single('photo'), async (req,res) => {
     }
 })
 
+router.get('/myRequests/:findBy?', async (req,res) => {
+    let token = req.headers.authorization.split(" ")[1];
+    let userId = await dbFunction.findUserID(jwt_decode(token).email);
+    let isLoggedIn = await tokenFunction.checkTokenAvailability(token);
+    let searchTerm = req.params.findBy || undefined;
+    if(!isLoggedIn) {
+        res.status(440).json({ 'data': {
+            'error': {
+                'error_code': consts.responseErrorExpiredToken.error_code,
+                'error_description': consts.responseErrorExpiredToken.error_description
+            }
+        }})
+    } else if (searchTerm){
+        let myRequests = await dbFunction.findAllRequestsMadeByWithSearchTerm(userId, searchTerm);
+        res.json({ 'data': {
+            'requests': myRequests
+        }});
+    } else {
+        let myRequests = await dbFunction.findAllRequestsMadeBy(userId);
+        res.json({ 'data': {
+            'requests': myRequests
+        }});
+    }
+
+
+})
+
 module.exports = router;
 

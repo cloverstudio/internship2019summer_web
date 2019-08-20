@@ -149,6 +149,23 @@ async function updateRequest(requestObj, imagePath) {
     .update(requestObj)
 }
 
+async function findAllRequestsMadeBy(id) {
+    let allRequests = await knex('requests')
+    .where({ userID: id })
+    .orderBy([{ column: 'updatedAt', order: 'desc' }, { column: 'createdAt', order: 'desc' }]);
+
+    return allRequests;
+}
+
+async function findAllRequestsMadeByWithSearchTerm(id, findBy) {
+    let allRequests = await knex('requests')
+    .where({ userID: id })
+    .orWhere('Request_type', 'like', `%${findBy}%`)
+    .orderBy([{ column: 'updatedAt', order: 'desc' }, { column: 'createdAt', order: 'desc' }]);
+
+    return allRequests;
+}
+
 module.exports = {
     insertNewUser,
     isAdmin,
@@ -158,5 +175,7 @@ module.exports = {
     updateUser,
     findUserID,
     newRequest,
-    updateRequest
+    updateRequest,
+    findAllRequestsMadeBy,
+    findAllRequestsMadeByWithSearchTerm
 }
