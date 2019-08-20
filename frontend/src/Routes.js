@@ -10,6 +10,7 @@ import MiddleScreen from './components/MiddleScreen';
 import NoNewRequests from './components/NoNewRequests';
 import NewRequest from './components/NewRequest';
 import Requests from './components/Requests';
+import MapContainer from './components/MapContainer';
 
 export default class Routes extends Component{
     render(){
@@ -26,6 +27,8 @@ export default class Routes extends Component{
                     <Route exact path="/Users"  component={Users}/>
                     <Route exact path="/Profile"  component={Profile}/>
                     <Route exact path="/AddNewUser" component={AddNewUser}/> 
+                    <Route exact path="/MapContainer" component={MapContainer}/> 
+
                 </Switch>
             </Router>
         )}
