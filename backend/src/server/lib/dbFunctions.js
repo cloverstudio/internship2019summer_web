@@ -126,7 +126,7 @@ async function newRequest(requestObj, userId, imagePath) {
 
     await knex('requests')
     .insert({ 
-        Title: requestObj.title,
+        Title: requestObj.Title,
         Request_type: requestObj.Request_type,
         location_latitude: requestObj.location_latitude,
         location_longitude: requestObj.location_longitude,
@@ -137,6 +137,18 @@ async function newRequest(requestObj, userId, imagePath) {
      });
 }
 
+async function updateRequest(requestObj, imagePath) {
+    
+    if(imagePath) {
+        requestObj.image = imagePath
+    }
+    requestObj.updatedAt = Date.now();
+
+    await knex('requests')
+    .where({ ID: requestObj.ID })
+    .update(requestObj)
+}
+
 module.exports = {
     insertNewUser,
     isAdmin,
@@ -145,5 +157,6 @@ module.exports = {
     findAllUsersById,
     updateUser,
     findUserID,
-    newRequest
+    newRequest,
+    updateRequest
 }

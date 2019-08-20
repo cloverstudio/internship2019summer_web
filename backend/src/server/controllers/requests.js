@@ -31,5 +31,27 @@ router.post('/new', upload.single('photo'), async (req, res) => {
 
 })
 
+router.put('/edit', upload.single('photo'), async (req,res) => {
+    let isLoggedIn = await tokenFunction.checkTokenAvailability(req.headers.token);
+    let data = req.body;
+    let file = req.file || undefined;
+    let imagePath = undefined;
+
+    if (file) {
+        imagePath = `uploads/photos/${file.filename}`;
+    }
+    if(!isLoggedIn) {
+        res.status(440).json({ 'data': {
+            'error': {
+                'error_code': consts.responseErrorExpiredToken.error_code,
+                'error_description': consts.responseErrorExpiredToken.error_description
+            }
+        }})
+    } else {
+        await dbFunction.updateRequest(data, imagePath);
+        res.json('zahtjev ažuriran!');
+    }
+})
+
 module.exports = router;
 
