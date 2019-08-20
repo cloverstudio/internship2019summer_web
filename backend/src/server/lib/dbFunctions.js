@@ -101,17 +101,11 @@ async function updateUser(userObj, imagePath) {
     if (imagePath) {
         userObj.image = imagePath; //add image path to user object
     }
-    let userObjKeys = Object.keys(userObj);
 
-    if (!user) {
-        let updateData = {};
-        for (let i = 0; i < userObjKeys.length; i++) {
-            updateData[userObjKeys[i]] = userObj[userObjKeys[i]];
-        }
-        
+    if (!user) {    
         await knex('persons')
-        .where({ ID: userObj.id })
-        .update(updateData);
+        .where({ ID: userObj.ID })
+        .update(userObj);
 
         return 'updated!';
     } else {
