@@ -89,10 +89,11 @@ router.get('/allUsers/:searchBy?', async (req, res) => {
     }
 });
 
-router.get('/details', async (req, res) => { 
+router.get('/details/:id', async (req, res) => {
+    let userId = req.params.id;
     let isLoggedIn = tokenFunctions.checkTokenAvailability(req.headers.token);
 
-    let user = await dbFunctions.findAllUsersById(req.body.id);
+    let user = await dbFunctions.findAllUsersById(userId);
 
     if (user.length > 0 && isLoggedIn) {
         res.json({ 'data': {
