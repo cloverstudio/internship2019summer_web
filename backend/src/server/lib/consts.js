@@ -26,6 +26,10 @@ module.exports = {
     responseErrorExpiredToken: {
         error_code: '1006',
         error_description: 'Sesija je istekla, potrebno se ponovno prijaviti.'
+    },
+    responseErrorPasswordsDoNotMatch: {
+        error_code: '1007',
+        error_description: 'Lozinke nisu jednake!'
     }
     
 }

@@ -7,6 +7,7 @@ const jwt_decode = require('jwt-decode');
 const upload = require('../middlewares/multer');
 const tokenFunctions = require('../lib/tokenFunctions');
 const path = require('path');
+fileUploadFunctions = require('../lib/fileUploadFunctions');
 
 router.post('/login', async (req, res) => {
     passport.authenticate(
@@ -89,7 +90,7 @@ router.get('/allUsers/:searchBy?', async (req, res) => {
 });
 
 router.get('/details', async (req, res) => { 
-    let isLoggedIn = await tokenFunctions.checkTokenAvailability(req.headers.token);
+    let isLoggedIn = tokenFunctions.checkTokenAvailability(req.headers.token);
 
     let user = await dbFunctions.findAllUsersById(req.body.id);
 
@@ -130,14 +131,11 @@ router.put('/newUser', upload.single('photo'), async (req, res) => {
 
     let token = req.headers.token;
     let securityCheck = await tokenFunctions.userDidNotPassSecuriityCheck(token, res);
-    let file = req.file || false;
-    let imagePath = undefined;
-
-    if (file) {
-        imagePath = `uploads/photos/${file.filename}`;
-    }
-
-    let data = await dbFunctions.updateUser(req.body, imagePath);
+    let imagePath = fileUploadFunctions.checkImageUpload(req.file);
+    let userObj = req.body;
+    let id = userObj.ID;
+    delete userObj.ID;
+    let data = await dbFunctions.updateUser(userObj, imagePath, id);
 
     if (!securityCheck && data.error) {
         res.json({
@@ -151,6 +149,65 @@ router.put('/newUser', upload.single('photo'), async (req, res) => {
     } else {
         res.status(440).json(securityCheck);
     }
+})
+
+router.put('/myProfile', upload.single('photo'), async (req, res) => {
+    let userObj = req.body;
+    let token = req.headers.authorization.split(" ")[1];
+    let isLoggedIn = tokenFunctions.checkTokenAvailability(token);
+    let userId = await dbFunctions.findUserID(jwt_decode(token).email);
+    let imagePath = fileUploadFunctions.checkImageUpload(req.file);
+    let userPassword = undefined;
+   
+    if(!isLoggedIn) {
+        return res.status(440).json({ 'data': {
+            'error': {
+                'error_code': consts.responseErrorExpiredToken.error_code,
+                'error_description': consts.responseErrorExpiredToken.error_description
+            }
+        }});
+    }
+
+    if(userObj.currentPassword) { // assing value to password if user tries to change password
+        userPassword = await dbFunctions.findUsersPassword(userId);
+    }
+
+    let currentPassword = userObj.currentPassword;
+    let newPassword2 = userObj.newPassword2;
+
+
+    delete userObj.currentPassword //remove passwords from userObj wich are not going to be saved
+    delete userObj.newPassword2; //  <-
+
+    //password check
+    if (currentPassword && userPassword.password != currentPassword) { //if user is logged, and tries to change pass, but current password is wrong
+        return res.json({ 'data': {
+            'error': {
+                'error_code': consts.responseErrorLoginWrongPassword.error_code,
+                'error_description': consts.responseErrorLoginWrongPassword.error_description
+            }
+        }});
+    } else if (currentPassword && userObj.password != newPassword2) { //if user is logged, and tries to change pass, but new password and new password check do not match
+        return res.json({ 'data': {
+            'error': {
+                'error_code': consts.responseErrorPasswordsDoNotMatch.error_code,
+                'error_description': consts.responseErrorPasswordsDoNotMatch.error_description
+            }
+        }});
+    } 
+
+    let data = await dbFunctions.updateUser(userObj, imagePath, userId);
+
+    if (data.error) { 
+        res.json({
+            'data': data
+        });
+    }
+    else {
+        res.json({ 'data': {
+            'user': data
+        }});
+    } 
 })
 
 module.exports = router;

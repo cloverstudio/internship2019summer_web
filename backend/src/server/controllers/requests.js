@@ -9,12 +9,7 @@ const upload = require('../middlewares/multer');
 router.post('/new', upload.single('photo'), async (req, res) => {
     let data = req.body;
     let isLoggedIn = await tokenFunction.checkTokenAvailability(req.headers.token);
-    let file = req.file || undefined;
-    let imagePath = undefined;
-
-    if (file) {
-        imagePath = `uploads/photos/${file.filename}`;
-    }
+    let imagePath = fileUploadFunctions.checkImageUpload(req.file);
 
     if(!isLoggedIn) {
         res.status(440).json({ 'data': {
@@ -34,12 +29,8 @@ router.post('/new', upload.single('photo'), async (req, res) => {
 router.put('/edit', upload.single('photo'), async (req,res) => {
     let isLoggedIn = await tokenFunction.checkTokenAvailability(req.headers.token);
     let data = req.body;
-    let file = req.file || undefined;
-    let imagePath = undefined;
+    let imagePath = fileUploadFunctions.checkImageUpload(req.file);
 
-    if (file) {
-        imagePath = `uploads/photos/${file.filename}`;
-    }
     if(!isLoggedIn) {
         res.status(440).json({ 'data': {
             'error': {

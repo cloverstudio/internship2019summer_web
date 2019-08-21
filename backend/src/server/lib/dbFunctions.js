@@ -18,9 +18,18 @@ knex = Knex({
 
 Model.knex(knex);
 
+async function findUsersPassword(id) {
+    let password = await knex('persons')
+    .where({ID: id})
+    .select('password');
+
+    return password[0];
+}
+
 async function findUserID(email) {
     let userId = await knex('persons')
     .where({ email: email})
+
     return userId[0].ID;
 }
 
@@ -92,24 +101,27 @@ async function insertNewUser(firstName, lastName, email, oib, password, photoNam
     }
 }
 
-async function updateUser(userObj, imagePath) {
+async function updateUser(userObj, imagePath, id) {
+    try{
+        let user = false;
+        if (userObj.email || userObj.oib) { // if oib or email are going to be updated, first check if they are available
+            user = await userAlreadyExists(userObj.email, userObj.oib);
+        }
+        if (imagePath) {
+            userObj.image = imagePath; //add image path to user object
+        }
 
-    let user = false;
-    if (userObj.email || userObj.oib) { // if oib or email are going to be updated, first check if they are available
-        user = await userAlreadyExists(userObj.email, userObj.oib);
-    }
-    if (imagePath) {
-        userObj.image = imagePath; //add image path to user object
-    }
+        if (!user) {    
+            await knex('persons')
+            .where({ ID: id })
+            .update(userObj);
 
-    if (!user) {    
-        await knex('persons')
-        .where({ ID: userObj.ID })
-        .update(userObj);
-
-        return 'updated!';
-    } else {
-        return user;
+            return 'updated!';
+        } else {
+            return user;
+        }
+    } catch (err) {
+        console.log(err);
     }
 }
 
@@ -171,5 +183,6 @@ module.exports = {
     newRequest,
     updateRequest,
     findAllRequestsMadeBy,
-    findAllRequestsMadeByWithSearchTerm
+    findAllRequestsMadeByWithSearchTerm,
+    findUsersPassword
 }
