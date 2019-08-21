@@ -154,9 +154,11 @@ export default class Login extends Component {
                     
                     <form onSubmit={this.handleSubmit}>
                     <div className="form-info">
+                        
                         <FormGroup controlId="email" bsSize="large">
                         <FormLabel>email</FormLabel>
                         <FormControl
+                        className="border-none"
                         autoFocus
                         type="email"
                         required
@@ -168,6 +170,7 @@ export default class Login extends Component {
                         <FormGroup controlId="password" bsSize="large">
                         <FormLabel>Lozinka</FormLabel>
                         <FormControl
+                        className="border-none"
                         required
                         value={this.state.password}
                         onChange={this.handleChange}

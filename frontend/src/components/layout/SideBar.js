@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Redirect} from 'react-router-dom';
+import {BrowserRouter as Redirect, Link} from 'react-router-dom';
 import moj_grad_logo from '../../assets/moj_grad_logo.svg';
 import nav_news_selected_icon from '../../assets/nav_news_selected_icon.svg';
 import nav_requests_selected_icon from '../../assets/nav_requests_selected_icon.svg'; 
@@ -12,12 +12,29 @@ export default class SideBar extends Component {
         super(props);
           this.state = {
               RedirectLogin: false,
-                // user: {
-                //     id: 2323,
-                //     name: 'djuro'
-                // },
+              
         };
     }
+
+
+    handleSubmit = async (event) => {
+      console.log('y');
+      await fetch('https://intern2019dev.clover.studio/users/logout',  {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'token': localStorage.getItem('token'),
+        }, method: 'POST'
+      }
+      ).then(async (response)  => {
+        console.log('x');
+         const json = await response.json();
+         localStorage.clear();
+      return this.setRedirectLogin();
+      }
+      ).catch(e=>{
+        console.log('err',e);})}
+
 
     componentDidMount() {
         if(!localStorage.getItem('user')){
@@ -33,20 +50,9 @@ export default class SideBar extends Component {
         })
       }  
 
-    renderRedirect = () => {
-        if (this.state.RedirectLogin) {
-          localStorage.clear();
-          return <Redirect to='/'/> 
-           
-        }
-      }
-      
+    
     render (){
 
-      // if (this.state.RedirectLogin) {
-      //   localStorage.clear();
-      //   return <Redirect to='/'/> 
-      // }
 
         return(
           <div className="sidebar-container">
@@ -86,12 +92,14 @@ export default class SideBar extends Component {
 
                 <div className="bar-logout-container">
                     <NavItem style= {{display: 'flex'}}>
-                      <img style= {{maxWidth: '20px'}} alt= "profile photo" src = {nav_users_selected_icon} />
-                        <NavLink 
-                          onClick={this.renderRedirect()}
-                          href="/" >
-                             Odjavi me
-                        </NavLink>
+                    <img style= {{maxWidth: '20px'}} alt= "profile photo" src = {nav_users_selected_icon} /> 
+                    <Link
+                      to = "/" 
+                      className="linkLogin" 
+                      onClick={this.handleSubmit}>
+                      Odjavi me
+                    </Link>
+                        
                     </NavItem>
                 </div>
               </div>
