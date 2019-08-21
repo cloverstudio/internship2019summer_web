@@ -5,6 +5,7 @@ const jwt_decode = require('jwt-decode');
 const tokenFunction = require('../lib/tokenFunctions');
 const consts = require('../lib/consts');
 const upload = require('../middlewares/multer');
+const fileUploadFunctions = require('../lib/fileUploadFunctions');
 
 router.post('/new', upload.single('photo'), async (req, res) => {
     let data = req.body;

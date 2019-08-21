@@ -7,7 +7,7 @@ const jwt_decode = require('jwt-decode');
 const upload = require('../middlewares/multer');
 const tokenFunctions = require('../lib/tokenFunctions');
 const path = require('path');
-fileUploadFunctions = require('../lib/fileUploadFunctions');
+const fileUploadFunctions = require('../lib/fileUploadFunctions');
 
 router.post('/login', async (req, res) => {
     passport.authenticate(
@@ -154,7 +154,7 @@ router.put('/newUser', upload.single('photo'), async (req, res) => {
 
 router.put('/myProfile', upload.single('photo'), async (req, res) => {
     let userObj = req.body;
-    let token = req.headers.authorization.split(" ")[1];
+    let token = req.headers.token;
     let isLoggedIn = tokenFunctions.checkTokenAvailability(token);
     let userId = await dbFunctions.findUserID(jwt_decode(token).email);
     let imagePath = fileUploadFunctions.checkImageUpload(req.file);

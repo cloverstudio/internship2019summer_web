@@ -172,6 +172,22 @@ async function findAllRequestsMadeByWithSearchTerm(id, findBy) {
     return allRequests;
 }
 
+async function addNews(newsObj, imagePath, filePath, userId) {
+    await knex('news')
+    .insert({
+        MadeBy: userId,
+        Title: newsObj.Title,
+        Message: newsObj.Message,
+        Location_latitude: newsObj.Location_latitude,
+        Location_longitude: newsObj.Location_longitude,
+        Address: newsObj.Address,
+        Images: imagePath,
+        Files: filePath,
+        CreatedAt: Date.now()
+    })
+
+}
+
 module.exports = {
     insertNewUser,
     isAdmin,
@@ -184,5 +200,6 @@ module.exports = {
     updateRequest,
     findAllRequestsMadeBy,
     findAllRequestsMadeByWithSearchTerm,
-    findUsersPassword
+    findUsersPassword,
+    addNews
 }
