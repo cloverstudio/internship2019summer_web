@@ -154,7 +154,7 @@ async function findAllRequestsMadeBy(id) {
 async function findAllRequestsMadeByWithSearchTerm(id, findBy) {
     let allRequests = await knex('requests')
     .where({ userID: id })
-    .orWhere('Request_type', 'like', `%${findBy}%`)
+    .where('Request_type', 'like', `%${findBy}%`)
     .orderBy([{ column: 'updatedAt', order: 'desc' }, { column: 'createdAt', order: 'desc' }]);
 
     return allRequests;
