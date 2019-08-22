@@ -97,12 +97,14 @@ router.get('/details/:id', async (req, res) => {
     let user = await dbFunctions.findAllUsersById(userId);
 
     if (user.length > 0 && isLoggedIn) {
+        console.log(user[0])
         res.json({ 'data': {
             'user': {
                 'firstName': user[0].firstName,
                 'lastName': user[0].lastName,
                 'oib': user[0].oib,
-                'email': user[0].email
+                'email': user[0].email,
+                'image': user[0].image
             }
         }})
     } else if (isLoggedIn && user.length == 0){
