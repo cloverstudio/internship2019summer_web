@@ -1,12 +1,12 @@
 module.exports = {
     checkImageUpload(file) {
         let fileCheck = file || false;
-        let imagePath = undefined;
+        let image = undefined;
 
         if (fileCheck) {
-            imagePath = `uploads/photos/${file.filename}`;
+            image = file.filename;
         }
-        return imagePath;
+        return image;
     },
     allFilesCheck(files) {
         let data = {
