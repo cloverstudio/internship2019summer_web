@@ -11,20 +11,19 @@ router.post('/new', upload.any(), async (req,res) => {
     let token = req.headers.token;
     let securityCheck = await tokenFunctions.userDidNotPassSecuriityCheck(token, res);
     let userId = await dbFunctions.findUserID(jwt_decode(token).email);
-    let filePath = undefined;
-    let imagePath = undefined;
-    let getFilesPath = fileUploadFunctions.allFilesCheck(req.files);
+    let fileName = undefined;
+    let imageName = undefined;
+    let getFileNames = fileUploadFunctions.allFilesCheck(req.files);
 
-    if (getFilesPath.imagesPath) {
-        imagePath = JSON.stringify(getFilesPath.imagesPath)
+    if (getFileNames.images) {
+        imageName = JSON.stringify(getFileNames.images )
     }
-    if (getFilesPath.filesPath) {
-        filePath = JSON.stringify(getFilesPath.filesPath)
+    if (getFileNames.files) {
+        fileName = JSON.stringify(getFileNames.files)
     }
-    
+    console.log(imageName, fileName)
     if (!securityCheck) {
-        await dbFunctions.addNews(req.body, imagePath, filePath, userId);
-
+        await dbFunctions.addNews(req.body, imageName, fileName, userId);
         res.json({ 'data': {
             'messagge': 'added news!'
         }});

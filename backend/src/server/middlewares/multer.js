@@ -11,7 +11,10 @@ let storage = multer.diskStorage({
         console.log(file.mimetype)
         cb({ error: 'file type not supported' })
         }
-    }
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + file.originalname);
+      }
 })
   
 const upload = multer({ storage: storage })

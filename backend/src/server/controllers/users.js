@@ -8,6 +8,7 @@ const upload = require('../middlewares/multer');
 const tokenFunctions = require('../lib/tokenFunctions');
 const path = require('path');
 const fileUploadFunctions = require('../lib/fileUploadFunctions');
+const fs = require('fs');
 
 router.post('/login', async (req, res) => {
     passport.authenticate(

@@ -10,16 +10,16 @@ module.exports = {
     },
     allFilesCheck(files) {
         let data = {
-            imagesPath: [],
-            filesPath: []
+            images: [],
+            files: []
         }
 
         for (let i = 0; i < files.length; i++) {
             if (files[i].mimetype === ('image/png' || 'image/jpg' || 'image/jpeg')) {
-                data.imagesPath.push(`uploads/photos/${files[i].filename}`);
+                data.images.push(Date.now() + files[i].originalname);
             }
             else if (files[i].mimetype === ('application/pdf' || 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')) {
-                data.filesPath.push(`uploads/files/${files[i].filename}`);
+                data.files.push(Date.now() + files[i].originalname);
             }
             else {
                 console.log('file type not supported');
