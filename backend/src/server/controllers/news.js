@@ -21,7 +21,6 @@ router.post('/new', upload.any(), async (req,res) => {
     if (getFileNames.files) {
         fileName = JSON.stringify(getFileNames.files)
     }
-    console.log(imageName, fileName)
     if (!securityCheck) {
         await dbFunctions.addNews(req.body, imageName, fileName, userId);
         res.json({ 'data': {
