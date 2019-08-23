@@ -22,7 +22,9 @@ router.post('/new', upload.single('photo'), async (req, res) => {
     } else {
         let userId = await dbFunction.findUserID(jwt_decode(req.headers.token).email);
         dbFunction.newRequest(data, userId, imagePath);
-        res.status(200).json({response: 'ok!'});
+        res.status(200).json({'data': {
+            'message': 'add new request!'
+        }});
     }
 
 })
@@ -41,7 +43,9 @@ router.put('/edit', upload.single('photo'), async (req,res) => {
         }})
     } else {
         await dbFunction.updateRequest(data, imagePath);
-        res.json('zahtjev ažuriran!');
+        res.json({'data': {
+            'message': 'request updated!'
+        }});
     }
 })
 

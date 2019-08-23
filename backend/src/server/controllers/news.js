@@ -54,7 +54,7 @@ router.put('/edit', upload.any(), async (req,res) => {
         await dbFunctions.updateNews(data, imageName, fileName, newsID)
 
         res.json({ 'data': {
-            'messagge': 'news updated!'
+            'message': 'news updated!'
         }});
 
     } else {
