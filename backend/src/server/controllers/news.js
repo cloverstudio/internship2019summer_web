@@ -24,7 +24,7 @@ router.post('/new', upload.any(), async (req,res) => {
     if (!securityCheck) { 
         await dbFunctions.addNews(req.body, imageName, fileName, userId);
         res.json({ 'data': {
-            'messagge': 'added news!'
+            'message': 'added news!'
         }});
     } else {
         res.status(440).json(securityCheck);
