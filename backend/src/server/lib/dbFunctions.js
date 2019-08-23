@@ -205,7 +205,9 @@ async function updateNews(newsObj, image, file, id) {
 }
 
 async function getAllNews() {
-    let allNews = await knex('news');
+    let allNews = await knex.from('news')
+    .innerJoin('persons', 'news.MadeBy', 'persons.ID')
+    .select('firstName', 'lastName', 'Title', 'news.ID', 'Location_latitude', 'Location_longitude', 'Address', 'CreatedAt', 'UpdatedAt', 'Files', 'Images');
     return allNews;
 }
 
