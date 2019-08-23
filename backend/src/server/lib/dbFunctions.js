@@ -144,7 +144,7 @@ async function newRequest(requestObj, userId, imagePath) {
      });
 }
 
-async function updateRequest(requestObj, imagePath) {
+async function updateRequest(requestObj, imagePath, id) {
     
     if(imagePath) {
         requestObj.image = imagePath
@@ -152,7 +152,7 @@ async function updateRequest(requestObj, imagePath) {
     requestObj.updatedAt = Date.now();
 
     await knex('requests')
-    .where({ ID: requestObj.ID })
+    .where({ ID: id })
     .update(requestObj)
 }
 

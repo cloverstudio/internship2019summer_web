@@ -32,14 +32,13 @@ router.post('/new', upload.any(), async (req,res) => {
 
 })
 
-router.put('/edit', upload.any(), async (req,res) => {
+router.put('/edit/:id', upload.any(), async (req,res) => {
     let data = req.body;
     let token = req.headers.token;
     let securityCheck = await tokenFunctions.userDidNotPassSecuriityCheck(token, res);
     let fileName = undefined;
     let imageName = undefined;
-    let newsID = data.ID;
-    delete data.ID;
+    let newsID = req.params.id;
 
     let getFileNames = fileUploadFunctions.allFilesCheck(req.files);
 

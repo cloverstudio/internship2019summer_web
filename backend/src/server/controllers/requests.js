@@ -29,10 +29,11 @@ router.post('/new', upload.single('photo'), async (req, res) => {
 
 })
 
-router.put('/edit', upload.single('photo'), async (req,res) => {
+router.put('/edit/:id', upload.single('photo'), async (req,res) => {
     let isLoggedIn = await tokenFunction.checkTokenAvailability(req.headers.token);
     let data = req.body;
     let imagePath = fileUploadFunctions.checkImageUpload(req.file);
+    let id = req.params.id;
 
     if(!isLoggedIn) {
         res.status(440).json({ 'data': {
@@ -42,7 +43,7 @@ router.put('/edit', upload.single('photo'), async (req,res) => {
             }
         }})
     } else {
-        await dbFunction.updateRequest(data, imagePath);
+        await dbFunction.updateRequest(data, imagePath, id);
         res.json({'data': {
             'message': 'request updated!'
         }});

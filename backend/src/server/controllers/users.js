@@ -130,14 +130,13 @@ router.post('/logout', (req, res) => {
     res.json('success!');
 })
 
-router.put('/newUser', upload.single('photo'), async (req, res) => {
+router.put('/newUser/:id', upload.single('photo'), async (req, res) => {
 
     let token = req.headers.token;
     let securityCheck = await tokenFunctions.userDidNotPassSecuriityCheck(token, res);
     let imagePath = fileUploadFunctions.checkImageUpload(req.file);
     let userObj = req.body;
-    let id = userObj.ID;
-    delete userObj.ID;
+    let id = req.params.id;
 
     if (securityCheck) {
         return res.status(440).json(securityCheck);
