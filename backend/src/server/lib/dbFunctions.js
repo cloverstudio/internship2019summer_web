@@ -209,6 +209,11 @@ async function getAllNews() {
     return allNews;
 }
 
+async function getAllRequests() {
+    let allRequests = await knex('requests');
+    return allRequests;
+}
+
 module.exports = {
     insertNewUser,
     isAdmin,
@@ -224,5 +229,6 @@ module.exports = {
     findUsersPassword,
     addNews,
     updateNews,
-    getAllNews
+    getAllNews,
+    getAllRequests
 }

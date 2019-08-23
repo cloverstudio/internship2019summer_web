@@ -68,8 +68,25 @@ router.get('/myRequests/:findBy?', async (req,res) => {
             'requests': myRequests
         }});
     }
+})
 
+router.get('/all', async (req,res) => {
+    let token = req.headers.token;
+    let securityCheck = await tokenFunction.userDidNotPassSecuriityCheck(token, res);
 
+    if (!securityCheck) {
+        let allRequests = await dbFunction.getAllRequests();
+        res.json({ 'data': {
+            'requests': allRequests
+        }})
+    } else {
+        res.status(440).json({ 'data': {
+            'error': {
+                'error_code': consts.responseErrorExpiredToken.error_code,
+                'error_description': consts.responseErrorExpiredToken.error_description
+            }
+        }});
+    }
 })
 
 module.exports = router;
