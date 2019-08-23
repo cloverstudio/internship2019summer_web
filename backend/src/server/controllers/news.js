@@ -5,6 +5,7 @@ const jwt_decode = require('jwt-decode');
 const tokenFunctions = require('../lib/tokenFunctions');
 const upload = require('../middlewares/multer');
 const fileUploadFunctions = require('../lib/fileUploadFunctions');
+const consts = require('../lib/consts');
 
 router.post('/new', upload.any(), async (req,res) => {
     let token = req.headers.token;
@@ -60,6 +61,25 @@ router.put('/edit', upload.any(), async (req,res) => {
         res.status(440).json(securityCheck);
     }
     
+})
+
+router.get('/all', async (req, res) => {
+    let token = req.headers.token;
+    let isLoggedIn = tokenFunctions.checkTokenAvailability(token);
+
+    if (isLoggedIn) {
+        let data = await dbFunctions.getAllNews();
+        res.json({ 'data': {
+            'news': data
+        }})
+    } else {
+        res.status(440).json({ 'data': {
+            'error': {
+                'error_code': consts.responseErrorExpiredToken.error_code,
+                'error_description': consts.responseErrorExpiredToken.error_description
+            }
+        }});
+    }
 })
 
 module.exports = router;

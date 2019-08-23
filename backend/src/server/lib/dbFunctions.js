@@ -204,6 +204,11 @@ async function updateNews(newsObj, image, file, id) {
     }
 }
 
+async function getAllNews() {
+    let allNews = await knex('news');
+    return allNews;
+}
+
 module.exports = {
     insertNewUser,
     isAdmin,
@@ -218,5 +223,6 @@ module.exports = {
     findAllRequestsMadeByWithSearchTerm,
     findUsersPassword,
     addNews,
-    updateNews
+    updateNews,
+    getAllNews
 }
