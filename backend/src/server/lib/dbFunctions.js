@@ -92,7 +92,7 @@ async function insertNewUser(firstName, lastName, email, oib, password, photoNam
             personsRoleId: 2,
             oib: oib,
             password: password,
-            image: `uploads/photos/${photoName}`
+            image: photoName
         })
         return newUser;
 
@@ -139,6 +139,7 @@ async function newRequest(requestObj, userId, imagePath) {
         message: requestObj.message,
         userID: userId,
         image: requestObj.image,
+        Address: requestObj.Address,
         createdAt: Date.now()
      });
 }
@@ -188,6 +189,21 @@ async function addNews(newsObj, imagePath, filePath, userId) {
 
 }
 
+async function updateNews(newsObj, image, file, id) {
+    try{
+        newsObj.Images = image;
+        newsObj.Files = file;
+        newsObj.updatedAt = Date.now();
+
+        await knex('news')
+        .where({ iD: id })
+        .update(newsObj)
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 module.exports = {
     insertNewUser,
     isAdmin,
@@ -201,5 +217,6 @@ module.exports = {
     findAllRequestsMadeBy,
     findAllRequestsMadeByWithSearchTerm,
     findUsersPassword,
-    addNews
+    addNews,
+    updateNews
 }

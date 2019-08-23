@@ -22,7 +22,7 @@ router.post('/new', upload.single('photo'), async (req, res) => {
     } else {
         let userId = await dbFunction.findUserID(jwt_decode(req.headers.token).email);
         dbFunction.newRequest(data, userId, imagePath);
-        res.status(200).json('ok!');
+        res.status(200).json({response: 'ok!'});
     }
 
 })

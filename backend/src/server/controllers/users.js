@@ -6,9 +6,7 @@ const consts = require('../lib/consts');
 const jwt_decode = require('jwt-decode');
 const upload = require('../middlewares/multer');
 const tokenFunctions = require('../lib/tokenFunctions');
-const path = require('path');
 const fileUploadFunctions = require('../lib/fileUploadFunctions');
-const fs = require('fs');
 
 router.post('/login', async (req, res) => {
     passport.authenticate(
@@ -48,22 +46,24 @@ router.post('/register', async (req, res) => {
 
  router.post('/newUser', async (req, res) => {
     let user = req.body;
-
-    let data = await dbFunctions.insertNewUser(user.firstName, user.lastName, user.email, user.oib, user.password);
     let securityCheck = await tokenFunctions.userDidNotPassSecuriityCheck(req.headers.token, res);
 
+    if (securityCheck) {
+        return res.status(440).json(securityCheck);
+    }
+
+    let data = await dbFunctions.insertNewUser(user.firstName, user.lastName, user.email, user.oib, user.password);
+
     // if email/oib are taken
-    if (!securityCheck && data.error) {
+    if (data.error) {
         res.json({
             'data': data
         });
     }
-    else if (!securityCheck) {
+    else {
         res.json({ 'data': {
             'user': data
         }});
-    } else {
-        res.status(440).json(securityCheck);
     }
 });
 
@@ -97,7 +97,6 @@ router.get('/details/:id', async (req, res) => {
     let user = await dbFunctions.findAllUsersById(userId);
 
     if (user.length > 0 && isLoggedIn) {
-        console.log(user[0])
         res.json({ 'data': {
             'user': {
                 'firstName': user[0].firstName,
@@ -139,19 +138,22 @@ router.put('/newUser', upload.single('photo'), async (req, res) => {
     let userObj = req.body;
     let id = userObj.ID;
     delete userObj.ID;
+
+    if (securityCheck) {
+        return res.status(440).json(securityCheck);
+    }
+
     let data = await dbFunctions.updateUser(userObj, imagePath, id);
 
-    if (!securityCheck && data.error) {
+    if (data.error) {
         res.json({
             'data': data
         });
     }
-    else if (!securityCheck) {
+    else {
         res.json({ 'data': {
             'user': data
         }});
-    } else {
-        res.status(440).json(securityCheck);
     }
 })
 
