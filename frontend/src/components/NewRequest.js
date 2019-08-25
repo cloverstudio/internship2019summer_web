@@ -51,7 +51,7 @@ class NewRequest extends Component {
     }
     console.log(addNewRequest);
 
-    // this.NewRequest(addNewRequest);
+    this.NewRequest(addNewRequest);
 
   }
 
