@@ -7,6 +7,7 @@ const Search = ({searchChange}) => {
         <Col>
             <FormControl 
             type="search"
+            className="border-none"
             placeholder="Pretraživanje korisnika"
             onChange = {searchChange}
             src ={search_icon}/>

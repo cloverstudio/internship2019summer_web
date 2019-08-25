@@ -8,16 +8,20 @@
     display: flex;
     margin: 15px;
     border-radius: 2px;
+    background: white;
 }
 
 .profile-photo{
-    max-width: 150px;
-    border-radius: 10px;
-    padding-left: 20px;
+    max-width: 55px;
+    max-height: 55px;
+    margin-left: 10px;
+    margin-top: 10px;
+    padding-bottom: 1px;
+    border-radius: 50%
 }
 
 .user-info{
-    padding-left: 20px;
+    padding-left: 13px;
     padding-top: 10px;
 }
 .user-info > h3{

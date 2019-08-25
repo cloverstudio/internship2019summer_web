@@ -49,7 +49,7 @@ export default class SideBar extends Component {
       // }
 
         return(
-          <div className="sidebar-container">
+          <div className="sidebar-container" style={{background:'#ffffff'}}>
             <div className="bar-img">
                 <img style= {{maxWidth: '100px'}} alt= "logo grada" src = {moj_grad_logo} />
             </div>
@@ -57,7 +57,7 @@ export default class SideBar extends Component {
                <div className="bar-links-container">
                   <NavItem style= {{display: 'flex', marginBottom: '20px'}}>
                       <img style= {{maxWidth: '20px'}} alt= "newspapers icon" src = {nav_news_selected_icon} />
-                      <NavLink href="/MainScreen">
+                      <NavLink href="/News">
                           Vijesti
                       </NavLink>
                   </NavItem>

@@ -3,9 +3,10 @@ import Search from './layout/Search';
 import UserList from './UserList';
 import { Button } from "react-bootstrap";
 import {Redirect} from 'react-router-dom';
-import {Row, Container} from 'react-bootstrap';
+import {Row, Container, Col} from 'react-bootstrap';
 import add_icon from '../assets/add_icon.svg';
 import axios from 'axios';
+import SideBar from './SideBar';
 //import apis from '../lib/api/api';
 
 
@@ -29,6 +30,7 @@ export class Users extends Component {
            return <Redirect to ="/"/>
         }
     }
+
 
     setRedirectAddNewUser = () => {
         this.setState({
@@ -70,10 +72,8 @@ export class Users extends Component {
             const letters = [];
             mapUsers.forEach(user =>{
                 if(typeof user.firstName !==  typeof null){
-                     letters.push(user.firstName.substring(0, 1));}
-                console.log(letters); 
+                     letters.push(user.firstName.substring(0, 1).toUpperCase());}
             const uniqueLetters = [...new Set(letters)];
-            console.log(uniqueLetters);
             this.setState({letterList: uniqueLetters})
         })
         
@@ -95,7 +95,6 @@ export class Users extends Component {
           }
 
         const {userprofile, searchfield} = this.state;
-        console.log(userprofile);
         const filteredUsers = userprofile.filter(user => {
             let pattern = "^"+ searchfield;
             const regex = new RegExp(pattern, "i")
@@ -104,10 +103,11 @@ export class Users extends Component {
 
 
         return (
-            <div>
-                <Container style={{margin:"0"}}>
+            <div style={{display:'flex', background:'#e7e7e7'}}>
+                <SideBar/>
+                <Container style={{margin:"0", background:'#e7e7e7'}}>
                     <Row>
-                    <Search searchChange = {this.onSearchChange}/>
+                    <Search searchChange = {this.onSearchChange} />
                     <Button className="btn-new-user col"
                     onClick = {this.setRedirectAddNewUser}>
                         <svg>
@@ -116,11 +116,12 @@ export class Users extends Component {
                         Kreiraj Korisnika
                     </Button>
                     </Row>
-                </Container>
-                <UserList
+                    <UserList
                 userprofile = {filteredUsers}
                 letterList ={this.state.letterList}
                 />
+                </Container>
+                
             </div>
         )
     }

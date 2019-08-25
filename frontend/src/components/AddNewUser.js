@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, FormGroup, FormControl, FormLabel, Row } from "react-bootstrap";
+import { Button, FormGroup, FormControl, FormLabel, Row, Image } from "react-bootstrap";
 import {Redirect} from 'react-router-dom';
 import swal from 'sweetalert';
 import md5 from 'md5';
@@ -10,6 +10,7 @@ export class AddNewUser extends Component {
 
     constructor(props){
         super(props);
+        this.handleClick = this.handleClick.bind(this);
         this.state = {
             name: "",
             email: "",
@@ -19,7 +20,8 @@ export class AddNewUser extends Component {
             lastName: '',
             jwt: localStorage.getItem('token'),
             error: "",
-            redirectToUsers: false
+            redirectToUsers: false,
+            image: []
         }
     }
     validateForm() {
@@ -71,7 +73,7 @@ export class AddNewUser extends Component {
             console.log(json);
             swal("Uspješno!", "Korisnik će na svoju email adresu dobiti podatke koji su potrebni za prjavu na sustav Moj Grad", "success");
             return this.setRedirectUsers();
-            }
+            } 
             ).catch(e=>{
               console.log(e);
               swal("Greška!", "Korisnik nije kreiran", "error");
@@ -83,6 +85,24 @@ export class AddNewUser extends Component {
               console.log(splitString);
               this.state.firstName = splitString[0].trim();
               this.state.lastName = splitString[1];
+          }
+
+          handleClick(e) {
+            this.refs.fileUploader.click();
+        }
+
+
+          uploadPhoto = (event) => {
+            fetch('https://intern2019dev.clover.studio/users/newUser',{
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'multipart/form-data',
+                  'token': this.state.jwt
+                }
+            }).then(
+              response => response.JSON()
+            )
           }
 
     render() {
@@ -104,11 +124,14 @@ export class AddNewUser extends Component {
                 <form>
                 <div className="new-user-form-container">
                 
-                <div className="add-user-photo">
-                <FormGroup controlId="profilePhoto" bsSize="large">
-                <FormLabel bsClass="custom-label">Profilna slika</FormLabel>
-                <img src={upload_photo_icon} style={{display:"flex"}}/>
-                </FormGroup>
+                <div className="add-user-photo" onClick={this.handleChange}>
+                  <FormGroup controlId="profilePhoto" bsSize="large">
+                    <FormLabel bsClass="custom-label">Profilna slika</FormLabel>
+                    <div style={{display:'flex', alignContent:'center'}}>
+                    <input type="file" id="file" ref="fileUploader" style={{display: "none"}}/>
+                    <Image src={upload_photo_icon} onClick = {this.uploadPhoto} />
+                    </div>
+                  </FormGroup>
                 </div>
 
                 <FormGroup controlId="name" bsSize="large">

@@ -1,34 +1,55 @@
 import React from 'react'
 import SingleUser from './SingleUser';
+import {withRouter } from 'react-router-dom';
 
-const UserList = ({userprofile, letterList}) =>{
-    return(
+const UserList = ({ userprofile, letterList }) => {
+
+    return (
         <div>
-            <div>{
-                letterList.map(i=>{
-                    return(
-                        <h1>{i}</h1>
+            {
+                letterList.map((i, index) => {
+                    const filteredUsers = userprofile.filter(user => {
+                        if (typeof user.firstName !== typeof null) {
+                          return  user.firstName.substring(0, 1).toUpperCase()==i
+                        }
+                    });
+                    return (
+                        <div key={index}>
+                            <h1>{i}</h1>
+                            {
+                                filteredUsers.map((user,index) => {
+                                    return (
+                                        <SingleUser 
+                                            key={index}
+                                           user={user}
+                                        />
+                                    );
+                                })
+                            }
+                        </div>
+                         
                     )
                 })
-            }</div>
-            <div>{
-                userprofile.map((user, i)=>{
-                    return(
-                        <SingleUser
-                        key={i}
-                        id = {userprofile[i].id}
-                        firstName = {userprofile[i].firstName}
-                        lastName = {userprofile[i].lastName}
-                        email = {userprofile[i].email}
-                        />
-                    );
-                })
             }
+            <div>{
+                userprofile.map(user => {
+                    if (typeof user.firstName === typeof null){
+                        return (
+                            <SingleUser
+                            key={user.id}
+                            user={user}
+                            />
+                        )
+                    }
+                })
+                
+            }
+
             </div>
-    </div>
+
+        </div>
     )
 }
 
-export default UserList;
-
+export default withRouter(UserList);
 
