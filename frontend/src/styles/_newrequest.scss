@@ -9,7 +9,7 @@
     color: #0076ff;
 }
 
-.outlined-btn {
+.outd-btn {
     background: white;
     color: #007bff;
 }
@@ -46,3 +46,9 @@
     border-left: none;
     border-right: none;
 }
+
+.map-container {
+    height: 200px;
+    width: 350px; 
+    position: relative;
+  }

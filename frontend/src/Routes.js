@@ -9,8 +9,12 @@ import AddNewUser from './components/AddNewUser';
 import MiddleScreen from './components/MiddleScreen';
 import NoNewRequests from './components/NoNewRequests';
 import NewRequest from './components/NewRequest';
+import EditRequest from './components/EditRequest';
 import Requests from './components/Requests';
 import MapContainer from './components/MapContainer';
+import Map from './components/Map';
+import Home from './components/Home';
+
 
 export default class Routes extends Component{
     render(){
@@ -23,11 +27,15 @@ export default class Routes extends Component{
                     <Route exact path="/MiddleScreen"  component={MiddleScreen}/>
                     <Route exact path="/NoNewRequests"  component={NoNewRequests}/>
                     <Route exact path="/NewRequest"  component={NewRequest}/>
+                    <Route exact path="/Requests/:requestsId"  component={EditRequest}/>
                     <Route exact path="/Requests"  component={Requests}/>
                     <Route exact path="/Users"  component={Users}/>
                     <Route exact path="/Profile"  component={Profile}/>
                     <Route exact path="/AddNewUser" component={AddNewUser}/> 
                     <Route exact path="/MapContainer" component={MapContainer}/> 
+                    <Route exact path="/Map" component={Map}/> 
+                    <Route exact path="/Home" component={Home}/> 
+
 
                 </Switch>
             </Router>

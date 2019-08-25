@@ -1,26 +1,30 @@
 import React, { Component } from 'react';
 import SideBar from './layout/SideBar';
 import MapContainer from './MapContainer';
+import Map from './Map';
+import axios from 'axios';
 import { Form, Button, FormGroup, FormControl, FormLabel, Label, FormText } from "react-bootstrap";
 
 
-export default class NewRequest extends Component {
-  constructor(props) {
-    super(props);
-  
-    this.state = {
-      title: "",
-      message: "",
-      Request_type: "",
-      location_latitude: "",
-      location_longitude: "",
-      photo: "",
-     
-    };
 
-    // this.handleChange = this.handleChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
-  }
+class NewRequest extends Component {
+  // constructor(props) {
+  //   super(props);
+
+  //   this.state = {
+  //     title: "",C
+  //     message: "",
+  //     Request_type: "",
+  //     location_latitude: "",
+  //     location_longitude: "",
+  //     address: "",
+  //     photo: "",
+
+  //   };
+
+  //   this.handleChange = this.handleChange.bind(this);
+  //   this.handleSubmit = this.handleSubmit.bind(this);
+  // }
 
 
   // PROCITAJ ------> https://reactjs.org/docs/forms.html
@@ -29,133 +33,142 @@ export default class NewRequest extends Component {
   //   event.preventDefault();
   // }
 
-  handleChange = event => {
-    const target = event.target;
-    this.setState({
-      [target.id]: target.value
-    });
+
+  async NewRequest(addNewRequest) {
+    console.log(localStorage.getItem('token'));
+    try {
+      
+      const response = await fetch('https://intern2019dev.clover.studio/requests/new', {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'token': localStorage.getItem('token')
+        },
+        method: 'POST',
+        body: JSON.stringify(addNewRequest)
+      }).then(res => {
+        res.json()
+        console.log(res.clone().json());
+      })
+
+      console.log("response register new",response);
+      this.props.history.push('/NewRequest');
+
+    } catch (err) {
+      console.log(err)
+    }
+
   }
 
-  validateForm() {
-    return this.state.title.length > 0 && this.state.message.length > 0;
+  
+
+  onSubmit(e) {
+    console.log(this.refs.photo.value);
+    e.preventDefault();
+    const addNewRequest = {
+      Title: this.refs.title.value,
+      Request_type: this.refs.Request_type.value,
+      Address: this.refs.address.value,
+      // location_latitude: this.refs.location_latitude.value, 
+      // location_longitude: this.refs.location_longitude.value,        
+      message: this.refs.message.value,
+      photo: this.refs.photo.value
+
+    }
+    console.log(addNewRequest);
+
+    this.NewRequest(addNewRequest);
+
   }
 
+  render() {
 
-    render() {
-      return (
-        <div style={{display:'flex'}}>
-          <SideBar />
+    return (
 
-          <div className="requests-container-gray">
-            <div className="new-request-white-container" style={{margin:'50px'}}>
-              <Form>
+      <div style={{ display: 'flex' }}>
+        <SideBar />
 
-                <div className="form-header">
-                  <div className="new-request-title">
-                    <Button 
-                      className="btn-back" 
-                      color="primary" 
-                      size="sm" 
-                      href="/Requests">
-                      Vrati se nazad
+        <div className="requests-container-gray">
+          <div className="new-request-white-container" style={{ margin: '50px' }}>
+
+            <div className="form-header">
+              <div className="new-request-title">
+                <Button
+                  className="btn-back"
+                  color="primary"
+                  size="sm"
+                  href="/Requests">
+                  Vrati se nazad
                     </Button>{' '}
-                    <p style={{textAlign: 'center', fontSize: '35px'}}>
-                      Novi Zahtjev
-                    </p>
-                  </div>
-                  <div>
-                    <p style={{textAlign: 'center'}}>
-                      Molimo vas, upišite tražene podatke kako bismo mogli zaprimiti zahtjev.
-                    </p>
-                  </div>
+
+                <div className="title-request">
+                  <p style={{ textAlign: 'center', fontSize: '25px' }}>
+                    Novi Zahtjev
+                      </p>
                 </div>
+              </div>
+              <div>
+                <p style={{ textAlign: 'center' }}>
+                  Molimo vas, upišite tražene podatke kako bismo mogli zaprimiti zahtjev.
+                    </p>
+              </div>
+            </div>
 
-                <FormGroup controlId="title" name="title" bssize="large">
-                  <FormLabel>Naslov:</FormLabel>
-                  <FormControl
-                    className="border-none"
-                    required
-                    type="text"
-                    placeholder="" 
-                    value={this.state.title}
-                    onChange={this.handleChange}/>
-                </FormGroup>
+          
+              <label htmlFor="name">Naslov:</label>
+              <div className="input-field">
+                <input type="text" name="title" ref="title" />
+              </div>
 
-                <Form.Group>
-                  <div className="type-files-location-container row" style= {{display: 'table'}}>
-                    
-                    <div className="type-files-container column">
-                      <Form.Group controlId="selector" style={{ marginBottom: '50px'}}>
-                        <FormLabel>Tip zahtjeva:
-            
-                            <select 
-                              // value={this.state.Request_type} 
-                              // name="Request_type"
-                              // onChange={this.handleChange}
-                              >
-                               <option value="kvar">Kvar</option>
-                                <option value="prijedlog">Prijedlog</option>
-                            </select>
-                        </FormLabel> 
-                      </Form.Group>
+              <label htmlFor="type">Tip zahtjeva:</label>
+              <div className="input-field">
+                <select>
+                  <option value="kvar" name="kvar" ref="Request_type">Kvar</option>
+                  <option value="prijedlog" name="Request_type" ref="prijedlog">Prijedlog</option>
+                </select>
+              </div>
 
-                      <FormGroup>
-                        <FormLabel htmlFor="exampleFile" action="intern2019.def.clover.studio/requests/new" method="POST" encType="multipart/form-data"
-                        >Datoteka: <br></br></FormLabel>
-                        <input type="file" name="photo" id="exampleFile" />
-                      </FormGroup>     
-                    </div>
-                      
-                    <div className="location-container column">
-                      <FormGroup>
-                        <FormLabel>Lokacija:</FormLabel>
-                        <div className="map-container" style= {{height: '200px', width: '350px'}}>
-                          <MapContainer />
-                          {/* name="location_longitude and latitiude" */}
-                        </div>
-                      </FormGroup>
-                    </div>
-                    
-                  </div>
-                </Form.Group>
+              <label htmlFor="photo" action="intern2019.def.clover.studio/requests/new" method="POST" encType="multipart/form-data">Datoteka:</label>
+              <div className="input-field">
+                <input type="file" name="photo" id="exampleFile" ref="photo" />
+              </div>
 
-                <Form.Group controlId="message">
-                  <FormLabel>Poruka:</FormLabel>
-                  <Form.Control 
-                    name="mesagge"
-                    required
-                    placeholder=""
-                    type="text" 
-                    as="textarea" 
-                    rows="2"
-                    value={this.state.message}
-                    onChange={this.handleChange}/>
-                </Form.Group>
+              <label htmlFor="address">Upišite lokaciju:</label>
+              <div className="input-field">
+                <input type="text" name="address" ref="address" />
+              </div>
 
-                <div className="two-btns-request">
-                <Button 
+              <label htmlFor="city">Poruka:</label>
+              <div className="input-field">
+                <input type="text" name="message" ref="message" />
+              </div>
+
+              <div className="two-btns-request">
+                <Button
                   color="primary"
                   type="submit"
-                  disabled={!this.validateForm()}
-                  onClick= {this.handleSubmit}>
+                  onClick={this.onSubmit.bind(this)}
+                >
                   Pošalji zahtjev
-                </Button>{' '}
+                      </Button>{' '}
 
-                <Button 
-                  className="outlined-btn" 
-                  outline color="primary" 
+                <Button
+                  className="outd-btn"
+                  color="primary"
                   href="/Requests">
-                    Poništi zahtjev
-                </Button>{' '}
+                  Poništi zahtjev
+                      </Button>{' '}
 
-                </div>   
-              </Form>
-            </div>
+              </div>
+            
+
           </div>
-
         </div>
-      )
-   }
+      </div>
+    )
+  }
 }
 
+
+export default NewRequest;
 

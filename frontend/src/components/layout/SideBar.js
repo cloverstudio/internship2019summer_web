@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Redirect, Link} from 'react-router-dom';
+import {BrowserRouter as Link} from 'react-router-dom';
 import moj_grad_logo from '../../assets/moj_grad_logo.svg';
 import nav_news_selected_icon from '../../assets/nav_news_selected_icon.svg';
 import nav_requests_selected_icon from '../../assets/nav_requests_selected_icon.svg'; 
 import nav_users_selected_icon from '../../assets/nav_users_selected_icon.svg';
 
-import { Nav, NavItem, NavLink } from 'reactstrap';
+import { NavItem, NavLink } from 'reactstrap';
 
 export default class SideBar extends Component {
     constructor(props){
@@ -18,7 +18,7 @@ export default class SideBar extends Component {
 
 
     handleSubmit = async (event) => {
-      console.log('y');
+      console.log('Request:');
       await fetch('https://intern2019dev.clover.studio/users/logout',  {
         headers: {
           'Accept': 'application/json',
@@ -27,9 +27,10 @@ export default class SideBar extends Component {
         }, method: 'POST'
       }
       ).then(async (response)  => {
-        console.log('x');
-         const json = await response.json();
-         localStorage.clear();
+        const json = await response.json();
+        console.log('Response:');
+        console.log(json);
+        localStorage.clear();
       return this.setRedirectLogin();
       }
       ).catch(e=>{
