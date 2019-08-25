@@ -11,7 +11,7 @@ export class Requests extends Component {
             <div className="requests-container-gray">
               <div className="new-requests-container">
                 <div className="requests-icon"> 
-                  <img style= {{maxWidth: "200px"}} src = {add_icon} />
+                  <img style= {{maxWidth: "200px"}} src = {add_icon} alt="Add more"/>
                 </div>
                 <div className="requests-text">
                 <p>Novi zahtjev</p>
@@ -20,7 +20,7 @@ export class Requests extends Component {
 
               <div className="new-requests-container">
                 <div className="requests-icon"> 
-                  <img style= {{maxWidth: "200px"}} src = {add_icon} />
+                  <img style= {{maxWidth: "200px"}} src = {add_icon} alt="Add more"/>
                 </div>
                 <div className="requests-text">
                 <p>Novi zahtjev</p>

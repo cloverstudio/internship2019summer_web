@@ -155,7 +155,7 @@ export default class Login extends Component {
                     <form onSubmit={this.handleSubmit}>
                     <div className="form-info">
                         
-                        <FormGroup controlId="email" bsSize="large">
+                        <FormGroup controlId="email" bssize="large">
                         <FormLabel>email</FormLabel>
                         <FormControl
                         className="border-none"
@@ -167,7 +167,7 @@ export default class Login extends Component {
                         />
                         </FormGroup>
                     
-                        <FormGroup controlId="password" bsSize="large">
+                        <FormGroup controlId="password" bssize="large">
                         <FormLabel>Lozinka</FormLabel>
                         <FormControl
                         className="border-none"
@@ -183,14 +183,14 @@ export default class Login extends Component {
                             id='rememberMe'
                             type="checkbox"
                             checked={this.state.rememberMe}
-                            onClick={this.handleChange} />
+                            onChange={this.handleChange} />
                             &nbsp;Zapamti me
                         </FormGroup>
 
                         <Button
                         className="btn-login"
                         block
-                        bsSize="large"
+                        bssize="large"
                         disabled={!this.validateForm()}
                         type="submit"
                         onClick = {this.handleSubmit}

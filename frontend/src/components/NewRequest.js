@@ -2,37 +2,11 @@ import React, { Component } from 'react';
 import SideBar from './layout/SideBar';
 import MapContainer from './MapContainer';
 import Map from './Map';
-import axios from 'axios';
 import { Form, Button, FormGroup, FormControl, FormLabel, Label, FormText } from "react-bootstrap";
 
 
 
 class NewRequest extends Component {
-  // constructor(props) {
-  //   super(props);
-
-  //   this.state = {
-  //     title: "",C
-  //     message: "",
-  //     Request_type: "",
-  //     location_latitude: "",
-  //     location_longitude: "",
-  //     address: "",
-  //     photo: "",
-
-  //   };
-
-  //   this.handleChange = this.handleChange.bind(this);
-  //   this.handleSubmit = this.handleSubmit.bind(this);
-  // }
-
-
-  // PROCITAJ ------> https://reactjs.org/docs/forms.html
-  // handleSubmit(event) {
-  //   alert('Your favorite is: ' + this.state.Request_type);
-  //   event.preventDefault();
-  // }
-
 
   async NewRequest(addNewRequest) {
     console.log(localStorage.getItem('token'));
@@ -77,7 +51,7 @@ class NewRequest extends Component {
     }
     console.log(addNewRequest);
 
-    this.NewRequest(addNewRequest);
+    // this.NewRequest(addNewRequest);
 
   }
 
@@ -110,11 +84,11 @@ class NewRequest extends Component {
               <div>
                 <p style={{ textAlign: 'center' }}>
                   Molimo vas, upišite tražene podatke kako bismo mogli zaprimiti zahtjev.
-                    </p>
+                </p>
               </div>
             </div>
 
-          
+            <form>
               <label htmlFor="name">Naslov:</label>
               <div className="input-field">
                 <input type="text" name="title" ref="title" />
@@ -122,9 +96,9 @@ class NewRequest extends Component {
 
               <label htmlFor="type">Tip zahtjeva:</label>
               <div className="input-field">
-                <select>
-                  <option value="kvar" name="kvar" ref="Request_type">Kvar</option>
-                  <option value="prijedlog" name="Request_type" ref="prijedlog">Prijedlog</option>
+                <select ref="Request_type">
+                  <option value="kvar" name="kvar">Kvar</option>
+                  <option value="prijedlog" name="prijedlog">Prijedlog</option>
                 </select>
               </div>
 
@@ -147,20 +121,19 @@ class NewRequest extends Component {
                 <Button
                   color="primary"
                   type="submit"
-                  onClick={this.onSubmit.bind(this)}
-                >
+                  onClick={this.onSubmit.bind(this)}>
                   Pošalji zahtjev
-                      </Button>{' '}
+                </Button>{' '}
 
                 <Button
                   className="outd-btn"
                   color="primary"
                   href="/Requests">
                   Poništi zahtjev
-                      </Button>{' '}
+                </Button>{' '}
 
               </div>
-            
+            </form>
 
           </div>
         </div>

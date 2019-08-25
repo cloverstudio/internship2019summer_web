@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Link} from 'react-router-dom';
+import {BrowserRouter as Redirect, Link} from 'react-router-dom';
 import moj_grad_logo from '../../assets/moj_grad_logo.svg';
 import nav_news_selected_icon from '../../assets/nav_news_selected_icon.svg';
 import nav_requests_selected_icon from '../../assets/nav_requests_selected_icon.svg'; 
@@ -84,7 +84,7 @@ export default class SideBar extends Component {
                   </NavItem>
 
                   <NavItem style= {{display: 'flex'}}>
-                      <img style= {{maxWidth: '20px'}} alt= "profile photo" src = {nav_users_selected_icon}/>
+                      <img style= {{maxWidth: '20px'}} alt= "profile" src = {nav_users_selected_icon}/>
                       <NavLink href="/Profile">
                           Profil
                       </NavLink>
@@ -93,7 +93,7 @@ export default class SideBar extends Component {
 
                 <div className="bar-logout-container">
                     <NavItem style= {{display: 'flex'}}>
-                    <img style= {{maxWidth: '20px'}} alt= "profile photo" src = {nav_users_selected_icon} /> 
+                    <img style= {{maxWidth: '20px'}} alt= "profile" src = {nav_users_selected_icon} /> 
                     <Link
                       to = "/" 
                       className="linkLogin" 
