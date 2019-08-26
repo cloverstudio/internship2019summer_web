@@ -136,7 +136,7 @@ router.put('/newUser/:id', upload.single('photo'), async (req, res) => {
     let securityCheck = await tokenFunctions.userDidNotPassSecuriityCheck(token, res);
     let imagePath = fileUploadFunctions.checkImageUpload(req.file);
     let userObj = req.body;
-    let id = req.params.id;
+    let userId = req.params.id;
 
     userObjKey = Object.keys(userObj);   //delete null properties from object
     for( let i = 0; i < userObjKey.length; i++) {
@@ -149,7 +149,7 @@ router.put('/newUser/:id', upload.single('photo'), async (req, res) => {
         return res.status(440).json(securityCheck);
     }
 
-    let data = await dbFunctions.updateUser(userObj, imagePath, id);
+    let data = await dbFunctions.updateUser(userObj, imagePath, userId);
 
     if (data.error) {
         res.json({

@@ -69,7 +69,6 @@ async function findAllUsersBy(findBy) {
 }
 
 async function userAlreadyExists(email, oib, id) {
-    
     let user = await knex('persons')
     .whereNot({ ID: id })
     .where({ email:email || null })
@@ -106,10 +105,10 @@ async function insertNewUser(firstName, lastName, email, oib, password, photoNam
 async function updateUser(userObj, imagePath, id) {
     try{
         let idCheck = await findAllUsersById(id);
-
         let user = false;
+
         if (userObj.email || userObj.oib) { // if oib or email are going to be updated, first check if they are available
-            user = await userAlreadyExists(userObj.email, userObj.oib);
+            user = await userAlreadyExists(userObj.email, userObj.oib, id);
         }
         if (imagePath) {
             userObj.image = imagePath; //add image path to user object
