@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import RequestItem from './RequestItem';
 import add_icon from '../assets/add_icon.svg';
 import SideBar from './layout/SideBar';
+import {CardDeck, Card} from 'react-bootstrap'
 
 export class Requests extends Component {
   constructor(){
@@ -20,7 +21,9 @@ export class Requests extends Component {
     console.log(localStorage.getItem('token'));
     try {
       
-      await fetch('https://intern2019dev.clover.studio/news/all', {
+      await fetch('https://intern2019dev.clover.studio/requests/myRequests', 
+      //admin 'https://intern2019dev.clover.studio/requests/all'
+      {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -29,9 +32,9 @@ export class Requests extends Component {
         method: 'GET'
       }).then(async (response) =>{
         const json = await response.json();
-        console.log(json.data.news);
+        console.log(json.data.requests);
         this.setState({
-          requests: json.data.news
+          requests: json.data.requests
         });
     })
     } catch (err) {
@@ -54,19 +57,21 @@ export class Requests extends Component {
            <SideBar />
             <div className="requests-container-gray">
               <div className="new-requests-container">
+                <Card style={{border: 'none'}}>
                 <a className="requests-icon" href="/NewRequest"> 
                   <img style= {{maxWidth: "200px"}} src = {add_icon} alt="Add more"/>
                     <div className="requests-text">
                       <p>Novi zahtjev</p>
                     </div>
                 </a>
+                </Card>
+                
               </div>
+                <ul className="collection" style={{listStyleType: 'none'}}>
+                  {RequestItems}
+                </ul>     
             </div>
-
-            <ul className="collection">
-              {RequestItems}
-            </ul>      
-        </div>
+         </div>
         )
     }
 }

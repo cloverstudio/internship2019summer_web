@@ -22,11 +22,11 @@ class NewRequest extends Component {
         body: JSON.stringify(addNewRequest)
       }).then(res => {
         res.json()
-        console.log(res.clone().json());
+        console.log(res);
       })
 
       console.log("response register new",response);
-      this.props.history.push('/NewRequest');
+      this.props.history.push('/Requests');
 
     } catch (err) {
       console.log(err)
