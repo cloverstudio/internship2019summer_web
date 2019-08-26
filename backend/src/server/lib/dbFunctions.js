@@ -68,7 +68,8 @@ async function findAllUsersBy(findBy) {
     return allUsers;
 }
 
-async function userAlreadyExists(email, oib) {
+async function userAlreadyExists(email, oib, id) {
+    
     let user = await knex('persons')
     .where({ email:email || null })
     .orWhere({ oib:oib || null });
@@ -103,6 +104,8 @@ async function insertNewUser(firstName, lastName, email, oib, password, photoNam
 
 async function updateUser(userObj, imagePath, id) {
     try{
+        let idCheck = await findAllUsersById(id);
+
         let user = false;
         if (userObj.email || userObj.oib) { // if oib or email are going to be updated, first check if they are available
             user = await userAlreadyExists(userObj.email, userObj.oib);
@@ -111,12 +114,17 @@ async function updateUser(userObj, imagePath, id) {
             userObj.image = imagePath; //add image path to user object
         }
 
-        if (!user) {    
+        if (!user && idCheck.length == 1) {    
             await knex('persons')
             .where({ ID: id })
             .update(userObj);
 
             return 'updated!';
+        } else if (idCheck.length == 0) {
+            return { 'error': {
+                'error_code': consts.responseErrorUserDetailUnknownId.error_code,
+                'error_description': consts.responseErrorUserDetailUnknownId.error_description
+            }}
         } else {
             return user;
         }

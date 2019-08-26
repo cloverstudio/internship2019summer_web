@@ -137,10 +137,10 @@ router.put('/newUser/:id', upload.single('photo'), async (req, res) => {
     let imagePath = fileUploadFunctions.checkImageUpload(req.file);
     let userObj = req.body;
     let id = req.params.id;
-
+    
     userObjKey = Object.keys(userObj);   //delete null properties from object
     for( let i = 0; i < userObjKey.length; i++) {
-        if (userObj[userObjKey[i]]) {
+        if (!userObj[userObjKey[i]]) {
             delete userObj[userObjKey[i]];
         }
     }
