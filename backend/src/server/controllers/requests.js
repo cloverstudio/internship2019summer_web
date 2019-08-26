@@ -80,7 +80,7 @@ router.get('/all', async (req,res) => {
     let securityCheck = await tokenFunction.userDidNotPassSecuriityCheck(token, res);
     let search = req.body.findBy || undefined;
 
-    if (!securityCheck && findBy) {
+    if (!securityCheck && search) {
         let allSortedRequests = await dbFunction.findAllRequestsSortedByRequestType(search);
         res.json({ 'data': {
             'requests': allSortedRequests
