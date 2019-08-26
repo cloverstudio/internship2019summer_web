@@ -181,6 +181,14 @@ async function findAllRequestsMadeByWithSearchTerm(id, findBy) {
     return allRequests;
 }
 
+async function findAllRequestsSortedByRequestType(findBy) {
+    let allRequests = await knex('requests')
+    .where('Request_type', 'like', `%${findBy}%`)
+    .orderBy([{ column: 'updatedAt', order: 'desc' }, { column: 'createdAt', order: 'desc' }]);
+
+    return allRequests;
+}
+
 async function addNews(newsObj, imagePath, filePath, userId) {
     await knex('news')
     .insert({
@@ -240,5 +248,6 @@ module.exports = {
     addNews,
     updateNews,
     getAllNews,
-    getAllRequests
+    getAllRequests,
+    findAllRequestsSortedByRequestType
 }

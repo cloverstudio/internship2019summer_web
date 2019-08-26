@@ -75,11 +75,18 @@ router.get('/myRequests/:findBy?', async (req,res) => {
     }
 })
 
-router.get('/all', async (req,res) => {
+router.get('/all/:search?', async (req,res) => {
     let token = req.headers.token;
     let securityCheck = await tokenFunction.userDidNotPassSecuriityCheck(token, res);
+    let findBy = req.params.search;
 
-    if (!securityCheck) {
+    if (!securityCheck && findBy) {
+        let allSortedRequests = await dbFunction.findAllRequestsSortedByRequestType(findBy);
+        res.json({ 'data': {
+            'requests': allSortedRequests
+        }})
+    }
+    else if (!securityCheck) {
         let allRequests = await dbFunction.getAllRequests();
         res.json({ 'data': {
             'requests': allRequests
