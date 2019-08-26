@@ -50,11 +50,11 @@ router.put('/edit/:id', upload.single('photo'), async (req,res) => {
     }
 })
 
-router.get('/myRequests/:findBy?', async (req,res) => {
+router.get('/myRequests', async (req,res) => {
     let token = req.headers.token
     let userId = await dbFunction.findUserID(jwt_decode(token).email);
     let isLoggedIn = await tokenFunction.checkTokenAvailability(token);
-    let searchTerm = req.params.findBy || undefined;
+    let searchTerm = req.body.findBy || undefined;
     if(!isLoggedIn) {
         res.status(440).json({ 'data': {
             'error': {
@@ -75,13 +75,13 @@ router.get('/myRequests/:findBy?', async (req,res) => {
     }
 })
 
-router.get('/all/:search?', async (req,res) => {
+router.get('/all', async (req,res) => {
     let token = req.headers.token;
     let securityCheck = await tokenFunction.userDidNotPassSecuriityCheck(token, res);
-    let findBy = req.params.search;
+    let search = req.body.findBy || undefined;
 
     if (!securityCheck && findBy) {
-        let allSortedRequests = await dbFunction.findAllRequestsSortedByRequestType(findBy);
+        let allSortedRequests = await dbFunction.findAllRequestsSortedByRequestType(search);
         res.json({ 'data': {
             'requests': allSortedRequests
         }})
