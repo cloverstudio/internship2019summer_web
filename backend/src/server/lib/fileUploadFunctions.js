@@ -6,6 +6,7 @@ module.exports = {
         if (fileCheck) {
             image = file.filename;
         }
+        console.log(file)
         return image;
     },
     allFilesCheck(files) {
