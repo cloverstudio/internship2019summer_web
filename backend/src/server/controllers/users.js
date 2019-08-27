@@ -44,15 +44,16 @@ router.post('/register', async (req, res) => {
     }       
  });
 
- router.post('/newUser', async (req, res) => {
+ router.post('/newUser', upload.single('photo'), async (req, res) => {
     let user = req.body;
+    let imagePath = fileUploadFunctions.checkImageUpload(req.file);
     let securityCheck = await tokenFunctions.userDidNotPassSecuriityCheck(req.headers.token, res);
 
     if (securityCheck) {
         return res.status(440).json(securityCheck);
     }
 
-    let data = await dbFunctions.insertNewUser(user.firstName, user.lastName, user.email, user.oib, user.password);
+    let data = await dbFunctions.insertNewUser(user.firstName, user.lastName, user.email, user.oib, user.password, imagePath);
 
     // if email/oib are taken
     if (data.error) {
