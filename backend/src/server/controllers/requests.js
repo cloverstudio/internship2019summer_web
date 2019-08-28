@@ -54,7 +54,7 @@ router.get('/myRequests', async (req,res) => {
     let token = req.headers.token
     let userId = await dbFunction.findUserID(jwt_decode(token).email);
     let isLoggedIn = await tokenFunction.checkTokenAvailability(token);
-    let searchTerm = req.body.findBy || undefined;
+    let searchTerm = req.query.findBy || undefined;
     if(!isLoggedIn) {
         res.status(440).json({ 'data': {
             'error': {
@@ -78,7 +78,7 @@ router.get('/myRequests', async (req,res) => {
 router.get('/all', async (req,res) => {
     let token = req.headers.token;
     let securityCheck = await tokenFunction.userDidNotPassSecuriityCheck(token, res);
-    let search = req.body.findBy || undefined;
+    let search = req.query.findBy || undefined;
 
     if (!securityCheck && search) {
         let allSortedRequests = await dbFunction.findAllRequestsSortedByRequestType(search);
