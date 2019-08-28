@@ -13,6 +13,7 @@ router.post('/new', upload.any(), async (req,res) => {
     let userId = await dbFunctions.findUserID(jwt_decode(token).email);
     let fileName = undefined;
     let imageName = undefined;
+    
     let getFileNames = fileUploadFunctions.allFilesCheck(req.files);
 
     if (getFileNames.images) { //save all images into imageName
@@ -21,6 +22,7 @@ router.post('/new', upload.any(), async (req,res) => {
     if (getFileNames.files) { ///save all other files into fileName
         fileName = JSON.stringify(getFileNames.files)
     }
+
     if (!securityCheck) { 
         await dbFunctions.addNews(req.body, imageName, fileName, userId);
         res.json({ 'data': {
