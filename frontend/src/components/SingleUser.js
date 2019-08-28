@@ -21,11 +21,7 @@ export default class SingleUser extends Component {
         })
         const editUser = JSON.stringify(this.props.user);
           localStorage.setItem('editUser', editUser);
-    }
-    
-
-
-    
+    } 
 
     render(){
         if (this.state.redirectToEdit) {

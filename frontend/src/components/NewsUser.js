@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import SideBar from './SideBar';
-import { Dropdown } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import no_content_icon from '../assets/no_content_icon.svg';
-import AddNewsButton from './layout/AddNewsButton';
-import NewsList from './NewsList';
+import NewsListUser from './NewsListUser';
+import OpenNews from './OpenNews';
 
 
 
 
-export default class News extends Component {
+export default class NewsUser extends Component {
 
     constructor(props) {
         super(props);
@@ -20,6 +19,8 @@ export default class News extends Component {
         }
     }
 
+
+    
 
     componentWillMount() {
         if (!localStorage.getItem('token')) {
@@ -48,6 +49,11 @@ export default class News extends Component {
         })
     }
 
+    redirectToOpenNews = () =>{
+        console.log('click');
+        
+   }
+
 
     render() {
 
@@ -56,23 +62,18 @@ export default class News extends Component {
         return (
             <div className="main-container" style={{ display: 'flex' }} >
                 <SideBar />
-                <div className="news-container" style={{ background: '#e7e7e7', maxWidth:'90%' }}>
-                    <Dropdown >
-                        <Dropdown.Toggle variant="success" id="dropdown-basic" style={{ marginLeft: '20px', color: '#0076ff', background:'white' }}>
-                            Sve
-                        </Dropdown.Toggle>
+                <div className="news-container"
+                style={{ background: '#e7e7e7', width:'90%', display:'flex' }}>{
+                       
+                <NewsListUser
+                newsList = {this.state.newsList}
+                />
 
-                        <Dropdown.Menu>
-                            <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
-                    <div className='no-dropdown'>
-                    <AddNewsButton />
-                    <NewsList
-                    newsList = {this.state.newsList} />
-                    </div>
+                }
+                
+                     
+                     
+                    
                 </div>
             </div>
         )

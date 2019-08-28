@@ -1,6 +1,7 @@
 .create-news{
     max-width: 60%;
     margin: 20px;
+    background: white;
 }
 
 .heading-create-news{
@@ -33,7 +34,6 @@
 }
 
 .location-form{
-    padding-top: 30px; 
     height: 300px;
     width: 40%;
     display: flex;
@@ -50,24 +50,81 @@
     position: relative;
 }
 
-/*
-.add-news-card{
-    background:"white";
-    height:"400px";
-    width:"300px";
-    color: '#0076ff';
-    justify-content:'center';
-    margin:'20px';
+//NewsContainer
+
+.no-dropdown{
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.title{
     font-family: $american-typewriter-bold;
-    display: inline-flex;
+    font-size: 1.3em;
+    color: black;
 }
 
-.add-news-image{
-    width:"50px";
-    height:"50px";
-    align-self:'center';
+.text{
+    font-family: $avenir-book;
+    color: black;
+    font-size: 0.9em;
+    height: 220px;
 }
-*/
 
+.author-date{
+    display: flex;
+    margin-top: 10px;
+}
 
+.author{
+    font-family: $avenir-book;
+    color: black;
+    font-size: 0.7em;
+    width: 49%;
+}
 
+.date{
+    font-family: $avenir-book;
+    color: black;
+    font-size: 0.7em;
+    width: 49%;
+    text-align: right;
+}
+
+//opennews.js
+.open-title{
+    font-family: $american-typewriter-bold;
+    font-size: 1.6em;
+}
+.open-text{
+    font-family: $avenir-book;
+}
+
+.open-author-date{
+    display: flex;
+    margin-top: 10px;
+    font-family: $avenir-book;
+    margin-bottom: 0;
+    margin-top: 90px;
+}
+
+.open-author{
+    color: black;
+    font-size: 0.7em;
+    width: 49%;
+}
+
+.open-date{
+    color: black;
+    font-size: 0.7em;
+    width: 49%;
+    text-align: right;
+}
+
+//addedDocument.js
+
+.added-document{
+    background: #e7e7e7;
+    width: 100px;
+    font-family: $avenir-book;
+    display: flex;
+}

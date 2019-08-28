@@ -1,17 +1,13 @@
-import React from 'react'
+import React, { Component } from 'react'
+import {FormGroup, FormControl, FormLabel, Button, Image} from 'react-bootstrap';
 
-const ProfileInfo = ( {name, email, oib, img} ) => {
-    
-    return(
-        <div>
-            <img src={img} alt=""/>
-            <h2>{name}</h2>
-            <p>{email}</p>
-             <p>{oib}</p>
-            
-        </div>
-    );
-      
+export default class ProfileInfo extends Component {
+    render() {
+        return (
+            <div>
+                
+                
+            </div>
+        )
+    }
 }
-
-export default ProfileInfo;

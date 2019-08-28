@@ -1,37 +1,48 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { Card, Image } from 'react-bootstrap';
 
 
-export class NewsContainer extends Component {
+
+export default class NewsContainer extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-
+            linkToPhoto: 'https://intern2019dev.clover.studio/uploads/photos/',
+            redirectToEditNews: false
         }
     }
 
+    redirectToEditNews = () => {
+        this.setState({
+            redirectToEditNews: true
+        })
+    }
+
+
+
     render() {
+        if (this.state.redirectToEditNews) {
+            return <Redirect to='/News/:openNews' />
+          }
+          console.log(this.props.newsList)
+
         return (
-            <div>
-                {
-                    this.props.newsData.map(news => {
-                        return (
-                            <Card>
-                                <Image src={news.Images} />
-                                <p class="title">{news.Title}</p>
-                                <p class="text">{news.Message}</p>
-                                <p class="author">Autor:{news.firstName}{this.props.newsData.lastName}</p>
-                                <p class="date">{news.CreatedAt}</p>
-                            </Card>
-                        )
-                    }
-                    )
-                }
-            </div>
+
+
+            <Card className="news-card"
+                style={{ background: "white", height: "400px ", width: "300px", color: '#0076ff', margin: '20px' }}
+                onClick={this.redirectToEditNews}>
+                <Image src={this.props.newsList.Images} style={{ height: '150px', width: '100%' }} />
+                <p className="title">{this.props.newsList.Title}</p>
+                <p className="text">{this.props.newsList.Message}</p>
+                <div className='author-date' style={{ display: 'flex' }}>
+                    <p className="author">Autor: {this.props.newsList.firstName} {this.props.newsList.lastName}</p>
+                    <p className="date">{this.props.newsList.CreatedAt}</p>
+                </div>
+            </Card>
+
         )
     }
 }
-
-export default NewsContainer
-

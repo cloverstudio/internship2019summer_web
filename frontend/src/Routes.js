@@ -11,7 +11,9 @@ import MiddleScreen from './components/MiddleScreen';
 import EditUser from './components/EditUser';
 import News from './components/News';
 import CreateNews from './components/CreateNews';
-import NoNews from './components/NoNews'
+import NoNews from './components/NoNews';
+import NewsUser from './components/NewsUser';
+import OpenNews from './components/OpenNews';
 
 
 export default class Routes extends Component{
@@ -24,8 +26,10 @@ export default class Routes extends Component{
                     <Route exact path="/MainScreen"  component={MainScreen}/>
                     <Route exact path="/MiddleScreen"  component={MiddleScreen}/>
                     <Route exact path="/News" component={News}/>
+                    <Route exact path="/NewsUser" component={NewsUser}/>
                     <Route exact path="/noNews" component={NoNews}/>
                     <Route exact path="/News/:createNews" component={CreateNews}/>
+                    <Route exact path="/NewsUser/:openNews" component={OpenNews}/>
                     <Route exact path="/Requests"  component={Requests}/>
                     <Route exact path="/Users"  component={Users}/>
                     <Route exact path="/Profile"  component={Profile}/>

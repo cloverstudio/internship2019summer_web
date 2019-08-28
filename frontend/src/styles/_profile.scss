@@ -1,0 +1,26 @@
+.profile-container{
+    background: white;
+    display: flex;
+    align-content: center;
+    margin-top: '10px';
+}
+
+.change-password{
+    width: 30%;
+    background: white;
+    height: 500px;
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+
+.heading-password-change{
+    padding-top: 20px;
+    font-family: $american-typewriter-bold;
+}
+
+.change-password > form {
+    width: 90%;
+    align-self: center;
+    font-family: $avenir-book;
+}

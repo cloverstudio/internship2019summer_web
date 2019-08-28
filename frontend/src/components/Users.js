@@ -31,6 +31,12 @@ export class Users extends Component {
         }
     }
 
+    componentDidCatch(json){
+        if(json.data.error.error_code == 1006){
+            return <Redirect to ='/'/>
+          }
+    }
+
 
     setRedirectAddNewUser = () => {
         this.setState({
