@@ -13,7 +13,6 @@ module.exports = {
             images: [],
             files: []
         }
-        console.log(files.length)
         for (let i = 0; i < files.length; i++) {
             if (files[i].mimetype === 'image/png' || files[i].mimetype === 'image/jpg' || files[i].mimetype === 'image/jpeg') {
                 data.images.push(Date.now() + files[i].originalname);
