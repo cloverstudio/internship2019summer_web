@@ -13,12 +13,13 @@ module.exports = {
             images: [],
             files: []
         }
-
+        console.log(files.length)
         for (let i = 0; i < files.length; i++) {
-            if (files[i].mimetype === 'image/png' || 'image/jpg' || 'image/jpeg') {
+            if (files[i].mimetype === 'image/png' || files[i].mimetype === 'image/jpg' || files[i].mimetype === 'image/jpeg') {
                 data.images.push(Date.now() + files[i].originalname);
             }
-            else if (files[i].mimetype === 'application/pdf' || 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+            else if (files[i].mimetype === 'application/pdf' || files[i].mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+
                 data.files.push(Date.now() + files[i].originalname);
             }
             else {
