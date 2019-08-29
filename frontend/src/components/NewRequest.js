@@ -107,15 +107,18 @@ class NewRequest extends Component {
                 <input type="file" name="photo" id="exampleFile" ref="photo" />
               </div>
 
+              <label htmlFor="city">Poruka:</label>
+              <div className="input-field">
+                <input type="text" name="message" ref="message" />
+              </div>
+
+
               <label htmlFor="address">Upišite lokaciju:</label>
               <div className="input-field">
                 <input type="text" name="address" ref="address" />
               </div>
 
-              <label htmlFor="city">Poruka:</label>
-              <div className="input-field">
-                <input type="text" name="message" ref="message" />
-              </div>
+              <MapContainer/>
 
               <div className="two-btns-request">
                 <Button

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {Link} from 'react-router-dom';
 import {CardDeck, Card, Button} from 'react-bootstrap';
 import SideBar from './layout/SideBar';
+import MapContainer from './MapContainer';
 
 export class RequestEdit extends Component {
   constructor(props){
@@ -73,15 +74,17 @@ export class RequestEdit extends Component {
                 <input type="file" name="photo" id="exampleFile" ref="photo" defaultValue={this.state.photo}/>
               </div>
 
+              <label htmlFor="city">Poruka:</label>
+              <div className="input-field">
+                <input type="text" name="message" ref="message" defaultValue={this.state.message}/>
+              </div>
+
               <label htmlFor="address">Upišite lokaciju:</label>
               <div className="input-field">
                 <input type="text" name="address" ref="address"  defaultValue={this.state.Address}/>
               </div>
 
-              <label htmlFor="city">Poruka:</label>
-              <div className="input-field">
-                <input type="text" name="message" ref="message" defaultValue={this.state.message}/>
-              </div>
+             <MapContainer/>
 
               <div className="two-btns-request">
                 <Button
