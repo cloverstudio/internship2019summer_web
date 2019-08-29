@@ -105,8 +105,6 @@ export default class Register extends Component {
       return <Redirect to='/MiddleScreen' />
     }
   }
- 
-
 
   validateForm() {
     return this.state.email.length > 0 && this.state.password.length > 0;

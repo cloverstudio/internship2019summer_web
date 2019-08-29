@@ -34,8 +34,6 @@ class NewRequest extends Component {
 
   }
 
-  
-
   onSubmit(e) {
     console.log(this.refs.photo.value);
     e.preventDefault();

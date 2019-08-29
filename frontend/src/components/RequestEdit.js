@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom';
-import {CardDeck, Card, Button} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 import SideBar from './layout/SideBar';
 import MapContainer from './MapContainer';
 
@@ -18,25 +17,50 @@ export class RequestEdit extends Component {
       location_longitude: editItem.location_longitude,        
       message: editItem.message,
       photo: editItem.photo,
-      // item: JSON.parse(localStorage.getItem(this.props.item))
     }
   }
 
-  componentWillMount(){
-    this.getMeetupDetails();
+
+  handleChange = event => {
+    const target = event.target;
+    console.log('target',target);
+    this.setState({
+      [event.target.id]: event.target.value
+    });
   }
-
-  getMeetupDetails(){
-    // var retrievedObject = localStorage.getItem(this.props.item);
-
-    // console.log('retrievedObject: ', JSON.parse(retrievedObject));
-
-    // console.log('retrievedObject2: ', this.props.location.state.item);
-
+ 
+  handleSubmit = async (event) => {
+    console.log('submit started');
+    event.preventDefault();
+    await fetch('https://intern2019dev.clover.studio/requests/edit/<id>',  {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }, method: 'PUT',
+      body: JSON.stringify({
+        Title: this.props.location.state.item.Title,
+        Request_type: this.props.location.state.item.Request_type,
+        Address: this.props.location.state.item.Address,
+        location_latitude: this.props.location.state.item.location_latitude, 
+        location_longitude: this.props.location.state.item.location_longitude,        
+        message: this.props.location.state.item.message,
+        photo: this.props.location.state.item.photo,
+        crossDomain : true,
+        xhrFields: {
+          withCredentials: true
   }
+      })
+    }
+    ).then(async (response)  => {
+       const json = await response.json();
+    console.log(json);
+    }
+    ).catch(e=>{
+      console.log('err',e);
+    })
+    }
 
-
-
+  	
 
   render(){
     return (
@@ -58,12 +82,22 @@ export class RequestEdit extends Component {
           <form>
               <label htmlFor="name">Naslov:</label>
               <div className="input-field">
-                <input type="text" name="title" ref="title" defaultValue={this.state.Title}/>
+                <input 
+                  type="text" 
+                  name="title" 
+                  ref="title" 
+                  defaultValue={this.state.Title}
+                  onChange={this.handleChange}
+                />
               </div>
 
               <label htmlFor="type">Tip zahtjeva:</label>
               <div className="input-field">
-                <select ref="Request_type" defaultValue={this.state.Request_type} >
+                <select 
+                  ref="Request_type" 
+                  defaultValue={this.state.Request_type} 
+                  onChange={this.handleChange}
+                >
                   <option value="kvar" name="kvar">Kvar</option>
                   <option value="prijedlog" name="prijedlog">Prijedlog</option>
                 </select>
@@ -71,17 +105,36 @@ export class RequestEdit extends Component {
 
               <label htmlFor="photo" action="intern2019.def.clover.studio/requests/new" method="POST" encType="multipart/form-data">Datoteka:</label>
               <div className="input-field">
-                <input type="file" name="photo" id="exampleFile" ref="photo" defaultValue={this.state.photo}/>
+                <input 
+                  type="file" 
+                  name="photo" 
+                  id="exampleFile"
+                  ref="photo" 
+                  defaultValue={this.state.photo}
+                  onChange={this.handleChange}
+                />
               </div>
 
               <label htmlFor="city">Poruka:</label>
-              <div className="input-field">
-                <input type="text" name="message" ref="message" defaultValue={this.state.message}/>
+              <div className="input-field" key={this.state.message}>
+                <input 
+                  type="text"
+                  name="message" 
+                  ref="message" 
+                  defaultValue={this.state.message || ''}
+                  onChange={this.handleChange}
+                />
               </div>
 
               <label htmlFor="address">Upišite lokaciju:</label>
               <div className="input-field">
-                <input type="text" name="address" ref="address"  defaultValue={this.state.Address}/>
+                <input 
+                  type="text" 
+                  name="address" 
+                  ref="address"  
+                  defaultValue={this.state.Address}
+                  onChange={this.handleChange}
+                />
               </div>
 
              <MapContainer/>
@@ -90,7 +143,7 @@ export class RequestEdit extends Component {
                 <Button
                   color="primary"
                   type="submit"
-                  // onClick={this.onSubmit.bind(this)}
+                  onClick = {this.handleSubmit}
                   >
                   Spremi promjene
                 </Button>{' '}
