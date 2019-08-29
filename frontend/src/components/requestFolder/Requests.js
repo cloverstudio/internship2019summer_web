@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import RequestItem from './RequestItem';
-import add_icon from '../assets/add_icon.svg';
-import SideBar from './layout/SideBar';
+import add_icon from '../../assets/add_icon.svg';
+import SideBar from '../layout/SideBar';
 import { CardDeck, Card } from 'react-bootstrap'
 import { throwStatement } from '@babel/types';
 

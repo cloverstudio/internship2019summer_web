@@ -7,13 +7,13 @@ import Users from './components/Users';
 import Profile from './components/Profile';
 import AddNewUser from './components/AddNewUser';
 import MiddleScreen from './components/MiddleScreen';
-import NoNewRequests from './components/NoNewRequests';
-import NewRequest from './components/NewRequest';
-import Requests from './components/Requests';
+import NoNewRequests from './components/requestFolder/NoNewRequests';
+import NewRequest from './components/requestFolder/NewRequest';
+import Requests from './components/requestFolder/Requests';
 import MapContainer from './components/MapContainer';
 import Map from './components/Map';
 import Home from './components/Home';
-import RequestEdit from './components/RequestEdit';
+import RequestEdit from './components/requestFolder/RequestEdit';
 
 
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {Button} from 'react-bootstrap';
-import SideBar from './layout/SideBar';
-import MapContainer from './MapContainer';
+import SideBar from '../layout/SideBar';
+import MapContainer from '../MapContainer';
 
 export class RequestEdit extends Component {
   constructor(props){

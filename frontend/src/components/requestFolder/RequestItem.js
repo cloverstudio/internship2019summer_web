@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Link, Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import {CardDeck, Card} from 'react-bootstrap'
 
 
@@ -12,7 +12,6 @@ export class RequestItem extends Component {
     }
   }
 
-
   setRedirectToDetails = (e) => {
     e.preventDefault();
     this.setState({
@@ -20,9 +19,7 @@ export class RequestItem extends Component {
     });
 } 
 
-  
-
-  render(){
+render(){
     if (this.state.redirectDetails) {
       return <Redirect to={{
         pathname:`/Requests/${this.state.item.ID}`,

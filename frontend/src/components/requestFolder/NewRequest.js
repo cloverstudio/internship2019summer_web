@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import SideBar from './layout/SideBar';
-import MapContainer from './MapContainer';
-import Map from './Map';
-import { Form, Button, FormGroup, FormControl, FormLabel, Label, FormText } from "react-bootstrap";
+import SideBar from '../layout/SideBar';
+import MapContainer from '../MapContainer';
+import {  Button } from "react-bootstrap";
 
 
 
@@ -142,7 +141,6 @@ class NewRequest extends Component {
     )
   }
 }
-
 
 export default NewRequest;
 
