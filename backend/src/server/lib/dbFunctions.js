@@ -73,9 +73,9 @@ async function userAlreadyExists(email, oib, id) {
 
     if (id) {
         user = await knex('persons')
-        .whereNot({ ID: id })
-        .andWhere({ email:email || null })
-        .orWhere({ oib:oib || null });
+        .where({ email:email || null })
+        .orWhere({ oib:oib || null })
+        .andWhereNot({ ID: id })
     } else {
         user = await knex('persons')
         .where({ email:email || null })
