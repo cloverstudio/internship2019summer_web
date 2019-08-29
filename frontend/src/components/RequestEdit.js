@@ -6,15 +6,18 @@ import SideBar from './layout/SideBar';
 export class RequestEdit extends Component {
   constructor(props){
     super(props);
+    let editItem = this.props.location.state.item;
+    console.log('props:', editItem);
+    console.log(editItem.Address);
     this.state = {
-      // Title: this.refs.title.value,
-      // Request_type: this.refs.Request_type.value,
-      // Address: this.refs.address.value,
-      // location_latitude: this.refs.location_latitude.value, 
-      // location_longitude: this.refs.location_longitude.value,        
-      // message: this.refs.message.value,
-      // photo: this.refs.photo.value,
-      item: JSON.parse(localStorage.getItem(this.props.item))
+      Title: editItem.Title,
+      Request_type: editItem.Request_type,
+      Address: editItem.Address,
+      location_latitude: editItem.location_latitude, 
+      location_longitude: editItem.location_longitude,        
+      message: editItem.message,
+      photo: editItem.photo,
+      // item: JSON.parse(localStorage.getItem(this.props.item))
     }
   }
 
@@ -23,11 +26,11 @@ export class RequestEdit extends Component {
   }
 
   getMeetupDetails(){
-  //   var retrievedObject = localStorage.getItem(this.props.item);
+    // var retrievedObject = localStorage.getItem(this.props.item);
 
-  // console.log('retrievedObject: ', JSON.parse(retrievedObject));
+    // console.log('retrievedObject: ', JSON.parse(retrievedObject));
 
-  // console.log(this.props.item);
+    // console.log('retrievedObject2: ', this.props.location.state.item);
 
   }
 
@@ -35,8 +38,6 @@ export class RequestEdit extends Component {
 
 
   render(){
-    let editRequest = JSON.parse(localStorage.getItem('editRequest'));
-    console.log(editRequest);
     return (
       
 
@@ -56,12 +57,12 @@ export class RequestEdit extends Component {
           <form>
               <label htmlFor="name">Naslov:</label>
               <div className="input-field">
-                <input type="text" name="title" ref="title" />
+                <input type="text" name="title" ref="title" defaultValue={this.state.Title}/>
               </div>
 
               <label htmlFor="type">Tip zahtjeva:</label>
               <div className="input-field">
-                <select ref="Request_type">
+                <select ref="Request_type" defaultValue={this.state.Request_type} >
                   <option value="kvar" name="kvar">Kvar</option>
                   <option value="prijedlog" name="prijedlog">Prijedlog</option>
                 </select>
@@ -69,17 +70,17 @@ export class RequestEdit extends Component {
 
               <label htmlFor="photo" action="intern2019.def.clover.studio/requests/new" method="POST" encType="multipart/form-data">Datoteka:</label>
               <div className="input-field">
-                <input type="file" name="photo" id="exampleFile" ref="photo" />
+                <input type="file" name="photo" id="exampleFile" ref="photo" defaultValue={this.state.photo}/>
               </div>
 
               <label htmlFor="address">Upišite lokaciju:</label>
               <div className="input-field">
-                <input type="text" name="address" ref="address" />
+                <input type="text" name="address" ref="address"  defaultValue={this.state.Address}/>
               </div>
 
               <label htmlFor="city">Poruka:</label>
               <div className="input-field">
-                <input type="text" name="message" ref="message" />
+                <input type="text" name="message" ref="message" defaultValue={this.state.message}/>
               </div>
 
               <div className="two-btns-request">

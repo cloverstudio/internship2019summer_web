@@ -18,14 +18,15 @@ export class RequestItem extends Component {
     this.setState({
         redirectDetails: true
     });
-    localStorage.setItem('editRequest', this.props.item);
-  }  
+} 
+
+  
 
   render(){
     if (this.state.redirectDetails) {
       return <Redirect to={{
         pathname:`/Requests/${this.state.item.ID}`,
-        state: {item: "bezveze"}
+        state: {item: this.props.item}
       }}/>
     }
 
