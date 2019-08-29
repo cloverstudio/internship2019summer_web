@@ -21,7 +21,6 @@ export class Requests extends Component {
 
 
   async getRequests() {
-    console.log(localStorage.getItem('token'));
     try {
 
       await fetch('https://intern2019dev.clover.studio/requests/myRequests',

@@ -3,16 +3,40 @@ import {Link} from 'react-router-dom';
 import {CardDeck, Card, Button} from 'react-bootstrap';
 import SideBar from './layout/SideBar';
 
-export class RequestDetails extends Component {
+export class RequestEdit extends Component {
   constructor(props){
     super(props);
     this.state = {
-      details: props.item
+      // Title: this.refs.title.value,
+      // Request_type: this.refs.Request_type.value,
+      // Address: this.refs.address.value,
+      // location_latitude: this.refs.location_latitude.value, 
+      // location_longitude: this.refs.location_longitude.value,        
+      // message: this.refs.message.value,
+      // photo: this.refs.photo.value,
+      item: JSON.parse(localStorage.getItem(this.props.item))
     }
   }
 
+  componentWillMount(){
+    this.getMeetupDetails();
+  }
+
+  getMeetupDetails(){
+  //   var retrievedObject = localStorage.getItem(this.props.item);
+
+  // console.log('retrievedObject: ', JSON.parse(retrievedObject));
+
+  // console.log(this.props.item);
+
+  }
+
+
+
+
   render(){
-    console.log('details')
+    let editRequest = JSON.parse(localStorage.getItem('editRequest'));
+    console.log(editRequest);
     return (
       
 
@@ -27,7 +51,7 @@ export class RequestDetails extends Component {
             Vrati se nazad
          </Button>{' '}
 
-          <h1>Detalji</h1>
+          <h1>Izmjena zahtjeva</h1>
           
           <form>
               <label htmlFor="name">Naslov:</label>
@@ -64,14 +88,7 @@ export class RequestDetails extends Component {
                   type="submit"
                   // onClick={this.onSubmit.bind(this)}
                   >
-                  Pošalji zahtjev
-                </Button>{' '}
-
-                <Button
-                  className="outd-btn"
-                  color="primary"
-                  href="/Requests">
-                  Poništi zahtjev
+                  Spremi promjene
                 </Button>{' '}
 
               </div>
@@ -85,4 +102,4 @@ export class RequestDetails extends Component {
 }
 
 
-export default RequestDetails;
+export default RequestEdit;

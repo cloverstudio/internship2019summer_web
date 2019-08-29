@@ -8,19 +8,27 @@ export class RequestItem extends Component {
     super(props);
     this.state = {
       item: props.item,
-      RedirectDetails: false
+      redirectDetails: false
     }
   }
 
-  setRedirectDetails = () => {
+
+  setRedirectToDetails = (e) => {
+    e.preventDefault();
     this.setState({
-      RedirectDetails: true,
-      state: { items: this.props.item },
-  
-    })
+        redirectDetails: true
+    });
+    localStorage.setItem('editRequest', this.props.item);
   }  
 
   render(){
+    if (this.state.redirectDetails) {
+      return <Redirect to={{
+        pathname:`/Requests/${this.state.item.ID}`,
+        state: {item: "bezveze"}
+      }}/>
+    }
+
     return (
       <li className="collection-item">
         <CardDeck>
@@ -29,17 +37,14 @@ export class RequestItem extends Component {
             <Card.Body>
               <Card.Title> 
             
-              {/* <Redirect to={{
-                  pathname: `/Requests/${this.state.item.ID}`,
-                  state: { items: this.props.item }
-                }}></Redirect> */}
+            
+                <div onClick={this.setRedirectToDetails}>
+                  <a href="#">
+                    {this.state.item.Title}
+                  </a> 
+  
+                </div>
                 
-                <Link 
-                  to={`/Requests/${this.state.item.ID}`}
-                  onClick={this.setRedirectDetails}
-                  >
-                {this.state.item.Title}</Link> 
-
               </Card.Title>
               <Card.Text>
                 {this.state.item.message}
