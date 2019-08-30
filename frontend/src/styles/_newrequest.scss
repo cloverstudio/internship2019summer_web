@@ -35,15 +35,18 @@
 
 .btn-back {
     background: #e7e7e7;
-    color: black;
+    font-size: 19px;
+    color: #0076ff;
     margin: 10px;
-    padding: 5px;
+    padding-left: 26px;
     border: none;
-    
-        background-image:url("../assets/back_icon.svg");
-        background-repeat:no-repeat;
-      
+    background-image: url(/static/media/back_icon.34d55556.svg);
+    background-repeat: no-repeat;
+    background-position: left center;
+    border-radius: 6px;
 }
+      
+
 
 .border-none {
     border-top: none;

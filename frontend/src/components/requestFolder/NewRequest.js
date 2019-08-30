@@ -5,8 +5,6 @@ import {  Button } from "react-bootstrap";
 import back_icon from '../../assets/back_icon.svg';
 
 
-
-
 class NewRequest extends Component {
 
   async NewRequest(addNewRequest) {
