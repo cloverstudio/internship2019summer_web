@@ -71,7 +71,7 @@ export default class SideBar extends Component {
 
                   <NavItem style= {{display: 'flex', marginBottom: '20px'}}>
                       <img style= {{maxWidth: '20px'}} alt= "request icon" src = {nav_requests_selected_icon} />
-                      <NavLink href="/NoNewRequests">
+                      <NavLink href="/Requests">
                           Zahtjevi
                       </NavLink>
                   </NavItem>
