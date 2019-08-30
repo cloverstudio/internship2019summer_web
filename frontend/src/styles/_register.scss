@@ -1,0 +1,51 @@
+@media all and (min-width: 480px) {
+    .register {
+      padding: 20px;
+    }
+  
+    .register form {
+      margin: 0 auto;
+      max-width: 320px;
+    }
+  } 
+
+.gray-container {
+  background-color: #e7e7e7;
+  padding: 20px;  
+}
+
+.white-container {
+  border-radius: 5%;
+  padding: 20px;
+  background-color: white;
+  max-width: 530px;
+  margin: auto;
+}
+
+Button{
+    font-weight: bold;
+    color: white;
+    background: rgb(16,65,160);
+    background: linear-gradient(90deg, rgba(16,65,160,1) 0%, rgba(17,93,185,1) 35%, rgba(13,122,214,1) 100%);
+    display: inline-block;
+    max-width: 150px;
+    margin: auto;
+  }
+
+.form-info {
+  margin: 20px;
+}
+
+.name-form {
+  margin: 30px;
+}
+
+.password-container {
+  position: relative;
+}
+
+.password-icon {
+  position: absolute;
+  right: 5px;
+  top: 9px;
+}

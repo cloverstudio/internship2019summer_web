@@ -1,0 +1,41 @@
+
+.requests-container-gray {
+  background: #E7E7E7; 
+  width: 100%;
+}
+
+
+.new-requests-container {
+ 
+  display: inline-block;
+  background-color: white;
+  margin: 30px;
+  padding: 40px 70px;
+
+}
+
+.requests-text {
+
+  color: #0076ff;
+  font-size: 20px;
+  text-align: center;
+  padding-top: 32px;
+  font-weight: 700;
+
+}
+
+.filter{
+  width: 340px;
+  font-size: 30px;
+  margin-left: 30px;
+  margin-top: 10px;
+  color: #0076ff;
+  background-color: white;
+  border: none;
+}
+
+ul li {
+  margin: 20px;
+  display: -webkit-box;
+}
+

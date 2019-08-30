@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
-import '../styles/Login.scss';
 import Footer from './layout/Footer';
 import Header from './layout/Header';
-import {BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, Link, Redirect} from 'react-router-dom';
 import axios from 'axios';
-/* get implementacija, validacija uvjeti (duljina usernamea, passworda, provjera emaila kako napravit) */
+import md5 from 'md5';
+import consts from '../lib/const';
 
 
 export default class Login extends Component {
@@ -14,67 +14,133 @@ export default class Login extends Component {
             this.state = {
             email: "",
             password: "",
-            redirect: false,
-            error: ''
+            redirectMainScreen: false,
+            redirectRegister: false,
+            error: '',
+            rememberMe: false,
+            token: "",
+            user: {
+              id: 2323,
+              name: 'djuro'
+            },
         };
-    }
+        
+    }    
 
-    setRedirect = () => {
+     // Local Storage
+  handleFormSubmit = () => {
+    const { user, rememberMe, token } = this.state;
+    localStorage.setItem('rememberMe', rememberMe);
+    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('token', token);
+
+    console.log('user', JSON.parse(localStorage.getItem("user")))
+  };
+
+      // remember me checkbox
+  handleChange = event => {
+    const target = event.target;
+    console.log(event);
+    this.setState({
+      [target.id]: target.type === "checkbox" ? target.checked : target.value
+    });
+  }
+
+         // password visibility
+  togglePasswordVisibility = () => {
+    const { passwordShow } = this.state;
+    this.setState({ passwordShow: !passwordShow });
+  }
+
+    setRedirectMainScreen = () => {
       this.setState({
-        redirect: true
+        redirectMainScreen: true,
       })
-    }    //redirect
+    }
+    setRedirectRegister = () => {
+      this.setState({
+        redirectRegister: true,
+      })
+
+    }  
 
 
     renderRedirect = () => {
-      if (this.state.redirect) {
+      if (this.state.redirectMainScreen) {
         return <Redirect to='/MainScreen' />
+      }
+    }
+
+    renderRedirectToRegister = () => {
+      if (this.state.redirectRegister) {
+        return <Redirect to='/Register' />
       }
     }
 
     async componentDidMount(){
-      this.getUser();
+      console.log("login",this.state);
     }
 
-    async getUser(){
-      await axios.get('https://api.randomuser.me/')
-      .then(response => 
-        response.data.results.map(user => ({
-          name: console.log(user.name.first),
-          email: console.log(user.email),
-          password: console.log(user.login.password)
-        }))
-        )
-        
-    }
-
+   
     validateForm() {
         return this.state.email.length > 0 && this.state.password.length > 0;
       }
 
-
-    //Update the state when the user types something into fields
-      handleChange = event => {
-        this.setState({
-          [event.target.id]: event.target.value
-        });
-      }
     
-      handleSubmit = event => {
+      handleSubmit = async (event) => {
         event.preventDefault();
-        const data = new FormData (event.target);
-        fetch('api/form-submit-url', {
-          method: 'POST',
-          body: data
-        }
-        );
-        console.log('success');
+        console.log('x');
+        event.preventDefault();
+        await fetch('https://intern2019dev.clover.studio/users/login', {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, method: 'POST',
+          body: JSON.stringify({
+            email: this.state.email,
+            password: md5(this.state.password),
+            crossDomain : true,
+            xhrFields: {
+              withCredentials: true
+          }
+          })
+        }).then(async (response) =>{
+           const json = await response.json();
+           console.log(json);
+           console.log(json.data.error)
+           if(json.data.error){
+             return this.checkIfError(json)
+           }else{
+             const user = json.data.user;
+             const jwt = json.data.user.jwt;
+             console.log(jwt);
+             localStorage.setItem('user',JSON.stringify(user));
+             localStorage.setItem('token',jwt);
+             return this.setRedirectMainScreen();
+           }
       }
+        ).catch(e=>{
+          console.log(e)
+        })
+  }
+
+  checkIfError = (json) =>{
+    if(json.data.error.error_code == consts.errorEmail){
+      return console.log('Oib se vec koristi');
+    }else if(json.data.error.error_code == consts.errorPassword){
+      return console.log('email se vec koristi')
+    }
+    }
+
 
     render() {
-      if (this.state.redirect) {
+      if (this.state.redirectMainScreen) {
         return <Redirect to='/MainScreen' />
       }
+      if (this.state.redirectRegister) {
+        return <Redirect to='/Register' />
+      }
+
         return (
 
           <Router>
@@ -88,9 +154,11 @@ export default class Login extends Component {
                     
                     <form onSubmit={this.handleSubmit}>
                     <div className="form-info">
-                        <FormGroup controlId="email" bsSize="large">
+                        
+                        <FormGroup controlId="email" bssize="large">
                         <FormLabel>email</FormLabel>
                         <FormControl
+                        className="border-none"
                         autoFocus
                         type="email"
                         required
@@ -99,9 +167,10 @@ export default class Login extends Component {
                         />
                         </FormGroup>
                     
-                        <FormGroup controlId="password" bsSize="large">
+                        <FormGroup controlId="password" bssize="large">
                         <FormLabel>Lozinka</FormLabel>
                         <FormControl
+                        className="border-none"
                         required
                         value={this.state.password}
                         onChange={this.handleChange}
@@ -109,25 +178,36 @@ export default class Login extends Component {
                         />
                         </FormGroup>
 
+                        <FormGroup>
+                          <input
+                            id='rememberMe'
+                            type="checkbox"
+                            checked={this.state.rememberMe}
+                            onChange={this.handleChange} />
+                            &nbsp;Zapamti me
+                        </FormGroup>
+
                         <Button
+                        className="btn-login"
                         block
-                        bsSize="large"
+                        bssize="large"
                         disabled={!this.validateForm()}
                         type="submit"
-                        onClick = {this.setRedirect}
+                        onClick = {this.handleSubmit}
                         >
                         Prijavi me                             
                         </Button>
 
                         
-                        
                       </div>
-                      <Link to = "/Register" className="link">Registriraj se putem OIB-a</Link>
+                      <Link to = "/Register" className="link" onClick={this.setRedirectRegister}>Registriraj se putem OIB-a</Link>
                     </form>
                     
                 </div>
+
+                <footer><Footer/></footer>
                 
-              <Footer/>
+              
             
 
               </div>
@@ -136,4 +216,3 @@ export default class Login extends Component {
         )
     }
 }
-

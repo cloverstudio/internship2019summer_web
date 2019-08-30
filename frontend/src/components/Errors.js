@@ -17,5 +17,4 @@ class ErrorHandler extends React.Component {
     }
   }
 
-
   export default Errors;

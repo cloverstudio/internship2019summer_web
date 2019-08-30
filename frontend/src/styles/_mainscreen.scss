@@ -1,0 +1,36 @@
+
+.no-news-container {
+  background: #E7E7E7; 
+  width: 100%;
+  text-align: center;
+}
+
+.no-news {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.bar-logout-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin: 15px;
+}
+
+.sidebar-container {
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  font-size: 25px;
+}
+
+.bar-img {
+  margin: 70px;
+  max-width: 100px;
+}
+
+.bar-navigation {
+  margin-left: 25px;
+}
