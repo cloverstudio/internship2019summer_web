@@ -1,9 +1,12 @@
-const db_host =  'localhost';
-const db_user = 'root';
-const db_password = '!@Antonio22';
-const db_name = 'MojGrad';
-JWT_SECRET='jsonwebtokensecretwordabc';
+const knexConfig = require('./knexfile');
 
+const db_host =  knexConfig.development.connection.host;
+const db_user = knexConfig.development.connection.user;
+const db_password = knexConfig.development.connection.password;
+const db_name = knexConfig.development.connection.database;
+JWT_SECRET = 'jsonwebtokensecretwordabc';
+JWT_EXPIRATIONTIME = '172800000';
+PORT = 8080;
 module.exports = {
     database: {
         db_host,
@@ -11,6 +14,8 @@ module.exports = {
         db_password,
         db_name
     },
-    JWT_SECRET
-    
-}
+    JWT_SECRET,
+    PORT,
+    JWT_EXPIRATIONTIME
+
+};

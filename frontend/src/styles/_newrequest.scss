@@ -1,0 +1,61 @@
+.new-request-white-container {
+    background-color: white;
+    padding: 50px;
+    height: 90vh;
+}
+
+.dropdown-btn Button{
+    background: #e7e7e7;
+    color: #0076ff;
+}
+
+.outd-btn {
+    background: white;
+    color: #007bff;
+}
+
+.two-btns-request {
+    position: absolute;
+    bottom: 6%;
+    left: 45%;
+    margin: 15px
+}
+
+.row {
+    padding: 20px;
+    display: table;
+    width: 100%; /*Optional*/
+    table-layout: fixed; /*Optional*/
+    border-spacing: 10px; /*Optional*/
+}
+
+.column {
+    display: table-cell
+}
+
+.btn-back {
+    background: #e7e7e7;
+    font-size: 19px;
+    color: #0076ff;
+    margin: 10px;
+    padding-left: 26px;
+    border: none;
+    background-image: url(/static/media/back_icon.34d55556.svg);
+    background-repeat: no-repeat;
+    background-position: left center;
+    border-radius: 6px;
+}
+      
+
+
+.border-none {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+.map-container {
+    height: 200px;
+    width: 350px; 
+    position: relative;
+  }

@@ -82,18 +82,10 @@ export default class Login extends Component {
     }
 
    
-
     validateForm() {
         return this.state.email.length > 0 && this.state.password.length > 0;
       }
 
-
-    //Update the state when the user types something into fields
-      handleChange = event => {
-        this.setState({
-          [event.target.id]: event.target.value
-        });
-      }
     
       handleSubmit = async (event) => {
         event.preventDefault();
@@ -162,9 +154,11 @@ export default class Login extends Component {
                     
                     <form onSubmit={this.handleSubmit}>
                     <div className="form-info">
-                        <FormGroup controlId="email" bsSize="large">
+                        
+                        <FormGroup controlId="email" bssize="large">
                         <FormLabel>email</FormLabel>
                         <FormControl
+                        className="border-none"
                         autoFocus
                         type="email"
                         required
@@ -173,9 +167,10 @@ export default class Login extends Component {
                         />
                         </FormGroup>
                     
-                        <FormGroup controlId="password" bsSize="large">
+                        <FormGroup controlId="password" bssize="large">
                         <FormLabel>Lozinka</FormLabel>
                         <FormControl
+                        className="border-none"
                         required
                         value={this.state.password}
                         onChange={this.handleChange}
@@ -188,14 +183,14 @@ export default class Login extends Component {
                             id='rememberMe'
                             type="checkbox"
                             checked={this.state.rememberMe}
-                            onClick={this.handleChange} />
+                            onChange={this.handleChange} />
                             &nbsp;Zapamti me
                         </FormGroup>
 
                         <Button
                         className="btn-login"
                         block
-                        bsSize="large"
+                        bssize="large"
                         disabled={!this.validateForm()}
                         type="submit"
                         onClick = {this.handleSubmit}

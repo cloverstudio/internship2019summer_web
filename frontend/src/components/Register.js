@@ -21,10 +21,6 @@ export default class Register extends Component {
       passwordShow: false,
       rememberMe: false,
       token: "",
-      // user: {
-      //   id: 2323,
-      //   name: 'djuro'
-      // },
     };
   }
 
@@ -54,17 +50,8 @@ export default class Register extends Component {
   }
 
         //redirect
-
-
-    
-    handleChange = event => {
-        this.setState({
-          [event.target.id]: event.target.value
-        });
-      }
-    
     handleSubmit = async (event) => {
-      console.log('x');
+      console.log('register submit passed');
       event.preventDefault();
       await fetch('https://intern2019dev.clover.studio/users/register',  {
         headers: {
@@ -117,16 +104,7 @@ export default class Register extends Component {
     if (this.state.redirectToMiddle) {
       return <Redirect to='/MiddleScreen' />
     }
-  }  
-
-        // API poziv
-
-
-    // .catch(e=> {
-    //   console.log('err',e);
-    // });
- 
-
+  }
 
   validateForm() {
     return this.state.email.length > 0 && this.state.password.length > 0;
@@ -162,17 +140,21 @@ export default class Register extends Component {
                 <FormGroup controlId="oib" bssize="large">
                   <FormLabel>OIB:</FormLabel>
                   <FormControl
+                    className="border-none"
                     required
                     autoFocus
                     maxLength="11"
                     type="text"
                     value={this.state.oib}
-                    onChange={this.handleChange}                  />
+                    onChange={this.handleChange}
+                  />
+
                 </FormGroup>
 
                 <FormGroup controlId="email" bssize="small">
                   <FormLabel>Email:</FormLabel>
                   <FormControl
+                    className="border-none"
                     required
                     autoFocus
                     type="email"
@@ -185,6 +167,7 @@ export default class Register extends Component {
                   <FormLabel>Lozinka:</FormLabel>
                   <div className="password-container">
                     <FormControl
+                      className="border-none"
                       style={{ paddingRight: '30px' }}
                       placeholder=""
                       required
@@ -207,12 +190,11 @@ export default class Register extends Component {
                     &nbsp;Zapamti me
                 </FormGroup>
 
-                <div className="register-btn">
+                <div className="register-btn-container">
                   {this.renderRedirectToMiddle()}
                   <Button
-                    style={{ fontWeight: 'bold' }}
-                    size="sm"
-                    // bsClass= "RegisterBtn"
+                    className="btn-register"
+                    bssize="large"
                     variant="primary"
                     block
                     disabled={!this.validateForm()}

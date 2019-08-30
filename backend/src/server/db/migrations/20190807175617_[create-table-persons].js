@@ -1,9 +1,6 @@
-module.exports = async function personTable() {
-    if (await knex.schema.hasTable('persons')) {
-        return;
-    }
-  
-    await knex.schema.createTable('persons', table => {
+
+exports.up = function(knex) {
+    return knex.schema.createTable('persons', table => {
         table.increments('id').primary();
         table.integer('personsRoleId').references('userRoles.id').unsigned();
         table.string('firstName');
@@ -13,4 +10,8 @@ module.exports = async function personTable() {
         table.string('password');
 
     })
-}
+};
+
+exports.down = function(knex) {
+    return knex.schema.dropTable('persons');
+};
