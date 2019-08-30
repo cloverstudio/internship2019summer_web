@@ -88,21 +88,22 @@ export class Requests extends Component {
               </select>
             </div>
           </div>
+          <div className="container-collection">
+              <div className="new-requests-container">
+                <Card style={{ border: 'none' }}>
+                  <a className="requests-icon" href="/NewRequest">
+                    <img style={{ maxWidth: "200px" }} src={add_icon} alt="Add more" />
+                    <div className="requests-text">
+                      <p>Novi zahtjev</p>
+                    </div>
+                  </a>
+                </Card>
 
-          <div className="new-requests-container">
-            <Card style={{ border: 'none' }}>
-              <a className="requests-icon" href="/NewRequest">
-                <img style={{ maxWidth: "200px" }} src={add_icon} alt="Add more" />
-                <div className="requests-text">
-                  <p>Novi zahtjev</p>
-                </div>
-              </a>
-            </Card>
-
+              </div>
+              <ul className="collection" style={{ listStyleType: 'none' }}>
+                {RequestItems}
+              </ul>
           </div>
-          <ul className="collection" style={{ listStyleType: 'none' }}>
-            {RequestItems}
-          </ul>
         </div>
       </div>
     )
