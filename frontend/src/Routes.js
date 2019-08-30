@@ -45,7 +45,6 @@ export default class Routes extends Component{
                     <Route exact path="/NoNewRequests"  component={NoNewRequests}/>
                     <Route exact path="/NewRequest"  component={NewRequest}/>
                     <Route exact path="/Requests/:ID"  component={RequestEdit}/>
-                    <Route exact path="/Requests"  component={Requests}/>
                     <Route exact path="/Users"  component={Users}/>
                     <Route exact path="/Profile"  component={Profile}/>
                     <Route exact path="/AddNewUser" component={AddNewUser}/> 
