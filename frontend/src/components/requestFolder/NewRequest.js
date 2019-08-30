@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import SideBar from '../layout/SideBar';
 import MapContainer from '../MapContainer';
 import {  Button } from "react-bootstrap";
+import back_icon from '../../assets/back_icon.svg';
+
 
 
 
@@ -64,13 +66,15 @@ class NewRequest extends Component {
 
             <div className="form-header">
               <div className="new-request-title">
+                <div className="back-btn-container">
                 <Button
                   className="btn-back"
                   color="primary"
                   size="sm"
                   href="/Requests">
-                  Vrati se nazad
+                  Vrati se
                     </Button>{' '}
+                </div>
 
                 <div className="title-request">
                   <p style={{ textAlign: 'center', fontSize: '25px' }}>

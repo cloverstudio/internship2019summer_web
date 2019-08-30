@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 import {Button} from 'react-bootstrap';
 import SideBar from '../layout/SideBar';
 import MapContainer from '../MapContainer';
+import {BrowserRouter as Redirect} from 'react-router-dom';
+
 
 export class RequestEdit extends Component {
   constructor(props){
     super(props);
     let editItem = this.props.location.state.item;
     console.log('props:', editItem);
-    console.log(editItem.Address);
     this.state = {
       Title: editItem.Title,
       Request_type: editItem.Request_type,
@@ -23,48 +24,44 @@ export class RequestEdit extends Component {
 
   handleChange = event => {
     const target = event.target;
-    console.log('target',target);
     this.setState({
-      [event.target.id]: event.target.value
+      [target.id]: target.value
     });
   }
  
   handleSubmit = async (event) => {
-    console.log('submit started');
+    console.log('Submit started');
     event.preventDefault();
-    await fetch('https://intern2019dev.clover.studio/requests/edit/<id>',  {
+    let requestId = this.props.location.state.item.ID;
+    await fetch(`https://intern2019dev.clover.studio/requests/edit/${requestId}`,  {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }, method: 'PUT',
       body: JSON.stringify({
-        Title: this.props.location.state.item.Title,
-        Request_type: this.props.location.state.item.Request_type,
-        Address: this.props.location.state.item.Address,
-        location_latitude: this.props.location.state.item.location_latitude, 
-        location_longitude: this.props.location.state.item.location_longitude,        
-        message: this.props.location.state.item.message,
-        photo: this.props.location.state.item.photo,
-        crossDomain : true,
-        xhrFields: {
-          withCredentials: true
-  }
+        Title: this.state.Title,
+        Request_type: this.state.Request_type,
+        Address: this.state.Address,
+        location_latitude: this.state.location_latitude, 
+        location_longitude: this.state.location_longitude,        
+        message: this.state.message,
+        photo: this.state.photo
       })
     }
     ).then(async (response)  => {
        const json = await response.json();
-    console.log(json);
+      //  return <Redirect to='/Requests' />
+      console.log(json);
     }
     ).catch(e=>{
       console.log('err',e);
     })
     }
 
-  	
 
   render(){
     return (
-      
 
       <div style={{display:'flex'}}>
         <SideBar />
@@ -85,6 +82,7 @@ export class RequestEdit extends Component {
                 <input 
                   type="text" 
                   name="title" 
+                  id="Title"
                   ref="title" 
                   defaultValue={this.state.Title}
                   onChange={this.handleChange}
@@ -94,7 +92,8 @@ export class RequestEdit extends Component {
               <label htmlFor="type">Tip zahtjeva:</label>
               <div className="input-field">
                 <select 
-                  ref="Request_type" 
+                  ref="Request_type"
+                  id="Request_type"
                   defaultValue={this.state.Request_type} 
                   onChange={this.handleChange}
                 >
@@ -108,7 +107,7 @@ export class RequestEdit extends Component {
                 <input 
                   type="file" 
                   name="photo" 
-                  id="exampleFile"
+                  id="photo"
                   ref="photo" 
                   defaultValue={this.state.photo}
                   onChange={this.handleChange}
@@ -116,12 +115,13 @@ export class RequestEdit extends Component {
               </div>
 
               <label htmlFor="city">Poruka:</label>
-              <div className="input-field" key={this.state.message}>
+              <div className="input-field">
                 <input 
                   type="text"
-                  name="message" 
+                  name="message"
+                  id="message"
                   ref="message" 
-                  defaultValue={this.state.message || ''}
+                  defaultValue={this.state.message}
                   onChange={this.handleChange}
                 />
               </div>
@@ -130,7 +130,8 @@ export class RequestEdit extends Component {
               <div className="input-field">
                 <input 
                   type="text" 
-                  name="address" 
+                  name="address"
+                  id="Address" 
                   ref="address"  
                   defaultValue={this.state.Address}
                   onChange={this.handleChange}

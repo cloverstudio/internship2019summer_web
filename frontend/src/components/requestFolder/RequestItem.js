@@ -34,15 +34,11 @@ render(){
             <Card.Img variant="top" src="holder.js/100px160" />
             <Card.Body>
               <Card.Title> 
-            
-            
                 <div onClick={this.setRedirectToDetails}>
                   <a href="#">
                     {this.state.item.Title}
                   </a> 
-  
                 </div>
-                
               </Card.Title>
               <Card.Text>
                 {this.state.item.message}
@@ -51,10 +47,6 @@ render(){
                 {this.state.item.Address}
               </Card.Text>
             </Card.Body>
-            <Card.Footer>
-
-
-            </Card.Footer>
           </Card>
         </CardDeck>
       </li>

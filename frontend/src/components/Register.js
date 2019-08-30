@@ -51,7 +51,7 @@ export default class Register extends Component {
 
         //redirect
     handleSubmit = async (event) => {
-      console.log('x');
+      console.log('register submit passed');
       event.preventDefault();
       await fetch('https://intern2019dev.clover.studio/users/register',  {
         headers: {
@@ -190,12 +190,11 @@ export default class Register extends Component {
                     &nbsp;Zapamti me
                 </FormGroup>
 
-                <div className="register-btn">
+                <div className="register-btn-container">
                   {this.renderRedirectToMiddle()}
                   <Button
-                    style={{ fontWeight: 'bold' }}
-                    size="sm"
-                    // bsClass= "RegisterBtn"
+                    className="btn-register"
+                    bssize="large"
                     variant="primary"
                     block
                     disabled={!this.validateForm()}

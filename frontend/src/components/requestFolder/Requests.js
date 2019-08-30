@@ -77,7 +77,11 @@ export class Requests extends Component {
 
           <div className="filter-type">
             <div className="input-field">
-              <select ref="Request_type" onChange={this.filterRequests.bind(this)}>
+              <select 
+                className="filter"
+                ref="Request_type" 
+                onChange={this.filterRequests.bind(this)}
+              >
                 <option value="sve" name="sve">Sve</option>
                 <option value="kvar" name="kvar">Kvar</option>
                 <option value="prijedlog" name="prijedlog">Prijedlog</option>
