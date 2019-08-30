@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import SideBar from './SideBar';
+import SideBar from '../layout/SideBar';
 import { Redirect } from 'react-router-dom';
 import swal from 'sweetalert';
 import { Button, FormGroup, FormLabel, Row, Col, FormControl, Image } from 'react-bootstrap';
-import AddedDocument from './layout/AddedDocument';
-import upload_photo_icon from '../assets/upload_photo_icon.svg';
-import upload_document_icon from '../assets/upload_document_icon.svg';
+import AddedDocument from '../layout/AddedDocument';
+import upload_photo_icon from '../../assets/upload_photo_icon.svg';
+import upload_document_icon from '../../assets/upload_document_icon.svg';
 import GoogleApiWraper from './NewsMapContainer';
 
 

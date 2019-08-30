@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Search from './layout/Search';
+import Search from '../layout/Search';
 import UserList from './UserList';
 import { Button } from "react-bootstrap";
 import {Redirect} from 'react-router-dom';
 import {Row, Container, Col} from 'react-bootstrap';
-import add_icon from '../assets/add_icon.svg';
+import add_icon from '../../assets/add_icon.svg';
 import axios from 'axios';
-import SideBar from './SideBar';
+import SideBar from '../layout/SideBar';
 //import apis from '../lib/api/api';
 
 

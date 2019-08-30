@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ProfileInfo from './ProfileInfo';
 import ChangePassword from './ChangePassword';
-import SideBar from './SideBar';
+import SideBar from '../layout/SideBar';
 import {Redirect} from 'react-router-dom';
 
 export default class Profile extends Component {

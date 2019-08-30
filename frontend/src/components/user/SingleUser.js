@@ -1,6 +1,6 @@
 import React, { useState, Component } from 'react'
 import { Redirect} from 'react-router-dom';
-import nav_users_icon from '../assets/nav_users_icon.svg';
+import nav_users_icon from '../../assets/nav_users_icon.svg';
 import {Image} from 'react-bootstrap';
 
 

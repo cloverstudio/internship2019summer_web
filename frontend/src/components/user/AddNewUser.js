@@ -3,7 +3,7 @@ import { Button, FormGroup, FormControl, FormLabel, Row, Image } from "react-boo
 import {Redirect} from 'react-router-dom';
 import swal from 'sweetalert';
 import md5 from 'md5';
-import upload_photo_icon from '../assets/upload_photo_icon.svg'
+import upload_photo_icon from '../../assets/upload_photo_icon.svg'
 
 
 export class AddNewUser extends Component {

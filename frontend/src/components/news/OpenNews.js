@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { Modal, Image, Card, Button } from 'react-bootstrap';
-import SideBar from './SideBar';
+import SideBar from '../layout/SideBar';
 
 export default class OpenNews extends Component {
 

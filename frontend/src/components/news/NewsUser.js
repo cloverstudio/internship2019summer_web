@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import SideBar from './SideBar';
+import SideBar from '../layout/SideBar';
 import { Redirect } from 'react-router-dom';
-import no_content_icon from '../assets/no_content_icon.svg';
+import no_content_icon from '../../assets/no_content_icon.svg';
 import NewsListUser from './NewsListUser';
 import OpenNews from './OpenNews';
 

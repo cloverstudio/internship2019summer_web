@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import SideBar from './SideBar';
+import SideBar from '../layout/SideBar';
 import {Button} from 'react-bootstrap';
 import {Redirect} from 'react-router-dom';
-import no_content_icon from '../assets/no_content_icon.svg';
+import no_content_icon from '../../assets/no_content_icon.svg';
 
 export default class NoNews extends Component {
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { FormGroup, FormControl, FormLabel, Button, Image } from 'react-bootstrap';
 import {Redirect} from 'react-router-dom';
 import swal from 'sweetalert';
-import no_content_icon from '../assets/no_content_icon.svg';
+import no_content_icon from '../../assets/no_content_icon.svg';
 
 
 export default class ProfileInfo extends Component {
