@@ -5,7 +5,7 @@
     margin-top: 10px;
     margin-left: 10px;
     height: 600px;
-    width: 40%;
+    max-width: 40%;
 }
 
 .change-password{
@@ -21,11 +21,17 @@
 
 .heading-password-change{
     padding-top: 20px;
-    font-family: $american-typewriter-bold;
+    font-family: $avenir-book;
+    padding-bottom: 20px;
+    font-weight: 800;
 }
 
 .change-password > form {
     width: 90%;
     align-self: center;
     font-family: $avenir-book;
+}
+
+.btn-change{
+    font-family: $american-typewriter-bold;
 }

@@ -21,7 +21,7 @@ export class AddNewUser extends Component {
             jwt: localStorage.getItem('token'),
             error: "",
             redirectToUsers: false,
-            image: []
+            image: null
         }
     }
     validateForm() {
@@ -91,6 +91,19 @@ export class AddNewUser extends Component {
             this.refs.fileUploader.click();
         }
 
+        uploadImages = () => {
+          this.setState({
+              // eslint-disable-next-line no-restricted-globals
+              images: URL.createObjectURL(event.target.files[0])
+          })
+      }
+  
+      onError = () => {
+          if(this.state.profileData.image === null){
+              return upload_photo_icon
+          }
+        }
+
 
           uploadPhoto = (event) => {
             fetch('https://intern2019dev.clover.studio/users/newUser',{
@@ -128,8 +141,13 @@ export class AddNewUser extends Component {
                   <FormGroup controlId="profilePhoto" bsSize="large">
                     <FormLabel bsClass="custom-label">Profilna slika</FormLabel>
                     <div style={{display:'flex', alignContent:'center'}}>
-                    <input type="file" id="file" ref="fileUploader" style={{display: "none"}}/>
-                    <Image src={upload_photo_icon} onClick = {this.uploadPhoto} />
+                    <input
+                    type="file"
+                    onChange = {this.uploadImages} 
+                    id="file" 
+                    ref={fileInput => this.fileInput = fileInput}
+                    style={{display: "none"}}/>
+                    <Image src={this.state.image} onClick = {this.fileInput.click()} />
                     </div>
                   </FormGroup>
                 </div>

@@ -7,6 +7,7 @@ import {Row, Container, Col} from 'react-bootstrap';
 import add_icon from '../../assets/add_icon.svg';
 import axios from 'axios';
 import SideBar from '../layout/SideBar';
+import swal from 'sweetalert';
 //import apis from '../lib/api/api';
 
 
@@ -62,6 +63,11 @@ export class Users extends Component {
         .then (async (response) => { 
             const json = await response.json();
             console.log(json);
+            console.log(json.data.error)
+            if(json.data.error.error_code === '1006'){
+                //ne radi redirect iz nekog razloga
+                return <Redirect to ='/'/>
+              }
             const mapUsers = json.data.user.map(user => {
                 return user;
             })
@@ -84,6 +90,9 @@ export class Users extends Component {
         })
         
         this.setState({userprofile: mapUsers})
+        }
+        ).catch(error => {
+            console.log(error)
         })
         }
 

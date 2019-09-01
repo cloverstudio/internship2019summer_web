@@ -13,6 +13,7 @@ export default class ProfileInfo extends Component {
         this.state = {
              profileData: JSON.parse(localStorage.getItem('user')),
              images: no_content_icon,
+             
         }
     }
     
@@ -73,9 +74,9 @@ export default class ProfileInfo extends Component {
 
     render() {
         return (
-            <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+            <div style={{display:'flex', alignItems:'center', justifyContent:'center', alignContent: 'center', padding:'20px'}}>
                 <form style={{alignSelf:'center'}}>
-                    <FormGroup controlId='photo'>
+                    <FormGroup controlId='photo' style={{display: 'flex', justifyContent: 'center'}}>
                     <input
                                     type='file'
                                     onChange={this.uploadImages}
@@ -84,12 +85,13 @@ export default class ProfileInfo extends Component {
                         <Image
                         src = {this.onError()}
                         roundedCircle
-                        style={{alignSelf:'center', width:'20%'}}
+                        style={{alignSelf:'center', width:'40%'}}
                          />
                     </FormGroup>
 
                     <FormGroup controlId='name'>
                         <FormControl
+                        className='border-none'
                         value={this.state.profileData.firstName + this.state.profileData.lastName} 
                         required
                         style={{alignSelf:'center'}}
@@ -98,6 +100,7 @@ export default class ProfileInfo extends Component {
 
                     <FormGroup controlId='oib'>
                         <FormControl
+                        className='border-none'
                         required
                         value = {this.state.profileData.oib}
                         
@@ -106,16 +109,29 @@ export default class ProfileInfo extends Component {
 
                     <FormGroup controlId='email'>
                         <FormControl
+                        className='border-none'
                         required
                         value = {this.state.profileData.email}
                         />
                     </FormGroup>
 
-                    <Button>Zaboravio/la sam lozinku!</Button>
+                    <div style={{display:'flex', justifyContent:'center'}}>
+                    <Button
+                    className= 'btn-cancel'
+                    onClick = {this.props.ChangePassword}>
+                    Zaboravio/la sam lozinku!
+                    </Button>
+                    </div>
 
-                    <p>U slučaju da zaboravite lozinku, ovdje je možete resetirati</p>
+                    <p style={{textAlign:'center', padding:'20px'}}>U slučaju da zaboravite lozinku, ovdje je možete resetirati.</p>
 
-                    <Button onClick={this.handleSubmit}>Promijeni podatke</Button>
+                    <div style={{display:'flex', justifyContent:'center'}}>
+                    <Button
+                    className='btn-change'
+                    onClick={this.handleSubmit}>
+                    Promijeni podatke
+                    </Button>
+                    </div>
 
                 </form>
             </div>

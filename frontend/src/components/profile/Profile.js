@@ -6,9 +6,31 @@ import {Redirect} from 'react-router-dom';
 
 export default class Profile extends Component {
 
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+             renderChangePassword: false
+        }
+        this.showChangePassword = this.showChangePassword.bind(this)
+    }
+    
+
     componentWillMount(){
         if(!localStorage.getItem('token')){
            return <Redirect to ='/'/>
+        }
+    }
+
+    showChangePassword(){
+        this.setState({
+            renderChangePassword: true
+        })
+    }
+
+    ChangePasswordComponent(){
+        if(this.state.renderChangePassword === true){
+            return <ChangePassword/>
         }
     }
 
@@ -19,7 +41,8 @@ export default class Profile extends Component {
             <div style ={{display:'flex', background:'#e7e7e7'}}>
                 <SideBar/>
                 <div className='profile-container'>
-                    <ProfileInfo/>
+                    <ProfileInfo
+                    ChangePassword = {this.showChangePassword}/>
                 </div>
                 <ChangePassword/>
             </div>
