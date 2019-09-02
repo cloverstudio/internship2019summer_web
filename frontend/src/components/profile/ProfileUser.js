@@ -16,7 +16,7 @@ export default class ProfileUser extends Component {
     }
     
 
-    componentWillMount(){
+    componentDidMount(){
         if(!localStorage.getItem('token')){
            return <Redirect to ='/'/>
         }

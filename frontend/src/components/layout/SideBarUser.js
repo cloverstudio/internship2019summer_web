@@ -14,7 +14,9 @@ export default class SideBarUser extends Component {
         this.state = {
             RedirectLogin: false,
             profilePhoto: JSON.parse(localStorage.getItem('user')),
+            
         };
+        
     }
 
 
@@ -56,13 +58,7 @@ export default class SideBarUser extends Component {
 
 
     render() {
-        if(this.state.profilePhoto.image === null ){
-            this.setState({
-                profilePhoto: {image: nav_users_selected_icon}
-            })
-        }
-
-
+        
 
 
         return (
@@ -98,7 +94,7 @@ export default class SideBarUser extends Component {
 
                     <div className="bar-logout-container">
                         <NavItem style={{ display: 'flex' }}>
-                            <img style={{ maxWidth: '20px' }} alt="profile" src={this.state.profilePhoto.image} />
+                            <Image style={{ maxWidth: '20px' }} alt="logout" src={nav_users_selected_icon} />
                             <Link
                                 to="/"
                                 className="linkLogin"

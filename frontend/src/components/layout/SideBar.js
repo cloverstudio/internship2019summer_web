@@ -54,13 +54,7 @@ export default class SideBar extends Component {
 
     
     render (){
-      if(this.state.profilePhoto.image === null ){
-        this.setState({
-            profilePhoto: {image: nav_users_selected_icon}
-        })
-    }
-
-
+    
         return(
           <div className="sidebar-container" style={{background:'#ffffff'}}>
             <div className="bar-img">
@@ -99,7 +93,7 @@ export default class SideBar extends Component {
 
                 <div className="bar-logout-container">
                     <NavItem style= {{display: 'flex'}}>
-                    <img style= {{maxWidth: '20px'}} alt= "profile" src = {nav_users_selected_icon} /> 
+                    <Image style= {{maxWidth: '20px'}} alt= "profile" src = {nav_users_selected_icon} /> 
                     <Link
                       to = "/" 
                       className="linkLogin" 

@@ -20,7 +20,7 @@ import MapContainer from './components/MapContainer';
 import Map from './components/Map';
 import Home from './components/Home';
 import RequestEdit from './components/requestFolder/RequestEdit';
-import ProfileUser from './components/profile/Profile';
+import ProfileUser from './components/profile/ProfileUser';
 import NoNewsUser from './components/news/NoNewsUser';
 
 

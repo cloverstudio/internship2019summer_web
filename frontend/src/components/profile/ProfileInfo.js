@@ -14,13 +14,13 @@ export default class ProfileInfo extends Component {
             profileData: JSON.parse(localStorage.getItem('user')),
             images: null,
             linkToPhoto: 'https://intern2019dev.clover.studio/uploads/photos/',
-            changedFields: {}
+            changedFields: {},
 
         }
     }
 
 
-    componentWillMount() {
+    componentDidMount() {
         if (!localStorage.getItem('token')) {
             return <Redirect to='/' />
         }
@@ -29,13 +29,13 @@ export default class ProfileInfo extends Component {
     handleChange = (event) => {
 
         this.setState({
-          [event.target.id]: event.target.value,
-          changedFields: {
-            ...this.state.changedFields,
-            [event.target.id]: event.target.value
-          }
+            [event.target.id]: event.target.value,
+            changedFields: {
+                ...this.state.changedFields,
+                [event.target.id]: event.target.value
+            }
         });
-      }
+    }
 
     uploadImages = () => {
         this.setState({
@@ -43,6 +43,13 @@ export default class ProfileInfo extends Component {
             images: URL.createObjectURL(event.target.files[0])
         })
     }
+
+    separateName = name => {
+        const splitString = name.split(' ');
+        console.log(splitString);
+        this.state.changedFields.firstName = splitString[0].trim();
+        this.state.changedFields.lastName = splitString[1].trim();
+      }
 
 
     handleSubmit = async (event) => {
@@ -56,12 +63,12 @@ export default class ProfileInfo extends Component {
                 'Content-Type': 'multipart/form-data',
                 'token': localStorage.getItem('token')
             },
-            body: JSON.stringify({sendObject})
-            .then(async (res) => {
-                const json = await res.json();
-                console.log(json);
-                swal("Uspješno!", "Korisnički podatci promijenjeni", "success");
-            })
+            body: JSON.stringify({ sendObject })
+                .then(async (res) => {
+                    const json = await res.json();
+                    console.log(json);
+                    swal("Uspješno!", "Korisnički podatci promijenjeni", "success");
+                })
         }
         ).catch(e => {
             console.log(e);
@@ -100,14 +107,16 @@ export default class ProfileInfo extends Component {
                     <FormGroup controlId='name'>
                         <FormControl
                             className='border-none'
-                            value={this.state.profileData.firstName + this.state.profileData.lastName}
+                            value={this.state.name}
                             required
+                            onChange={this.handleChange}
                             style={{ alignSelf: 'center' }}
                         />
                     </FormGroup>
 
                     <FormGroup controlId='oib'>
                         <FormControl
+                            onChange={this.handleChange}
                             className='border-none'
                             required
                             value={this.state.profileData.oib}
@@ -117,6 +126,7 @@ export default class ProfileInfo extends Component {
 
                     <FormGroup controlId='email'>
                         <FormControl
+                            onChange={this.handleChange}
                             className='border-none'
                             required
                             value={this.state.profileData.email}
