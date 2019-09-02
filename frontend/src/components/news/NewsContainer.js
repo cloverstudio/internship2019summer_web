@@ -26,7 +26,6 @@ export default class NewsContainer extends Component {
         if (this.state.redirectToEditNews) {
             return <Redirect to='/News/:openNews' />
           }
-          console.log(this.props.newsList)
 
         return (
 

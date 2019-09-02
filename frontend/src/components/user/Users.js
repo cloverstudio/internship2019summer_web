@@ -20,7 +20,8 @@ export class Users extends Component {
             searchfield: '',
             redirectAddUser: false,
             jwt: localStorage.getItem('token'),
-            letterList: []
+            letterList: [],
+            user: JSON.parse(localStorage.getItem('user'))
         }
     }
 
@@ -31,6 +32,7 @@ export class Users extends Component {
            return <Redirect to ="/"/>
         }
     }
+
 
     componentDidCatch(json){
         if(json.data.error.error_code == 1006){

@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
-import SideBar from '../layout/SideBar';
+import SideBarUser from '../layout/SideBarUser';
 import { Redirect } from 'react-router-dom';
-import no_content_icon from '../../assets/no_content_icon.svg';
 import NewsListUser from './NewsListUser';
-import OpenNews from './OpenNews';
-
-
-
 
 export default class NewsUser extends Component {
 
@@ -15,12 +10,8 @@ export default class NewsUser extends Component {
         this.state = {
             jwt: localStorage.getItem('token'),
             newsList: [],
-            
         }
     }
-
-
-    
 
     componentWillMount() {
         if (!localStorage.getItem('token')) {
@@ -45,7 +36,7 @@ export default class NewsUser extends Component {
             this.setState({newsList: mapNews})
             console.log(this.state.newsList)
         }).catch(e => {
-            console.log(e);
+            return <Redirect to='/NoNewsUser' />
         })
     }
 
@@ -61,7 +52,7 @@ export default class NewsUser extends Component {
 
         return (
             <div className="main-container" style={{ display: 'flex' }} >
-                <SideBar />
+                <SideBarUser />
                 <div className="news-container"
                 style={{ background: '#e7e7e7', width:'90%', display:'flex' }}>{
                        

@@ -2,12 +2,7 @@ import React, { Component } from 'react';
 import SideBar from '../layout/SideBar';
 import { Dropdown } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-import no_content_icon from '../../assets/no_content_icon.svg';
-import AddNewsButton from '../layout/AddNewsButton';
 import NewsList from './NewsList';
-
-
-
 
 export default class News extends Component {
 
@@ -16,7 +11,6 @@ export default class News extends Component {
         this.state = {
             jwt: localStorage.getItem('token'),
             newsList: [],
-            
         }
     }
 
@@ -36,15 +30,12 @@ export default class News extends Component {
             }, method: 'GET'
         }).then(async (response) => {
             const json = await response.json();
-            console.log(json);
             const mapNews = json.data.news.map(news => {
                 return news;
             })
-            console.log(mapNews)
             this.setState({newsList: mapNews})
-            console.log(this.state.newsList)
         }).catch(e => {
-            console.log(e);
+            return <Redirect to='/NoNews' />
         })
     }
 
@@ -69,7 +60,6 @@ export default class News extends Component {
                         </Dropdown.Menu>
                     </Dropdown>
                     <div className='no-dropdown'>
-                    <AddNewsButton />
                     <NewsList
                     newsList = {this.state.newsList} />
                     </div>

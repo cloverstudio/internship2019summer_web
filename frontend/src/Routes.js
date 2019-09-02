@@ -20,6 +20,8 @@ import MapContainer from './components/MapContainer';
 import Map from './components/Map';
 import Home from './components/Home';
 import RequestEdit from './components/requestFolder/RequestEdit';
+import ProfileUser from './components/profile/Profile';
+import NoNewsUser from './components/news/NoNewsUser';
 
 
 
@@ -35,6 +37,7 @@ export default class Routes extends Component{
                     <Route exact path="/News" component={News}/>
                     <Route exact path="/NewsUser" component={NewsUser}/>
                     <Route exact path="/noNews" component={NoNews}/>
+                    <Route exact path="/noNewsUser" component={NoNewsUser}/>
                     <Route exact path="/News/:createNews" component={CreateNews}/>
                     <Route exact path="/NewsUser/:openNews" component={OpenNews}/>
                     <Route exact path="/Requests"  component={Requests}/>
@@ -48,6 +51,7 @@ export default class Routes extends Component{
                     <Route exact path="/Requests"  component={Requests}/>
                     <Route exact path="/Users"  component={Users}/>
                     <Route exact path="/Profile"  component={Profile}/>
+                    <Route exact path="/ProfileUser"  component={ProfileUser}/>
                     <Route exact path="/AddNewUser" component={AddNewUser}/> 
                     <Route exact path="/MapContainer" component={MapContainer}/> 
                     <Route exact path="/Map" component={Map}/> 

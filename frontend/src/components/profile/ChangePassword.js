@@ -5,7 +5,7 @@ import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 export default class ChangePassword extends Component {
     render() {
         return (
-            <div className="change-password" style={{display:'flex', alignItems:'center', justifyContent:'center', alignContent: 'center', padding:'20px'}} >
+            <div className="change-password"  >
                 <form>
                     <h4 className="heading-password-change">Promjena lozinke</h4>
                     <FormGroup controlId="password" bsSize="large">

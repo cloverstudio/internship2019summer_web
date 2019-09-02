@@ -4,6 +4,7 @@ import moj_grad_logo from '../../assets/moj_grad_logo.svg';
 import nav_news_selected_icon from '../../assets/nav_news_selected_icon.svg';
 import nav_requests_selected_icon from '../../assets/nav_requests_selected_icon.svg'; 
 import nav_users_selected_icon from '../../assets/nav_users_selected_icon.svg';
+import {Image} from 'react-bootstrap';
 
 import { NavItem, NavLink } from 'reactstrap';
 
@@ -12,7 +13,7 @@ export default class SideBar extends Component {
         super(props);
           this.state = {
               RedirectLogin: false,
-              
+              profilePhoto: JSON.parse(localStorage.getItem('user')),
         };
     }
 
@@ -53,6 +54,11 @@ export default class SideBar extends Component {
 
     
     render (){
+      if(this.state.profilePhoto.image === null ){
+        this.setState({
+            profilePhoto: {image: nav_users_selected_icon}
+        })
+    }
 
 
         return(
@@ -84,7 +90,7 @@ export default class SideBar extends Component {
                   </NavItem>
 
                   <NavItem style= {{display: 'flex'}}>
-                      <img style= {{maxWidth: '20px'}} alt= "profile" src = {nav_users_selected_icon}/>
+                      <Image style= {{maxWidth: '20px'}} alt= "profile" src = {nav_users_selected_icon}/>
                       <NavLink href="/Profile">
                           Profil
                       </NavLink>

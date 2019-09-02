@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import ProfileInfo from './ProfileInfo';
 import ChangePassword from './ChangePassword';
-import SideBar from '../layout/SideBar';
+import SideBarUser from '../layout/SideBarUser';
 import {Redirect} from 'react-router-dom';
 
-export default class Profile extends Component {
+export default class ProfileUser extends Component {
 
     constructor(props) {
         super(props)
@@ -26,8 +26,6 @@ export default class Profile extends Component {
         this.setState({
             renderChangePassword: true
         })
-        console.log('heey')
-        console.log(this.state.renderChangePassword)
     }
 
     ChangePasswordComponent(){
@@ -41,7 +39,7 @@ export default class Profile extends Component {
     render() {
         return (
             <div style ={{display:'flex', background:'#e7e7e7'}}>
-                <SideBar/>
+                <SideBarUser/>
                 <div className='profile-container'>
                     <ProfileInfo
                     ChangePassword = {this.showChangePassword}/>
