@@ -2,10 +2,8 @@ import React, { Component } from "react";
 import Header from './layout/Header';
 import Footer from './layout/Footer';
 import {  Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
-import { BrowserRouter as Redirect } from 'react-router-dom';
-// import icon_hidden from '../assets/log_in_lozinka_hiden_icon.svg';
+import { Redirect } from 'react-router-dom';
 import icon_show from '../assets/log_in_lozinka_icon.svg';
-import axios from "axios";
 import md5 from 'md5';
 import consts from '../lib/const';
 
@@ -23,16 +21,6 @@ export default class Register extends Component {
       token: "",
     };
   }
-
-        // Local Storage
-  handleFormSubmit = () => {
-    const { user, rememberMe, token } = this.state;
-    localStorage.setItem('rememberMe', rememberMe);
-    localStorage.setItem('user', JSON.stringify(user));
-    localStorage.setItem('token', token);
-
-    console.log('user', JSON.parse(localStorage.getItem("user")))
-  };
 
       // remember me checkbox
   handleChange = event => {
@@ -75,6 +63,11 @@ export default class Register extends Component {
       if(json.data.error){
         return this.checkIfError(json)
       }else{
+        const user = json.data.user;
+        const token = json.data.user.jwt;
+        localStorage.setItem('rememberMe', this.state.rememberMe);
+        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('token', token);
         return this.setRedirectToMiddle();
       }
       }
@@ -98,12 +91,6 @@ export default class Register extends Component {
     this.setState({
       redirectToMiddle: true
     })
-  }
-
-  renderRedirectToMiddle = () => {
-    if (this.state.redirectToMiddle) {
-      return <Redirect to='/MiddleScreen' />
-    }
   }
 
   validateForm() {
@@ -130,7 +117,7 @@ export default class Register extends Component {
                     </p>
                 <p style={{ fontWeight: 'bold' }}>
                   Prijavite se putem OIB-a
-                    </p>
+                </p>
 
               </div>
             </div>
@@ -148,7 +135,6 @@ export default class Register extends Component {
                     value={this.state.oib}
                     onChange={this.handleChange}
                   />
-
                 </FormGroup>
 
                 <FormGroup controlId="email" bssize="small">
@@ -191,9 +177,8 @@ export default class Register extends Component {
                 </FormGroup>
 
                 <div className="register-btn-container">
-                  {this.renderRedirectToMiddle()}
                   <Button
-                    className="btn-register"
+                    className="btn-register bold-btn"
                     bssize="large"
                     variant="primary"
                     block

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SideBar from '../layout/SideBar';
 import MapContainer from '../MapContainer';
-import {  Button } from "react-bootstrap";
+import {  Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import back_icon from '../../assets/back_icon.svg';
 
 
@@ -66,7 +66,7 @@ class NewRequest extends Component {
               <div className="new-request-title">
                 <div className="back-btn-container">
                 <Button
-                  className="btn-back"
+                  className="btn-back bold-btn"
                   color="primary"
                   size="sm"
                   href="/Requests">
@@ -75,7 +75,7 @@ class NewRequest extends Component {
                 </div>
 
                 <div className="title-request">
-                  <p style={{ textAlign: 'center', fontSize: '25px' }}>
+                  <p style={{ textAlign: 'center', fontSize: '25px', fontFamily: 'American Typewriter Bold, serif'}}>
                     Novi Zahtjev
                       </p>
                 </div>
@@ -88,39 +88,64 @@ class NewRequest extends Component {
             </div>
 
             <form>
-              <label htmlFor="name">Naslov:</label>
-              <div className="input-field">
-                <input type="text" name="title" ref="title" />
-              </div>
+              <FormGroup bssize="large">
+                <FormLabel>Naslov:</FormLabel>
+                <FormControl
+                  className="border-none"
+                  required
+                  autoFocus
+                  type="text"
+                  name="title"
+                  ref="title"
+                  />
+              </FormGroup>
 
-              <label htmlFor="type">Tip zahtjeva:</label>
-              <div className="input-field">
-                <select ref="Request_type">
-                  <option value="kvar" name="kvar">Kvar</option>
-                  <option value="prijedlog" name="prijedlog">Prijedlog</option>
-                </select>
-              </div>
+              <FormGroup>
+                <label htmlFor="type">Tip zahtjeva:</label>
+                <div className="input-field">
+                  <select ref="Request_type">
+                    <option value="kvar" name="kvar">Kvar</option>
+                    <option value="prijedlog" name="prijedlog">Prijedlog</option>
+                  </select>
+                </div>
+              </FormGroup>
 
-              <label htmlFor="photo" action="intern2019.def.clover.studio/requests/new" method="POST" encType="multipart/form-data">Datoteka:</label>
-              <div className="input-field">
-                <input type="file" name="photo" id="exampleFile" ref="photo" />
-              </div>
+              <FormGroup>
+                <label htmlFor="photo" action="intern2019.def.clover.studio/requests/new" method="POST" encType="multipart/form-data">Datoteka:</label>
+                <div className="input-field">
+                  <input type="file" name="photo" id="exampleFile" ref="photo" />
+                </div>
+              </FormGroup>
 
-              <label htmlFor="city">Poruka:</label>
-              <div className="input-field">
-                <input type="text" name="message" ref="message" />
-              </div>
+              <FormGroup bssize="large">
+                <FormLabel>Poruka:</FormLabel>
+                <FormControl
+                  className="border-none"
+                  required
+                  autoFocus
+                  type="text"
+                  name="message"
+                  ref="message"
+                  />
+              </FormGroup>
 
-
-              <label htmlFor="address">Upišite lokaciju:</label>
-              <div className="input-field">
-                <input type="text" name="address" ref="address" />
-              </div>
+              <FormGroup bssize="large">
+                <FormLabel>Upišite lokaciju:</FormLabel>
+                <FormControl
+                  className="border-none"
+                  required
+                  autoFocus
+                  type="text"
+                  name="address"
+                  ref="address"
+                  />
+              </FormGroup>
 
               <MapContainer/>
 
               <div className="two-btns-request">
                 <Button
+                  className="bold-btn"
                   color="primary"
                   type="submit"
                   onClick={this.onSubmit.bind(this)}>
@@ -128,15 +153,13 @@ class NewRequest extends Component {
                 </Button>{' '}
 
                 <Button
-                  className="outd-btn"
+                  className="outd-btn bold-btn"
                   color="primary"
                   href="/Requests">
                   Poništi zahtjev
                 </Button>{' '}
-
-              </div>
+               </div>
             </form>
-
           </div>
         </div>
       </div>

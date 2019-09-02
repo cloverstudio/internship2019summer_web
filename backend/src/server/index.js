@@ -4,6 +4,7 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const config = require('./config');
 const cors = require('cors');
+const path = require('path');
 
 app.use(cors());
 
@@ -33,6 +34,8 @@ app.use(passport.session());
 
 // Initialize routes
 app.use('/', routes);
+
+app.use(express.static(path.join(__dirname, '../../../../' +'public')))
 
 app.set('view engine', 'ejs');
 app.listen(port, () => console.log(`Listening on port ${ port }`));

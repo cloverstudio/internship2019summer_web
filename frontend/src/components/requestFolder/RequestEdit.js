@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {Button} from 'react-bootstrap';
 import SideBar from '../layout/SideBar';
 import MapContainer from '../MapContainer';
-import {BrowserRouter as Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 
 export class RequestEdit extends Component {
@@ -18,6 +18,7 @@ export class RequestEdit extends Component {
       location_longitude: editItem.location_longitude,        
       message: editItem.message,
       photo: editItem.photo,
+      redirectToRequests: false
     }
   }
 
@@ -51,18 +52,34 @@ export class RequestEdit extends Component {
     }
     ).then(async (response)  => {
        const json = await response.json();
-      //  return <Redirect to='/Requests' />
-      console.log(json);
+       if(json.data.error) {
+        console.log('error')
+      } else {
+        this.setRedirectToRequests();
+      }
     }
     ).catch(e=>{
       console.log('err',e);
     })
+  }
+
+    setRedirectToRequests = () =>{
+      console.log("Evo");
+      this.setState({
+          redirectToRequests: true
+      })
     }
 
 
-  render(){
-    return (
+  render() {
+    if (this.state.redirectToRequests) {
+      console.log('Redirect....');
+      return <Redirect to='/Requests' />
+    }
 
+
+    return (
+      
       <div style={{display:'flex'}}>
         <SideBar />
         <div className="requests-container-gray">

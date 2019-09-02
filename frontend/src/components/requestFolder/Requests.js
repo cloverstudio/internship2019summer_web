@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import RequestItem from './RequestItem';
 import add_icon from '../../assets/add_icon.svg';
 import SideBar from '../layout/SideBar';
-import { CardDeck, Card } from 'react-bootstrap'
-import { throwStatement } from '@babel/types';
+import NoNewRequests from '../requestFolder/NoNewRequests';
+import { Card} from 'react-bootstrap';
 
 export class Requests extends Component {
   constructor() {
@@ -11,7 +11,8 @@ export class Requests extends Component {
 
     this.requests=[];
     this.state = {
-      filteredRequests: []
+      filteredRequests: [],
+      loadingDone: false
     }
   }
 
@@ -38,7 +39,8 @@ export class Requests extends Component {
 
           this.requests=json.data.requests;
           this.setState({
-            filteredRequests: json.data.requests
+            filteredRequests: json.data.requests,
+            loadingDone: true
           });
         })
     } catch (err) {
@@ -70,6 +72,27 @@ export class Requests extends Component {
       )
     })
 
+    if (this.state.loadingDone === false) {
+      return (
+        <div style={{ display: 'flex' }}>
+          <SideBar />
+          <div className="requests-container-gray">
+          </div>
+        </div>
+      )
+    }
+
+    if (this.state.loadingDone && this.requests.length == 0) {
+      return (
+        <div style={{ display: 'flex' }}>
+          <SideBar />
+          <div className="requests-container-gray">
+            <NoNewRequests />
+          </div>
+        </div>
+      )
+    }
+
     return (
       <div style={{ display: 'flex' }}>
         <SideBar />
@@ -88,21 +111,23 @@ export class Requests extends Component {
               </select>
             </div>
           </div>
-
-          <div className="new-requests-container">
-            <Card style={{ border: 'none' }}>
-              <a className="requests-icon" href="/NewRequest">
-                <img style={{ maxWidth: "200px" }} src={add_icon} alt="Add more" />
-                <div className="requests-text">
-                  <p>Novi zahtjev</p>
-                </div>
-              </a>
-            </Card>
-
-          </div>
-          <ul className="collection" style={{ listStyleType: 'none' }}>
-            {RequestItems}
-          </ul>
+            <div className="grid-container">
+              <div className="grid-item new-requests-container">
+                <Card style={{ border: 'none' }}>
+                  <a className="requests-icon" href="/NewRequest">
+                    <img style={{ maxWidth: "200px" }} src={add_icon} alt="Add more" />
+                    <div className="requests-text">
+                      <p>Novi zahtjev</p>
+                    </div>
+                  </a>
+                </Card>
+              </div>
+              <div className="">
+                <ul className="grid-item">
+                  {RequestItems}
+                </ul>
+              </div>
+            </div>
         </div>
       </div>
     )

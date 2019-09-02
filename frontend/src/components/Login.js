@@ -179,7 +179,7 @@ export default class Login extends Component {
                         </FormGroup>
 
                         <Button
-                        className="btn-login"
+                        className="btn-login bold-btn"
                         block
                         bssize="large"
                         disabled={!this.validateForm()}

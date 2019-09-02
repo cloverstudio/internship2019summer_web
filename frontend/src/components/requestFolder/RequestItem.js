@@ -28,7 +28,7 @@ render(){
     }
 
     return (
-      <li className="collection-item">
+      <li className="grid-item">
         <CardDeck>
           <Card>
             <Card.Img variant="top" src="holder.js/100px160" />

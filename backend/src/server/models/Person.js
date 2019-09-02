@@ -1,5 +1,6 @@
 const { Model } = require('objection'); 
 const UserRole = require('./UserRole');
+const Request = require('./Request');
 
 class Person extends Model {
     static get tableName() {
@@ -12,9 +13,18 @@ class Person extends Model {
                 modelClass: UserRole,
                 join: {
                     from: 'persons.id',
-                    to: 'userRoles.id'
+                    to: 'userRoles.userRolesId'
+                }
+            },
+            request: {
+                relation: Model.HasManyRelation,
+                modelClass: Request,
+                join: {
+                    from: 'persons.id',
+                    to: 'requests.userID'
                 }
             }
+
         };
     }
 } 
