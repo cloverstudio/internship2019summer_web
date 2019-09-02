@@ -3,7 +3,7 @@ import RequestItem from './RequestItem';
 import add_icon from '../../assets/add_icon.svg';
 import SideBar from '../layout/SideBar';
 import NoNewRequests from '../requestFolder/NoNewRequests';
-import { CardDeck, Card } from 'react-bootstrap';
+import { Card} from 'react-bootstrap';
 
 export class Requests extends Component {
   constructor() {
@@ -111,8 +111,8 @@ export class Requests extends Component {
               </select>
             </div>
           </div>
-          <div className="container-collection">
-              <div className="new-requests-container">
+            <div className="grid-container">
+              <div className="grid-item new-requests-container">
                 <Card style={{ border: 'none' }}>
                   <a className="requests-icon" href="/NewRequest">
                     <img style={{ maxWidth: "200px" }} src={add_icon} alt="Add more" />
@@ -121,12 +121,13 @@ export class Requests extends Component {
                     </div>
                   </a>
                 </Card>
-
               </div>
-              <ul className="collection" style={{ listStyleType: 'none' }}>
-                {RequestItems}
-              </ul>
-          </div>
+              <div className="">
+                <ul className="grid-item">
+                  {RequestItems}
+                </ul>
+              </div>
+            </div>
         </div>
       </div>
     )

@@ -117,7 +117,7 @@ export default class Register extends Component {
                     </p>
                 <p style={{ fontWeight: 'bold' }}>
                   Prijavite se putem OIB-a
-                    </p>
+                </p>
 
               </div>
             </div>
@@ -135,7 +135,6 @@ export default class Register extends Component {
                     value={this.state.oib}
                     onChange={this.handleChange}
                   />
-
                 </FormGroup>
 
                 <FormGroup controlId="email" bssize="small">
@@ -179,7 +178,7 @@ export default class Register extends Component {
 
                 <div className="register-btn-container">
                   <Button
-                    className="btn-register"
+                    className="btn-register bold-btn"
                     bssize="large"
                     variant="primary"
                     block
