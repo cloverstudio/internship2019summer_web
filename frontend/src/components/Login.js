@@ -5,6 +5,7 @@ import Header from './layout/Header';
 import {BrowserRouter as Router, Link, Redirect} from 'react-router-dom';
 import md5 from 'md5';
 import consts from '../lib/const';
+import swal from 'sweetalert';
 
 
 export default class Login extends Component {
@@ -114,9 +115,9 @@ export default class Login extends Component {
 
   checkIfError = (json) =>{
     if(json.data.error.error_code == consts.errorEmail){
-      return console.log('Oib se vec koristi');
+      return swal("Greška",'Krivi email!','error');
     }else if(json.data.error.error_code == consts.errorPassword){
-      return console.log('email se vec koristi')
+      return swal("Greška",'Krivi password!','error')
     }
     }
 

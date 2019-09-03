@@ -66,10 +66,10 @@ export class Users extends Component {
             const json = await response.json();
             console.log(json);
             console.log(json.data.error)
-            if(json.data.error.error_code === '1006'){
+            /*if(json.data.error.error_code === '1006'){
                 //ne radi redirect iz nekog razloga
                 return <Redirect to ='/'/>
-              }
+              }*/
             const mapUsers = json.data.user.map(user => {
                 return user;
             })
@@ -123,7 +123,7 @@ export class Users extends Component {
             <div style={{display:'flex', background:'#e7e7e7'}}>
                 <SideBar/>
                 <Container style={{margin:"0", background:'#e7e7e7'}}>
-                    <Row>
+                    <Row style={{display:'flex'}}>
                     <Search searchChange = {this.onSearchChange} />
                     <Button className="btn-new-user col"
                     onClick = {this.setRedirectAddNewUser}>

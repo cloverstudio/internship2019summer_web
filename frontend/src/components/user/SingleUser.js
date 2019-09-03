@@ -32,7 +32,7 @@ export default class SingleUser extends Component {
             return (
 
             <div className="user" onClick = {this.setredirectToEdit} id={this.props.user.ID}>
-                <Image className="profile-photo" src={this.state.linkToPhoto + `${this.props.user.image}`} alt="" />
+                <Image className="profile-photo" src={this.state.linkToPhoto+`${this.props.user.image}`} alt="" />
                 <div className="user-info">
                     <h3>{this.props.user.firstName} {this.props.user.lastName}</h3>
                     <p>{this.props.user.email}</p>

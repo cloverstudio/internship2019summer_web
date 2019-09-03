@@ -38,13 +38,15 @@
 //users.js
 .btn-new-user{
     display: flex;
-    width: 30%;
+    max-width: 30%;
+    height: 40px;
     background: #0076ff;
     color: white;
     font-size: 1.2rem;
     align-content: center;
     justify-content: center;
     font-family: 'American Typewriter Bold', serif;
+    margin: 0;
 }
 .btn-new-user > svg {
     max-width: 20px;
@@ -56,9 +58,7 @@
 
 //AddNewUser.js
 .new-user-form{
-    width: 40%;
     border-radius: 5px;
-    margin-left: 20px;
     
 }
 
@@ -82,14 +82,9 @@
 }
 
 .new-user-form-container{
-    padding-top: 30px;
+    padding: 20px;
 }
 .add-user-photo{
     display: flex;
-
-}
-
-.add-user-photo > img {
-    border-radius: 20px;
-    display: flex;
+    justify-content: center;
 }
