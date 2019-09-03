@@ -50,16 +50,17 @@ export class AddNewUser extends Component {
   handleSubmit = async (event) => {
     console.log(this.state.images)
     const data = new FormData()
-    data.append('image', `https://intern2019dev.clover.studio/uploads/photos/${this.state.images}`)
+    data.append('photo', this.state.images);
     event.preventDefault();
     this.separateName(this.state.name);
-    /*appendas sve u form data (znam da je seljacki), dalje
-    moras maknut iz headera content-type obaveznoo, pogledat uploadPhoto funkciju za dalje i link gore*/
     data.append('firstName', this.state.firstName)
     data.append('lastName', this.state.lastName)
-    data.append('email', this.state.email)
     data.append('oib', this.state.oib)
+    data.append('email', this.state.email)
     data.append('password', md5(this.state.password))
+    for(var pair of data.entries()) {
+      console.log(pair[0]+ ', '+ pair[1]); 
+    }
     await fetch('https://intern2019dev.clover.studio/users/newUser', {
       headers: {
         'Accept': 'application/json',
