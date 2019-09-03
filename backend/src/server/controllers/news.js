@@ -17,7 +17,7 @@ router.post('/new', upload.any(), async (req,res) => {
     let getFileNames = fileUploadFunctions.allFilesCheck(req.files);
 
     if (getFileNames.images) { //save all images into imageName
-        imageName = JSON.stringify(getFileNames.images )
+        imageName = JSON.stringify(getFileNames.images);
     }
     if (getFileNames.files) { ///save all other files into fileName
         fileName = JSON.stringify(getFileNames.files)
@@ -45,7 +45,7 @@ router.put('/edit/:id', upload.any(), async (req,res) => {
     let getFileNames = fileUploadFunctions.allFilesCheck(req.files);
 
     if (getFileNames.images) { //save all images into imageName
-        imageName = JSON.stringify(getFileNames.images )
+        imageName = JSON.stringify(getFileNames.images)
     }
     if (getFileNames.files) { //save all other files into fileName
         fileName = JSON.stringify(getFileNames.files)

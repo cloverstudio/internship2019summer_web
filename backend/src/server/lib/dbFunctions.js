@@ -62,6 +62,7 @@ async function findAllUsersBy(findBy) {
     let allUsers = await knex('persons')
     .where('firstName', 'like', `%${findBy}%`)
     .orWhere('lastName', 'like', `%${findBy}%`)
+    .orWhere('name', 'like', `%${findBy}%`)
     .orWhere('oib', 'like', `%${findBy}%`)
     .orWhere('email', 'like', `%${findBy}%`)
 
@@ -90,13 +91,18 @@ async function userAlreadyExists(email, oib, id) {
         return {error: {"error_code": consts.responseErrorRegisterEmailAlreadyExists.error_code, "error_description": consts.responseErrorRegisterEmailAlreadyExists.error_description }};
     }
 }
-async function insertNewUser(firstName, lastName, email, oib, password, photoName) {
+async function insertNewUser(firstName, lastName, email, oib, password, name, photoName) {
+    let firstNameAdd = firstName || undefined;
+    let lastNameAdd = lastName || undefined;
+    let nameAdd = name || undefined;
+
     let user = await userAlreadyExists(email, oib);
 
     if (!user) {
         let newUser = await Person.query().insertGraph({
-            firstName: firstName,
-            lastName: lastName,
+            firstName: firstNameAdd,
+            lastName: lastNameAdd,
+            name: nameAdd,
             email: email,
             personsRoleId: 2,
             oib: oib,
@@ -229,9 +235,22 @@ async function updateNews(newsObj, image, file, id) {
 }
 
 async function getAllNews() {
+    let createdAtDateFromat;
+    let updatedAtDateFormat;
     let allNews = await knex.from('news')
     .innerJoin('persons', 'news.MadeBy', 'persons.ID')
     .select('firstName', 'lastName', 'Title', 'news.ID', 'Location_latitude', 'Location_longitude', 'Address', 'Message', 'CreatedAt', 'UpdatedAt', 'Files', 'Images');
+    for (let i = 0; i < allNews.length; i++) {
+        if (allNews[i].CreatedAt != null) {
+            createdAtDateFromat = new Date(allNews[i].CreatedAt);
+            allNews[i].CreatedAt = createdAtDateFromat.getDate() + '.' + parseInt(createdAtDateFromat.getMonth() + 1 ) +'.' + createdAtDateFromat.getFullYear() + '.';
+        }
+
+        if (allNews[i].UpdatedAt != null) {
+            updatedAtDateFormat = new Date(allNews[i].UpdatedAt);
+            allNews[i].UpdatedAt = updatedAtDateFormat.getDate() + '.' + parseInt(updatedAtDateFormat.getMonth() + 1 ) + '.' + updatedAtDateFormat.getFullYear() + '.';
+        }
+    }
     return allNews;
 }
 

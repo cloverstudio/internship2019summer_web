@@ -29,7 +29,8 @@ router.post('/login', async (req, res) => {
 
 router.post('/register', async (req, res) => {
     let user = req.body;
-    let response = await dbFunctions.insertNewUser(user.firstName, user.lastName, user.email, user.oib, user.password)
+    let response = await dbFunctions.insertNewUser(user.firstName, user.lastName, user.email, user.oib, user.password, user.name)
+
     try{
         if (response.error) {
             res.json({ 'data': response
@@ -53,8 +54,8 @@ router.post('/register', async (req, res) => {
         return res.status(440).json(securityCheck);
     }
 
-    let data = await dbFunctions.insertNewUser(user.firstName, user.lastName, user.email, user.oib, user.password, imagePath);
-
+    let data = await dbFunctions.insertNewUser(user.firstName, user.lastName, user.email, user.oib, user.password, user.name, imagePath);
+    
     // if email/oib are taken
     if (data.error) {
         res.json({
