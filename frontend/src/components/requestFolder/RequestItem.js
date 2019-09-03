@@ -32,9 +32,10 @@ render(){
         <Card>
             <Card.Body>
               <Card.Title> 
-                <div onClick={this.setRedirectToDetails}>
-                  <a href="#">
-                    {this.state.item.Title}
+                <div onClick={this.setRedirectToDetails} style={{fontFamily: 'American Typewriter Bold', color: 'black'}}>
+                  <a href="#" style={{color: 'black'}}>
+                    {this.state.item.Title} <br></br>
+                    Tip: {this.state.item.Request_type}
                   </a> 
                 </div>
               </Card.Title>

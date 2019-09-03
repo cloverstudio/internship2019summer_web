@@ -154,7 +154,7 @@ class NewRequest extends Component {
 
               <div className="two-btns-request">
                 <Button
-                  className="bold-btn"
+                  className="bold-btn blue-btn"
                   color="primary"
                   type="submit"
                   onClick={this.onSubmit.bind(this)}>
@@ -162,7 +162,7 @@ class NewRequest extends Component {
                 </Button>{' '}
 
                 <Button
-                  className="outd-btn bold-btn"
+                  className="outd-btn bold-btn blue-btn"
                   color="primary"
                   href="/Requests">
                   Poništi zahtjev

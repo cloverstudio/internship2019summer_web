@@ -47,16 +47,26 @@ form {
     margin-top: 70px;
 }
 
+.blue-btn {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
 .outd-btn {
     background: white;
     color: #007bff;
 }
 
 .two-btns-request {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    white-space: nowrap;
     position: absolute;
-    bottom: 6%;
-    left: 45%;
-    margin: 15px
+    top: 80%;
+    left: 58%;
+    transform: translate(-50%, -50%);
 }
 
 .btn-back {
