@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Redirect} from 'react-router-dom';
-import {CardDeck, Card} from 'react-bootstrap'
+import {CardDeck, Card, Row, Col} from 'react-bootstrap'
 
 
 export class RequestItem extends Component {
@@ -28,10 +28,8 @@ render(){
     }
 
     return (
-      <li className="grid-item">
-        <CardDeck>
-          <Card>
-            <Card.Img variant="top" src="holder.js/100px160" />
+      <Col md="4">
+        <Card>
             <Card.Body>
               <Card.Title> 
                 <div onClick={this.setRedirectToDetails}>
@@ -43,13 +41,13 @@ render(){
               <Card.Text>
                 {this.state.item.message}
               </Card.Text>
+              <Card.Img variant="top" src="https://via.placeholder.com/150x100" />
               <Card.Text>
                 {this.state.item.Address}
               </Card.Text>
             </Card.Body>
           </Card>
-        </CardDeck>
-      </li>
+      </Col>
       
     )
   }

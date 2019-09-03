@@ -4,16 +4,6 @@
   width: 100%;
 }
 
-
-// .new-requests-container {
- 
-//   display: inline-block;
-//   background-color: white;
-//   margin: 30px;
-//   padding: 40px 70px;
-
-// }
-
 .requests-text {
 
   color: #0076ff;
@@ -27,26 +17,44 @@
 
 .filter{
   width: 340px;
-  font-size: 30px;
-  margin-left: 30px;
-  margin-top: 10px;
+  font-size: 25px;
+  margin-left: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   color: #0076ff;
   background-color: white;
   border: none;
+  font-family: "American Typewriter Bold", serif;
 }
 
-// ul li {
-//   margin: 20px;
-//   display: -webkit-box;
-//   list-style-type: none;
-// }
-
-
-.grid-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  padding: 10px;
-  grid-column-gap: 30px;
-  grid-row-gap: 30px;
-
+.container-wide {
+  padding-right: 30px;
+  padding-left: 30px;
 }
+
+.card {
+  height: 350px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+
+a.card-inner {
+  height: 100%;
+  width: 100%;
+}
+a.card-new-request {
+  text-align: center;
+}
+
+.card-new-request-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+img.card-img-top {
+  height: 200px;
+}
+
+

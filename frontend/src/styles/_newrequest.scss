@@ -1,7 +1,33 @@
 .new-request-white-container {
     background-color: white;
-    padding: 50px;
+    padding: 20px;
     height: 90vh;
+    margin: 70px;
+}
+
+.new-request-title{
+    text-align: center;
+    font-size: 20px;
+}
+
+form {
+    font-size: 18px;
+}
+
+.filter-gray{
+    width: 340px;
+    font-size: 20px;
+    margin-left: 30px;
+    margin-top: 10px;
+    color: #0076ff;
+    background-color:#e7e7e7;
+    border: none;
+    font-family: "American Typewriter Bold", serif;
+  }
+
+.title-request {
+    font-size: 25px; 
+    font-family: "American Typewriter Bold", serif;
 }
 
 .bold-btn{
@@ -10,8 +36,15 @@
 
 .dropdown-btn Button{
     background: #e7e7e7;
-    color: #0076ff;
-    
+    color: #0076ff; 
+}
+
+.type {
+    margin-bottom: 70px;
+}
+
+.message-container {
+    margin-top: 70px;
 }
 
 .outd-btn {
@@ -26,18 +59,6 @@
     margin: 15px
 }
 
-.row {
-    padding: 20px;
-    display: table;
-    width: 100%; /*Optional*/
-    table-layout: fixed; /*Optional*/
-    border-spacing: 10px; /*Optional*/
-}
-
-.column {
-    display: table-cell
-}
-
 .btn-back {
     background: #e7e7e7;
     font-size: 19px;
@@ -49,6 +70,7 @@
     background-repeat: no-repeat;
     background-position: left center;
     border-radius: 6px;
+    position: absolute;
 }
 
 .border-none {
