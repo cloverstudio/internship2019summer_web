@@ -80,9 +80,7 @@ export class Requests extends Component {
           </div>
         </div>
       )
-    }
-
-    if (this.state.loadingDone && this.requests.length == 0) {
+    } else if (this.state.loadingDone === true && this.requests.length == 0) {
       return (
         <div style={{ display: 'flex' }}>
           <SideBar />
@@ -91,6 +89,8 @@ export class Requests extends Component {
           </div>
         </div>
       )
+    } else {
+      
     }
 
     return (
