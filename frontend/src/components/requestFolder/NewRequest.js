@@ -59,7 +59,7 @@ class NewRequest extends Component {
       <div style={{ display: 'flex' }}>
         <SideBar />
 
-        <div className="requests-container-gray">
+        <div className="container-gray">
           <div className="new-request-white-container">
 
             <div className="form-header">

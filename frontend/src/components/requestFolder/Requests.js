@@ -76,7 +76,7 @@ export class Requests extends Component {
       return (
         <div style={{ display: 'flex' }}>
           <SideBar />
-          <div className="requests-container-gray">
+          <div className="container-gray">
           </div>
         </div>
       )
@@ -84,7 +84,7 @@ export class Requests extends Component {
       return (
         <div style={{ display: 'flex' }}>
           <SideBar />
-          <div className="requests-container-gray">
+          <div className="container-gray">
             <NoNewRequests />
           </div>
         </div>
@@ -96,7 +96,7 @@ export class Requests extends Component {
     return (
       <div style={{ display: 'flex' }}>
         <SideBar />
-        <div className="requests-container-gray">
+        <div className="container-gray">
 
           <div className="filter-type container-fluid container-wide">
             <div className="input-field row">
