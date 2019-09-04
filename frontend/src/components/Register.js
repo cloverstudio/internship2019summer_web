@@ -18,7 +18,7 @@ export default class Register extends Component {
       redirectToMiddle: false,
       passwordShow: false,
       rememberMe: false,
-      token: "",
+      token: ""
     };
   }
 
@@ -57,12 +57,10 @@ export default class Register extends Component {
         })
       }
       ).then(async (response)  => {
-         const json = await response.json();
-      console.log(json);
-      console.log(json.data.error)
-      if(json.data.error){
-        return this.checkIfError(json)
-      }else{
+      const json = await response.json();
+      if(json.data.error) {
+        return this.checkIfError(json.data.error);
+      } else {
         const user = json.data.user;
         const token = json.data.user.jwt;
         localStorage.setItem('rememberMe', this.state.rememberMe);
@@ -76,13 +74,13 @@ export default class Register extends Component {
       })
       }
 
-      checkIfError = (json) =>{
-        if(json.data.error.error_code == consts.errorOIBInUse){
-          return console.log('Oib se vec koristi');
-        }else if(json.data.error.error_code == consts.errorEmailInUse){
-          return console.log('email se vec koristi')
+      checkIfError = (error) =>{
+        if(error.error_code == consts.errorOIBInUse.error_code) {
+          alert(consts.errorOIBInUse.error_description);
+        } else if(error.error_code == consts.errorEmailInUse.error_code) {
+          alert(consts.errorEmailInUse.error_description);
         }
-        }
+      }
       
       
           // API poziv
@@ -123,7 +121,6 @@ export default class Register extends Component {
             </div>
             <div className="form-info">
               <form  className="name-form">
-
                 <FormGroup controlId="oib" bssize="large">
                   <FormLabel>OIB:</FormLabel>
                   <FormControl
@@ -168,7 +165,6 @@ export default class Register extends Component {
                 <FormGroup style={{textAlign: 'center', fontSize: '18px'}}>
                   <input
                     className="remember-me"
-                    style={{textAlign: 'center'}}
                     id='rememberMe'
                     type="checkbox"
                     checked={this.state.rememberMe}

@@ -38,7 +38,7 @@ export default class SideBar extends Component {
 
 
     componentDidMount() {
-        if(!localStorage.getItem('user')){
+        if(!localStorage.getItem('token')){
             this.setRedirectLogin();
         } else {
             console.log('Using data from localStorage');

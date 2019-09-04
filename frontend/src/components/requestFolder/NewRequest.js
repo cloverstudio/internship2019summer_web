@@ -34,7 +34,7 @@ class NewRequest extends Component {
   }
 
   onSubmit(e) {
-    console.log(this.refs.photo.value);
+    console.log(this.refs.image.value);
     e.preventDefault();
     const addNewRequest = {
       Title: this.refs.title.value,
@@ -43,7 +43,7 @@ class NewRequest extends Component {
       // location_latitude: this.refs.location_latitude.value, 
       // location_longitude: this.refs.location_longitude.value,        
       message: this.refs.message.value,
-      photo: this.refs.photo.value
+      image: this.refs.image.value
 
     }
     console.log(addNewRequest);
@@ -114,9 +114,19 @@ class NewRequest extends Component {
                         </FormGroup>
 
                         <FormGroup>
-                          <label htmlFor="photo" action="intern2019.def.clover.studio/requests/new" method="POST" encType="multipart/form-data">Datoteka:</label>
+                          <label 
+                            htmlFor="image" 
+                            action="intern2019.def.clover.studio/requests/new" 
+                            method="POST" encType="multipart/form-data"
+                          >Datoteka:
+                          </label>
                           <div className="input-field">
-                            <input type="file" name="photo" id="exampleFile" ref="photo" />
+                            <input 
+                              type="file" 
+                              name="image" 
+                              id="exampleFile" 
+                              ref="image" 
+                            />
                           </div>
                         </FormGroup>
                       </Col>

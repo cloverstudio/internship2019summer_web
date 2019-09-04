@@ -17,7 +17,7 @@ export class RequestEdit extends Component {
       location_latitude: editItem.location_latitude, 
       location_longitude: editItem.location_longitude,        
       message: editItem.message,
-      photo: editItem.photo,
+      image: editItem.image,
       redirectToRequests: false
     }
   }
@@ -47,7 +47,7 @@ export class RequestEdit extends Component {
         location_latitude: this.state.location_latitude, 
         location_longitude: this.state.location_longitude,        
         message: this.state.message,
-        photo: this.state.photo
+        image: this.state.image
       })
     }
     ).then(async (response)  => {
@@ -131,15 +131,15 @@ export class RequestEdit extends Component {
                   </FormGroup>
 
                   <FormGroup>
-                    <label htmlFor="photo" action="intern2019.def.clover.studio/requests/new" method="POST" encType="multipart/form-data">Datoteka:</label>
+                    <label htmlFor="image" action="intern2019.def.clover.studio/requests/new" method="POST" encType="multipart/form-data">Datoteka:</label>
                     <div className="input-field">
                       <input 
                         type="file" 
-                        name="photo" 
+                        name="image" 
                         id="exampleFile" 
-                        ref="photo" 
-                        id="photo" 
-                        defaultValue={this.state.photo}
+                        ref="image" 
+                        id="image" 
+                        defaultValue={this.state.image}
                         onChange={this.handleChange}
                       />
                     </div>
