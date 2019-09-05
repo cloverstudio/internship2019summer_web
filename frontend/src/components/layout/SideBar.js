@@ -4,6 +4,8 @@ import moj_grad_logo from '../../assets/moj_grad_logo.svg';
 import nav_news_selected_icon from '../../assets/nav_news_selected_icon.svg';
 import nav_requests_selected_icon from '../../assets/nav_requests_selected_icon.svg'; 
 import nav_users_selected_icon from '../../assets/nav_users_selected_icon.svg';
+import {Image} from 'react-bootstrap';
+import SideBarUser from './SideBarUser';
 
 import { NavItem, NavLink } from 'reactstrap';
 
@@ -12,7 +14,8 @@ export default class SideBar extends Component {
         super(props);
           this.state = {
               RedirectLogin: false,
-              
+              profilePhoto: JSON.parse(localStorage.getItem('user')),
+              userRole: JSON.parse(localStorage.getItem('user'))
         };
     }
 
@@ -38,7 +41,7 @@ export default class SideBar extends Component {
 
 
     componentDidMount() {
-        if(!localStorage.getItem('user')){
+        if(!localStorage.getItem('token')){
             this.setRedirectLogin();
         } else {
             console.log('Using data from localStorage');
@@ -53,8 +56,11 @@ export default class SideBar extends Component {
 
     
     render (){
-
-
+      if(this.state.userRole.personsRoleId === 2){
+        console.log(this.state.userRole.personsRoleId)
+        return <SideBarUser/>
+      }
+    
         return(
           <div className="sidebar-container" style={{background:'#ffffff'}}>
             <div className="bar-img">
@@ -71,7 +77,7 @@ export default class SideBar extends Component {
 
                   <NavItem style= {{display: 'flex', marginBottom: '20px'}}>
                       <img style= {{maxWidth: '20px'}} alt= "request icon" src = {nav_requests_selected_icon} />
-                      <NavLink href="/NoNewRequests">
+                      <NavLink href="/Requests">
                           Zahtjevi
                       </NavLink>
                   </NavItem>
@@ -84,7 +90,7 @@ export default class SideBar extends Component {
                   </NavItem>
 
                   <NavItem style= {{display: 'flex'}}>
-                      <img style= {{maxWidth: '20px'}} alt= "profile" src = {nav_users_selected_icon}/>
+                      <Image style= {{maxWidth: '20px'}} alt= "profile" src = {nav_users_selected_icon}/>
                       <NavLink href="/Profile">
                           Profil
                       </NavLink>
@@ -93,7 +99,7 @@ export default class SideBar extends Component {
 
                 <div className="bar-logout-container">
                     <NavItem style= {{display: 'flex'}}>
-                    <img style= {{maxWidth: '20px'}} alt= "profile" src = {nav_users_selected_icon} /> 
+                    <Image style= {{maxWidth: '20px'}} alt= "profile" src = {nav_users_selected_icon} /> 
                     <Link
                       to = "/" 
                       className="linkLogin" 

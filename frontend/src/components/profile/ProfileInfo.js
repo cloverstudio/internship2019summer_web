@@ -1,121 +1,176 @@
 import React, { Component } from 'react'
 import { FormGroup, FormControl, FormLabel, Button, Image } from 'react-bootstrap';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import swal from 'sweetalert';
 import no_content_icon from '../../assets/no_content_icon.svg';
-
+import consts from '../../lib/const';
+import nav_users_icon from '../../assets/nav_users_icon.svg'
 
 export default class ProfileInfo extends Component {
 
     constructor(props) {
         super(props)
-        
+
         this.state = {
-             profileData: JSON.parse(localStorage.getItem('user')),
-             images: no_content_icon,
-        }
-    }
-    
-
-    componentWillMount(){
-        if(!localStorage.getItem('token')){
-            return <Redirect to ='/'/>
+            profileData: JSON.parse(localStorage.getItem('user')),
+            images: null,
+            linkToPhoto: 'https://intern2019dev.clover.studio/uploads/photos/',
+            changedFields: {},
         }
     }
 
-    handleChange = event => {
+
+    componentDidMount() {
+        if (!localStorage.getItem('token')) {
+            return <Redirect to='/' />
+        }
+    }
+
+    handleChange = (event) => {
+
         this.setState({
-          [event.target.id]: event.target.value
+            [event.target.id]: event.target.value,
+            changedFields: {
+                ...this.state.changedFields,
+                [event.target.id]: event.target.value
+            }
         });
     }
 
-    uploadImages = () => {
+    joinName(){
+        const name = this.state.profileData.firstName.concat(" ")
+        name = name.concat(this.state.profileData.lastName)
         this.setState({
-            // eslint-disable-next-line no-restricted-globals
-            images: URL.createObjectURL(event.target.files[0])
+            name: name
         })
     }
 
-    onError = () => {
-        if(this.state.profileData.image === null){
-            return no_content_icon
+    uploadImages = (event) => {
+        this.setState({
+            images: event.target.files[0]
+        })
+    }
+
+    separateName = name => {
+        const splitString = name.split(' ');
+        console.log(splitString);
+        this.state.changedFields.firstName = splitString[0].trim();
+        this.state.changedFields.lastName = splitString[1].trim();
+      }
+
+      checkIfError = (json) => {
+        if (json.data.error.error_code == consts.errorEmail) {
+          return swal('Oib se vec koristi');
+        } else if (json.data.error.error_code == consts.errorPassword) {
+          return swal('email se vec koristi');
         }
       }
 
+
     handleSubmit = async (event) => {
+        const data = new FormData()
+        for ( var key in this.state.changedFields ) {
+            data.append(key, this.state.changedFields[key]);  
+            }
+        if(this.state.images !== this.state.profileData.image && this.state.images !== null ){
+            data.append('photo', this.state.images)
+        }
         event.preventDefault();
         await fetch('https://intern2019dev.clover.studio/users/myProfile', {
             method: 'PUT',
             headers: {
-                'Accept': 'multipart/form-data',
+                'Accept': 'application/json',
                 'Content-Type': 'multipart/form-data',
                 'token': localStorage.getItem('token')
             },
-            body: JSON.stringify({
-                //firstName: ,
-                //lastName:  ,
-                //oib: ,
-                xhrFields: {
-                    withCredentials: true
-                }
-        }).then(async (res) => {
-            const json = await res.json();
-            console.log(json);
-            swal("Uspješno!", "Vijest uspješno objavljena na portal Moj Grad", "success");
-        })
+            body: data 
+                .then(async (res) => {
+                    const json = await res.json();
+                    console.log(json);
+                    swal("Uspješno!", "Korisnički podatci promijenjeni", "success");
+                })
         }
         ).catch(e => {
             console.log(e);
-            swal("Greška!", "Vijest nije objavljena!", "error");
+            swal("Greška!", "Podatci nisu promijenjeni!", "error");
         })
     }
 
 
     render() {
+        if (this.state.profileData.image === null) {
+            this.setState({
+                profileData: {
+                    image: nav_users_icon
+                }
+            })
+        }
+
+
         return (
-            <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
-                <form style={{alignSelf:'center'}}>
-                    <FormGroup controlId='photo'>
-                    <input
-                                    type='file'
-                                    onChange={this.uploadImages}
-                                    style={{display:'none'}}
-                                    ref= {fileInput => this.fileInput = fileInput} />
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', alignContent: 'center', padding: '20px' }}>
+                <form style={{ alignSelf: 'center' }}>
+                    <FormGroup controlId='photo' style={{ display: 'flex', justifyContent: 'center' }}>
+                        <input
+                            type='file'
+                            onChange={this.uploadImages}
+                            style={{ display: 'none' }}
+                            ref={fileInput => this.fileInput = fileInput} />
                         <Image
-                        src = {this.onError()}
-                        roundedCircle
-                        style={{alignSelf:'center', width:'20%'}}
-                         />
+                            src={this.state.profileData.image}
+                            roundedCircle
+                            style={{ alignSelf: 'center', width: '40%' }}
+                            onClick={() => this.fileInput.click()}
+                            fluid
+                        />
                     </FormGroup>
 
                     <FormGroup controlId='name'>
                         <FormControl
-                        value={this.state.profileData.firstName + this.state.profileData.lastName} 
-                        required
-                        style={{alignSelf:'center'}}
+                            className='border-none'
+                            value={this.state.name}
+                            required
+                            onChange={this.handleChange}
+                            style={{ alignSelf: 'center' }}
                         />
                     </FormGroup>
 
                     <FormGroup controlId='oib'>
                         <FormControl
-                        required
-                        value = {this.state.profileData.oib}
-                        
+                            onChange={this.handleChange}
+                            className='border-none'
+                            required
+                            value={this.state.profileData.oib}
+
                         />
                     </FormGroup>
 
                     <FormGroup controlId='email'>
                         <FormControl
-                        required
-                        value = {this.state.profileData.email}
+                            onChange={this.handleChange}
+                            className='border-none'
+                            required
+                            value={this.state.profileData.email}
                         />
                     </FormGroup>
 
-                    <Button>Zaboravio/la sam lozinku!</Button>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <Button
+                            className='btn-cancel'
+                            onClick={this.props.ChangePassword}>
+                            Zaboravio/la sam lozinku!
+                    </Button>
+                    </div>
 
-                    <p>U slučaju da zaboravite lozinku, ovdje je možete resetirati</p>
+                    <p style={{ textAlign: 'center', padding: '20px' }}>U slučaju da zaboravite lozinku, ovdje je možete resetirati.</p>
 
-                    <Button onClick={this.handleSubmit}>Promijeni podatke</Button>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <Button
+                            className='btn-change'
+                            onClick={this.handleSubmit}>
+                            Promijeni podatke
+                    </Button>
+                    </div>
 
                 </form>
             </div>

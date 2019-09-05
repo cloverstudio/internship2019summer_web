@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import ProfileInfo from './ProfileInfo';
 import ChangePassword from './ChangePassword';
-import SideBar from '../layout/SideBar';
+import SideBarUser from '../layout/SideBarUser';
 import {Redirect} from 'react-router-dom';
-import ProfileUser from './ProfileUser';
+import Profile from './Profile';
 
-export default class Profile extends Component {
+
+export default class ProfileUser extends Component {
 
     constructor(props) {
         super(props)
@@ -18,7 +19,7 @@ export default class Profile extends Component {
     }
     
 
-    componentWillMount(){
+    componentDidMount(){
         if(!localStorage.getItem('token')){
            return <Redirect to ='/'/>
         }
@@ -28,8 +29,6 @@ export default class Profile extends Component {
         this.setState({
             renderChangePassword: true
         })
-        console.log('heey')
-        console.log(this.state.renderChangePassword)
     }
 
     ChangePasswordComponent(){
@@ -41,13 +40,13 @@ export default class Profile extends Component {
     
     
     render() {
-        if(this.state.userRole.personsRoleId === 2){
+        if(this.state.userRole.personsRoleId === 1){
             console.log(this.state.userRole.personsRoleId)
-            return <ProfileUser/>
+            return <Profile/>
           }
         return (
             <div style ={{display:'flex', background:'#e7e7e7'}}>
-                <SideBar/>
+                <SideBarUser/>
                 <div className='profile-container'>
                     <ProfileInfo
                     ChangePassword = {this.showChangePassword}/>

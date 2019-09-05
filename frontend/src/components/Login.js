@@ -3,9 +3,9 @@ import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import Footer from './layout/Footer';
 import Header from './layout/Header';
 import {BrowserRouter as Router, Link, Redirect} from 'react-router-dom';
-import axios from 'axios';
 import md5 from 'md5';
 import consts from '../lib/const';
+import swal from 'sweetalert';
 
 
 export default class Login extends Component {
@@ -19,6 +19,7 @@ export default class Login extends Component {
             error: '',
             rememberMe: false,
             token: "",
+            role: '',
             user: {
               id: 2323,
               name: 'djuro'
@@ -40,7 +41,6 @@ export default class Login extends Component {
       // remember me checkbox
   handleChange = event => {
     const target = event.target;
-    console.log(event);
     this.setState({
       [target.id]: target.type === "checkbox" ? target.checked : target.value
     });
@@ -65,18 +65,6 @@ export default class Login extends Component {
     }  
 
 
-    renderRedirect = () => {
-      if (this.state.redirectMainScreen) {
-        return <Redirect to='/MainScreen' />
-      }
-    }
-
-    renderRedirectToRegister = () => {
-      if (this.state.redirectRegister) {
-        return <Redirect to='/Register' />
-      }
-    }
-
     async componentDidMount(){
       console.log("login",this.state);
     }
@@ -88,8 +76,6 @@ export default class Login extends Component {
 
     
       handleSubmit = async (event) => {
-        event.preventDefault();
-        console.log('x');
         event.preventDefault();
         await fetch('https://intern2019dev.clover.studio/users/login', {
           headers: {
@@ -113,6 +99,9 @@ export default class Login extends Component {
            }else{
              const user = json.data.user;
              const jwt = json.data.user.jwt;
+             this.setState({
+               role: json.data.user.personsRoleId
+             })
              console.log(jwt);
              localStorage.setItem('user',JSON.stringify(user));
              localStorage.setItem('token',jwt);
@@ -125,18 +114,21 @@ export default class Login extends Component {
   }
 
   checkIfError = (json) =>{
-    if(json.data.error.error_code == consts.errorEmail){
-      return console.log('Oib se vec koristi');
-    }else if(json.data.error.error_code == consts.errorPassword){
-      return console.log('email se vec koristi')
+    if(json.data.error.error_code == consts.errorEmail.error_code){
+      alert(consts.errorEmail.error_description);
+    }else if(json.data.error.error_code == consts.errorPassword.error_code){
+      alert(consts.errorPassword.error_description);
     }
     }
 
 
     render() {
-      if (this.state.redirectMainScreen) {
-        return <Redirect to='/MainScreen' />
+      if (this.state.redirectMainScreen && this.state.role === 1) {
+        return <Redirect to='/News' />
       }
+      if(this.state.redirectMainScreen && this.state.role === 2) {
+        return <Redirect to='/NewsUser' />
+      }      
       if (this.state.redirectRegister) {
         return <Redirect to='/Register' />
       }
@@ -178,7 +170,7 @@ export default class Login extends Component {
                         />
                         </FormGroup>
 
-                        <FormGroup>
+                        <FormGroup style={{textAlign: 'center', fontSize: '18px'}}>
                           <input
                             id='rememberMe'
                             type="checkbox"
@@ -188,7 +180,7 @@ export default class Login extends Component {
                         </FormGroup>
 
                         <Button
-                        className="btn-login"
+                        className="btn-login bold-btn"
                         block
                         bssize="large"
                         disabled={!this.validateForm()}

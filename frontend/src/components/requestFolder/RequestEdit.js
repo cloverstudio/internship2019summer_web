@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import {Button} from 'react-bootstrap';
+import { Button, FormGroup, FormControl, FormLabel, Row, Col} from "react-bootstrap";
 import SideBar from '../layout/SideBar';
 import MapContainer from '../MapContainer';
-import {BrowserRouter as Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 
 export class RequestEdit extends Component {
@@ -17,7 +17,8 @@ export class RequestEdit extends Component {
       location_latitude: editItem.location_latitude, 
       location_longitude: editItem.location_longitude,        
       message: editItem.message,
-      photo: editItem.photo,
+      image: editItem.image,
+      redirectToRequests: false
     }
   }
 
@@ -46,113 +47,157 @@ export class RequestEdit extends Component {
         location_latitude: this.state.location_latitude, 
         location_longitude: this.state.location_longitude,        
         message: this.state.message,
-        photo: this.state.photo
+        image: this.state.image
       })
     }
     ).then(async (response)  => {
        const json = await response.json();
-      //  return <Redirect to='/Requests' />
-      console.log(json);
+       if(json.data.error) {
+        console.log('error')
+      } else {
+        this.setRedirectToRequests();
+      }
     }
     ).catch(e=>{
       console.log('err',e);
     })
+  }
+
+    setRedirectToRequests = () =>{
+      console.log("Evo");
+      this.setState({
+          redirectToRequests: true
+      })
     }
 
 
-  render(){
-    return (
+  render() {
+    if (this.state.redirectToRequests) {
+      console.log('Redirect....');
+      return <Redirect to='/Requests' />
+    }
 
+
+    return (
+      
       <div style={{display:'flex'}}>
         <SideBar />
-        <div className="requests-container-gray">
-         <Button
-            className=""
+        <div className="container-gray">
+         <div className="new-request-white-container">
+          <Button
+            className="btn-back bold-btn"
             color="primary"
             size="sm"
             href="/Requests">
-            Vrati se nazad
-         </Button>{' '}
-
-          <h1>Izmjena zahtjeva</h1>
+            Vrati se
+          </Button>{' '}
+          <div className="title-request new-request-title">
+            <h1>Izmjena zahtjeva</h1>
+          </div>
           
           <form>
-              <label htmlFor="name">Naslov:</label>
-              <div className="input-field">
-                <input 
-                  type="text" 
-                  name="title" 
-                  id="Title"
-                  ref="title" 
-                  defaultValue={this.state.Title}
-                  onChange={this.handleChange}
+            <FormGroup bssize="large">
+              <FormLabel>Naslov:</FormLabel>
+              <FormControl
+                className="border-none"
+                required
+                autoFocus
+                type="text"
+                name="title"
+                ref="title"
+                id="Title"
+                defaultValue={this.state.Title}
+                onChange={this.handleChange}
                 />
-              </div>
+            </FormGroup>
+              
+            <div className="info-container">
+              <Row>
+                <Col md="6">
+                  <FormGroup className="type">
+                    <label htmlFor="type">Tip zahtjeva:</label>
+                    <div className="input-field">
+                      <select 
+                        className="filter-gray" 
+                        ref="Request_type"
+                        id="Request_type"
+                        defaultValue={this.state.Request_type} 
+                        onChange={this.handleChange}
+                      >
+                        <option value="kvar" name="kvar">Kvar</option>
+                        <option value="prijedlog" name="prijedlog">Prijedlog</option>
+                      </select>
+                    </div>
+                  </FormGroup>
 
-              <label htmlFor="type">Tip zahtjeva:</label>
-              <div className="input-field">
-                <select 
-                  ref="Request_type"
-                  id="Request_type"
-                  defaultValue={this.state.Request_type} 
-                  onChange={this.handleChange}
-                >
-                  <option value="kvar" name="kvar">Kvar</option>
-                  <option value="prijedlog" name="prijedlog">Prijedlog</option>
-                </select>
-              </div>
+                  <FormGroup>
+                    <label htmlFor="image" action="intern2019.def.clover.studio/requests/new" method="POST" encType="multipart/form-data">Datoteka:</label>
+                    <div className="input-field">
+                      <input 
+                        type="file" 
+                        name="image" 
+                        id="exampleFile" 
+                        ref="image" 
+                        id="image" 
+                        defaultValue={this.state.image}
+                        onChange={this.handleChange}
+                      />
+                    </div>
+                  </FormGroup>
+                </Col>
 
-              <label htmlFor="photo" action="intern2019.def.clover.studio/requests/new" method="POST" encType="multipart/form-data">Datoteka:</label>
-              <div className="input-field">
-                <input 
-                  type="file" 
-                  name="photo" 
-                  id="photo"
-                  ref="photo" 
-                  defaultValue={this.state.photo}
-                  onChange={this.handleChange}
-                />
-              </div>
+                <Col md="6">
+                  <FormGroup bssize="large">
+                    <FormLabel>Upišite lokaciju:</FormLabel>
+                    <FormControl
+                      className="border-none"
+                      required
+                      autoFocus
+                      type="textarea"
+                      name="address"
+                      ref="address"
+                      id="Address" 
+                      defaultValue={this.state.Address}
+                      onChange={this.handleChange}
+                      />
+                  </FormGroup>
 
-              <label htmlFor="city">Poruka:</label>
-              <div className="input-field">
-                <input 
-                  type="text"
-                  name="message"
-                  id="message"
-                  ref="message" 
-                  defaultValue={this.state.message}
-                  onChange={this.handleChange}
-                />
-              </div>
+                  <MapContainer/>
 
-              <label htmlFor="address">Upišite lokaciju:</label>
-              <div className="input-field">
-                <input 
-                  type="text" 
-                  name="address"
-                  id="Address" 
-                  ref="address"  
-                  defaultValue={this.state.Address}
-                  onChange={this.handleChange}
-                />
+                </Col>
+              </Row>
+            </div>
+            <div className="message-container">
+                <FormGroup bssize="large">
+                  <FormLabel>Poruka:</FormLabel>
+                  <FormControl
+                    className="border-none"
+                    required
+                    autoFocus
+                    type="textarea"
+                    name="message"
+                    ref="message"
+                    id="message"
+                    defaultValue={this.state.message}
+                    onChange={this.handleChange}
+                    />
+                </FormGroup>
               </div>
-
-             <MapContainer/>
 
               <div className="two-btns-request">
                 <Button
+                  className="bold-btn blue-btn"
                   color="primary"
                   type="submit"
                   onClick = {this.handleSubmit}
                   >
-                  Spremi promjene
+                  Spremi izmjene
                 </Button>{' '}
 
               </div>
             </form>
-        </div>
-        
+          </div>
+       </div>
       </div>
       
     )

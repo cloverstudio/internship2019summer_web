@@ -2,12 +2,8 @@ import React, { Component } from 'react';
 import SideBar from '../layout/SideBar';
 import { Dropdown } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-import no_content_icon from '../../assets/no_content_icon.svg';
-import AddNewsButton from '../layout/AddNewsButton';
 import NewsList from './NewsList';
-
-
-
+import NewsUser from './NewsUser'
 
 export default class News extends Component {
 
@@ -16,7 +12,7 @@ export default class News extends Component {
         this.state = {
             jwt: localStorage.getItem('token'),
             newsList: [],
-            
+            userRole: JSON.parse(localStorage.getItem('user'))
         }
     }
 
@@ -36,20 +32,21 @@ export default class News extends Component {
             }, method: 'GET'
         }).then(async (response) => {
             const json = await response.json();
-            console.log(json);
             const mapNews = json.data.news.map(news => {
                 return news;
             })
-            console.log(mapNews)
             this.setState({newsList: mapNews})
-            console.log(this.state.newsList)
         }).catch(e => {
-            console.log(e);
+            return <Redirect to='/NoNews' />
         })
     }
 
 
     render() {
+        if(this.state.userRole.personsRoleId === 2){
+            console.log(this.state.userRole.personsRoleId)
+            return <NewsUser/>
+          }
 
         
 
@@ -58,7 +55,7 @@ export default class News extends Component {
                 <SideBar />
                 <div className="news-container" style={{ background: '#e7e7e7', maxWidth:'90%' }}>
                     <Dropdown >
-                        <Dropdown.Toggle variant="success" id="dropdown-basic" style={{ marginLeft: '20px', color: '#0076ff', background:'white' }}>
+                        <Dropdown.Toggle variant="success" id="dropdown-basic" style={{ marginLeft: '20px', color: '#0076ff', background:'white', width:'24%' }}>
                             Sve
                         </Dropdown.Toggle>
 
@@ -69,7 +66,6 @@ export default class News extends Component {
                         </Dropdown.Menu>
                     </Dropdown>
                     <div className='no-dropdown'>
-                    <AddNewsButton />
                     <NewsList
                     newsList = {this.state.newsList} />
                     </div>

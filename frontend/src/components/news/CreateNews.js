@@ -6,7 +6,9 @@ import { Button, FormGroup, FormLabel, Row, Col, FormControl, Image } from 'reac
 import AddedDocument from '../layout/AddedDocument';
 import upload_photo_icon from '../../assets/upload_photo_icon.svg';
 import upload_document_icon from '../../assets/upload_document_icon.svg';
-import GoogleApiWraper from './NewsMapContainer';
+//import GoogleApiWraper from './NewsMapContainer';
+import Map from './Map';
+
 
 
 export default class CreateNews extends Component {
@@ -20,7 +22,7 @@ export default class CreateNews extends Component {
             file: null,
             title: '',
             message: '',
-            address: '',
+            address: 'ilica',
             location_latitude: '',
             location_longitude: '',
         }
@@ -32,19 +34,17 @@ export default class CreateNews extends Component {
         })
     }
 
-    uploadDocument = () => {
+    uploadFiles = (event) => {
         this.setState({
-            // eslint-disable-next-line no-restricted-globals
-            file: URL.createObjectURL(event.target.files[0])
+          file: event.target.files[0]
         })
-    }
+      }
 
-    uploadImages = () => {
+    uploadImages = (event) => {
         this.setState({
-            // eslint-disable-next-line no-restricted-globals
-            images: URL.createObjectURL(event.target.files[0])
+          images: event.target.files[0]
         })
-    }
+      }
 
     handleChange = event => {
         this.setState({
@@ -53,25 +53,24 @@ export default class CreateNews extends Component {
     }
 
     handleSubmit = async (event) => {
+        const data = new FormData
+        data.append('photo',this.state.images)
+        data.append('file',this.state.file)
+        data.append('Title', this.state.title)
+        data.append('Message', this.state.message)
+        data.append('Address', this.state.address)
+        for(var pair of data.entries()) {
+            console.log(pair[0]+ ', '+ pair[1]); 
+          }
         event.preventDefault();
         await fetch('https://intern2019dev.clover.studio/news/new', {
             method: 'POST',
             headers: {
-                'Accept': 'multipart/form-data',
+                'Accept': 'application/json',
                 'Content-Type': 'multipart/form-data',
                 'token': localStorage.getItem('token')
             },
-            body: JSON.stringify({
-                //Images: this.state.images,
-                //Documents: this.state.documents,
-                Title: this.state.title,
-                Message: this.state.message,
-                Address: 'Ilica',
-                crossDomain: true,
-                xhrFields: {
-                    withCredentials: true
-                }
-            })
+            body: data
         }).then(async (response) => {
             const json = await response.json();
             console.log(json);
@@ -95,12 +94,13 @@ export default class CreateNews extends Component {
         return (
             <div style={{ display: 'flex', background: '#e7e7e7' }}>
                 <SideBar />
-                <div className="create-news" style={{ minWidth: '80%', padding: '20px' }}>
-                    <Row className="justify-content-md-center">
+                <div className="create-news" style={{ width: '60%', padding: '20px' }}>
+                    <Row style={{display:'flex', justifyContent:'center'}}>
                         <Col sm={3}>
                             <Button
+                                style={{marginLeft:'-40px', width:'100px'}}
                                 className="return sm=4"
-                                onClick={this.redirectToNews}>
+                                href='/News'>
                                 Vrati se
                         </Button>
                         </Col>
@@ -115,7 +115,7 @@ export default class CreateNews extends Component {
                             <div className="news-add-photos">
                                 <FormGroup controlId="newsphotos" bsSize="large" style={{ paddingTop: '5px' }}>
                                     <FormLabel bsClass="custom-label">Fotografije:</FormLabel>
-                                    <Row>
+                                    <Row style={{display:'flex', justifyContent:'left'}}>
                                     <input
                                     type='file'
                                     onChange={this.uploadImages}
@@ -136,6 +136,7 @@ export default class CreateNews extends Component {
                                 <FormControl
                                     onChange={this.handleChange}
                                     className="border-none"
+                                    required
                                 />
                             </FormGroup>
 
@@ -144,42 +145,44 @@ export default class CreateNews extends Component {
                                 <FormControl
                                     onChange={this.handleChange}
                                     className="border-none"
+                                    required
                                 />
                             </FormGroup>
 
-                            <Row >
-                                <Col sm={5} >
-                                    <FormGroup controlId="Address" className="location-form">
-                                        <FormLabel >Lokacija</FormLabel>
-                                        <GoogleApiWraper style={{ marginTop: '20px', position: 'static' }} />
-                                        <FormControl
-                                            onChange={this.handleChange}
-                                            className="border-none"
-                                            style={{ paddingTop: "60px" }} />
+                            <div style={{display:'flex'}}>
+                                    <FormGroup controlId="address" className="location-form">
+                                        <Map
+                                        handleChange={this.handleChange}
+                                        google={ this.props.google }
+                                        center={{ lat: 45.815399, lng: 15.966568}}
+                                        height='200px'
+                                        zoom={10}/>
                                     </FormGroup>
-                                </Col>
+                                
 
-                                <Col sm={5}>
+                                
                                     <FormGroup controlId="documents" className="document-form">
-                                        <FormLabel>Dokumenti</FormLabel>
+                                        <FormLabel style={{height:'20px', display:'block'}}>Dokumenti</FormLabel>
+                                        <div style={{display:'flex', justifyContent:'left'}}>
                                         <input 
                                         type='file' 
-                                        onChange={this.uploadDocument}
+                                        onChange={this.uploadFiles}
                                         ref={fileInput => this.fileInput = fileInput}
                                         style={{display:'none'}} />
                                         <Image 
                                         src={upload_document_icon} 
-                                        style={{ display: "flex", background: "#e7e7e7", height:'120px', width:'100px', padding:'20px' }}
+                                        style={{ display: "flex", background: "#e7e7e7", height:'120px', width:'100px', padding:'20px', margin:'0' }}
                                         onClick = {() => this.fileInput.click()}
                                         rounded />
-                                        <div>
-                                            <AddedDocument/>
                                         </div>
                                     </FormGroup>
-                                </Col>
+                            </div>
 
-                            </Row>
-                            <Row className="justify-content-md-center" style={{ paddingTop: "300px" }}>
+                            
+
+
+                            <div style={{ paddingTop: "300px", display:'flex', justifyContent:'center'}}>
+                            
                                 <Button
                                     className="btn-submit sm=4"
                                     onClick={this.handleSubmit}>
@@ -190,7 +193,8 @@ export default class CreateNews extends Component {
                                     href='/News'>
                                     Poništi
                         </Button>
-                            </Row>
+                        
+                            </div>
 
                         </div>
                     </form>

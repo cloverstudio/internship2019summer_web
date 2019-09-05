@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import RequestItem from './RequestItem';
 import add_icon from '../../assets/add_icon.svg';
 import SideBar from '../layout/SideBar';
-import { CardDeck, Card } from 'react-bootstrap'
-import { throwStatement } from '@babel/types';
+import NoNewRequests from '../requestFolder/NoNewRequests';
+import { Card, Row, Col} from 'react-bootstrap';
 
 export class Requests extends Component {
   constructor() {
@@ -11,7 +11,8 @@ export class Requests extends Component {
 
     this.requests=[];
     this.state = {
-      filteredRequests: []
+      filteredRequests: [],
+      loadingDone: false
     }
   }
 
@@ -38,7 +39,8 @@ export class Requests extends Component {
 
           this.requests=json.data.requests;
           this.setState({
-            filteredRequests: json.data.requests
+            filteredRequests: json.data.requests,
+            loadingDone: true
           });
         })
     } catch (err) {
@@ -70,13 +72,34 @@ export class Requests extends Component {
       )
     })
 
+    if (this.state.loadingDone === false) {
+      return (
+        <div style={{ display: 'flex' }}>
+          <SideBar />
+          <div className="container-gray">
+          </div>
+        </div>
+      )
+    } else if (this.state.loadingDone === true && this.requests.length == 0) {
+      return (
+        <div style={{ display: 'flex' }}>
+          <SideBar />
+          <div className="container-gray">
+            <NoNewRequests />
+          </div>
+        </div>
+      )
+    } else {
+      
+    }
+
     return (
       <div style={{ display: 'flex' }}>
         <SideBar />
-        <div className="requests-container-gray">
+        <div className="container-gray">
 
-          <div className="filter-type">
-            <div className="input-field">
+          <div className="filter-type container-fluid container-wide">
+            <div className="input-field row">
               <select 
                 className="filter"
                 ref="Request_type" 
@@ -89,20 +112,21 @@ export class Requests extends Component {
             </div>
           </div>
 
-          <div className="new-requests-container">
-            <Card style={{ border: 'none' }}>
-              <a className="requests-icon" href="/NewRequest">
-                <img style={{ maxWidth: "200px" }} src={add_icon} alt="Add more" />
-                <div className="requests-text">
-                  <p>Novi zahtjev</p>
-                </div>
-              </a>
-            </Card>
-
-          </div>
-          <ul className="collection" style={{ listStyleType: 'none' }}>
-            {RequestItems}
-          </ul>
+            <div className="container-fluid container-wide">
+              <Row>
+              <Col md="4">
+                <Card style={{ border: 'none' }}>
+                  <a className="card-inner card-new-request" href="/NewRequest">
+                    <div className="card-new-request-content">
+                      <img style={{ maxWidth: "200px" }} src={add_icon} alt="Add more" />
+                      <p className="requests-text">Novi zahtjev</p>
+                    </div>
+                  </a>
+                </Card>
+              </Col>
+              {RequestItems} 
+              </Row>   
+            </div>
         </div>
       </div>
     )

@@ -13,12 +13,13 @@ class MiddleScreen extends Component {
 
     this.state = {
         redirect: false,
-        time: 5
-
+        time: 5,
+        user: JSON.parse(localStorage.getItem('user'))
     }
   }
 
   componentDidMount(prevProps) {
+    console.log(this.state.user.personsRoleId)
     
     const timer = setInterval(() => {
 
@@ -48,9 +49,12 @@ class MiddleScreen extends Component {
   }  
 
     render() {
-      if (this.state.redirect) {
-        return <Redirect to='/MainScreen' />
+      if (this.state.redirect && this.state.user.personsRoleId === 1) {
+        return <Redirect to='/News' />
       }
+      if(this.state.redirect && this.state.user.personsRoleId === 2) {
+        return <Redirect to='/NewsUser' />
+      }  
 
   //loginsucceed name
 

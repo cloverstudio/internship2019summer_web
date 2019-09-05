@@ -7,6 +7,7 @@ import {Row, Container, Col} from 'react-bootstrap';
 import add_icon from '../../assets/add_icon.svg';
 import axios from 'axios';
 import SideBar from '../layout/SideBar';
+import swal from 'sweetalert';
 //import apis from '../lib/api/api';
 
 
@@ -19,7 +20,8 @@ export class Users extends Component {
             searchfield: '',
             redirectAddUser: false,
             jwt: localStorage.getItem('token'),
-            letterList: []
+            letterList: [],
+            user: JSON.parse(localStorage.getItem('user'))
         }
     }
 
@@ -30,6 +32,7 @@ export class Users extends Component {
            return <Redirect to ="/"/>
         }
     }
+
 
     componentDidCatch(json){
         if(json.data.error.error_code == 1006){
@@ -62,6 +65,11 @@ export class Users extends Component {
         .then (async (response) => { 
             const json = await response.json();
             console.log(json);
+            console.log(json.data.error)
+            /*if(json.data.error.error_code === '1006'){
+                //ne radi redirect iz nekog razloga
+                return <Redirect to ='/'/>
+              }*/
             const mapUsers = json.data.user.map(user => {
                 return user;
             })
@@ -84,6 +92,9 @@ export class Users extends Component {
         })
         
         this.setState({userprofile: mapUsers})
+        }
+        ).catch(error => {
+            console.log(error)
         })
         }
 
@@ -96,6 +107,10 @@ export class Users extends Component {
         
 
     render() {
+        if(this.state.user.personsRoleId === 2){
+            console.log(this.state.user.personsRoleId)
+            return <Redirect to = '/'/>
+          }
         if (this.state.redirectAddUser) {
             return <Redirect to='/AddNewUser' />
           }
@@ -112,7 +127,7 @@ export class Users extends Component {
             <div style={{display:'flex', background:'#e7e7e7'}}>
                 <SideBar/>
                 <Container style={{margin:"0", background:'#e7e7e7'}}>
-                    <Row>
+                    <Row style={{display:'flex', marginLeft:'5px'}}>
                     <Search searchChange = {this.onSearchChange} />
                     <Button className="btn-new-user col"
                     onClick = {this.setRedirectAddNewUser}>

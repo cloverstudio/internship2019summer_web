@@ -11,7 +11,7 @@ export default class SingleUser extends Component {
         super(props);
         this.state = {
             redirectToEdit: false,
-            linkToPhoto: 'https://intern2019dev.clover.studio/uploads/photos/'
+            linkToPhoto: 'https://intern2019dev.clover.studio/uploads/files/'
         }
     }
 
@@ -23,6 +23,14 @@ export default class SingleUser extends Component {
           localStorage.setItem('editUser', editUser);
     } 
 
+    /* checkName(){
+        if(this.props.user.firstName && this.props.lastName){
+            return `${this.props.user.firstName} ${this.props.user.lastName}` 
+        }else{
+            return this.props.user.name
+        }
+    }*/
+
     render(){
         if (this.state.redirectToEdit) {
             return <Redirect to={`/Users/${this.props.user.ID}`} />
@@ -32,7 +40,7 @@ export default class SingleUser extends Component {
             return (
 
             <div className="user" onClick = {this.setredirectToEdit} id={this.props.user.ID}>
-                <Image className="profile-photo" src={this.state.linkToPhoto + `${this.props.user.image}`} alt="" />
+                <Image className="profile-photo" src={this.state.linkToPhoto+`${this.props.user.image}`} alt="" />
                 <div className="user-info">
                     <h3>{this.props.user.firstName} {this.props.user.lastName}</h3>
                     <p>{this.props.user.email}</p>
