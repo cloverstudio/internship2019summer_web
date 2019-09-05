@@ -10,7 +10,7 @@ export default class Profile extends Component {
         super(props)
     
         this.state = {
-             renderChangePassword: false
+             renderChangePassword: false,
         }
         this.showChangePassword = this.showChangePassword.bind(this)
     }

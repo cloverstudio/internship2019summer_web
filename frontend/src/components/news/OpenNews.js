@@ -19,6 +19,12 @@ export default class OpenNews extends Component {
                 <SideBar/>
             
                     <Card style={{ background: "white", width: "80%", color: 'black', margin: '20px' }}>
+                        <Button 
+                        style={{position: 'absolute', zIndex:'3', top:'20px'}}
+                        className='return'
+                        href='/NewsUser'>
+                            Vrati se
+                        </Button>
                         <Image src={this.state.passedProps.Image} style={{width:'100%', height:'500px'}}/>
                         <p className="open-title">{this.state.passedProps.Title}</p>
                         <p className="open-text">{this.state.passedProps.Message}</p>
