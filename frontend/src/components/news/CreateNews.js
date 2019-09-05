@@ -174,10 +174,6 @@ export default class CreateNews extends Component {
                                         style={{ display: "flex", background: "#e7e7e7", height:'120px', width:'100px', padding:'20px', margin:'0' }}
                                         onClick = {() => this.fileInput.click()}
                                         rounded />
-                                        <div>
-                                            <AddedDocument
-                                            file={this.state.file}/>
-                                        </div>
                                         </div>
                                     </FormGroup>
                             </div>

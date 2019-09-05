@@ -107,6 +107,10 @@ export class Users extends Component {
         
 
     render() {
+        if(this.state.user.personsRoleId === 2){
+            console.log(this.state.user.personsRoleId)
+            return <Redirect to = '/'/>
+          }
         if (this.state.redirectAddUser) {
             return <Redirect to='/AddNewUser' />
           }
@@ -123,7 +127,7 @@ export class Users extends Component {
             <div style={{display:'flex', background:'#e7e7e7'}}>
                 <SideBar/>
                 <Container style={{margin:"0", background:'#e7e7e7'}}>
-                    <Row style={{display:'flex'}}>
+                    <Row style={{display:'flex', marginLeft:'5px'}}>
                     <Search searchChange = {this.onSearchChange} />
                     <Button className="btn-new-user col"
                     onClick = {this.setRedirectAddNewUser}>

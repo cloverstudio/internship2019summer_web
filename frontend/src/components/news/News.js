@@ -3,6 +3,7 @@ import SideBar from '../layout/SideBar';
 import { Dropdown } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import NewsList from './NewsList';
+import NewsUser from './NewsUser'
 
 export default class News extends Component {
 
@@ -11,6 +12,7 @@ export default class News extends Component {
         this.state = {
             jwt: localStorage.getItem('token'),
             newsList: [],
+            userRole: JSON.parse(localStorage.getItem('user'))
         }
     }
 
@@ -41,6 +43,10 @@ export default class News extends Component {
 
 
     render() {
+        if(this.state.userRole.personsRoleId === 2){
+            console.log(this.state.userRole.personsRoleId)
+            return <NewsUser/>
+          }
 
         
 
@@ -49,7 +55,7 @@ export default class News extends Component {
                 <SideBar />
                 <div className="news-container" style={{ background: '#e7e7e7', maxWidth:'90%' }}>
                     <Dropdown >
-                        <Dropdown.Toggle variant="success" id="dropdown-basic" style={{ marginLeft: '20px', color: '#0076ff', background:'white' }}>
+                        <Dropdown.Toggle variant="success" id="dropdown-basic" style={{ marginLeft: '20px', color: '#0076ff', background:'white', width:'24%' }}>
                             Sve
                         </Dropdown.Toggle>
 
