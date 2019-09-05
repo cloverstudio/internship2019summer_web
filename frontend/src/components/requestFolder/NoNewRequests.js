@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import SideBar from './../layout/SideBar';
 import no_content_icon from '../../assets/no_content_icon.svg'; 
 import {  Button} from "react-bootstrap";
 import { Redirect } from 'react-router-dom';
