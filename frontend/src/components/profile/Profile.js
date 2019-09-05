@@ -3,6 +3,7 @@ import ProfileInfo from './ProfileInfo';
 import ChangePassword from './ChangePassword';
 import SideBar from '../layout/SideBar';
 import {Redirect} from 'react-router-dom';
+import ProfileUser from './ProfileUser';
 
 export default class Profile extends Component {
 
@@ -11,6 +12,7 @@ export default class Profile extends Component {
     
         this.state = {
              renderChangePassword: false,
+             userRole: JSON.parse(localStorage.getItem('user'))
         }
         this.showChangePassword = this.showChangePassword.bind(this)
     }
@@ -39,6 +41,10 @@ export default class Profile extends Component {
     
     
     render() {
+        if(this.state.userRole.personsRoleId === 2){
+            console.log(this.state.userRole.personsRoleId)
+            return <ProfileUser/>
+          }
         return (
             <div style ={{display:'flex', background:'#e7e7e7'}}>
                 <SideBar/>

@@ -124,6 +124,7 @@ export class AddNewUser extends Component {
         <div style={{ background: 'white', margin: '10px', minWidth: '50%' }}>
           <Row style={{ display: 'flex' }}>
             <Button
+              style={{width:'100px', marginLeft:'35px'}}
               className="return"
               onClick={this.setRedirectUsers}>
               Vrati se

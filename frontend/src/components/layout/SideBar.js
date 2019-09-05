@@ -5,6 +5,7 @@ import nav_news_selected_icon from '../../assets/nav_news_selected_icon.svg';
 import nav_requests_selected_icon from '../../assets/nav_requests_selected_icon.svg'; 
 import nav_users_selected_icon from '../../assets/nav_users_selected_icon.svg';
 import {Image} from 'react-bootstrap';
+import SideBarUser from './SideBarUser';
 
 import { NavItem, NavLink } from 'reactstrap';
 
@@ -14,6 +15,7 @@ export default class SideBar extends Component {
           this.state = {
               RedirectLogin: false,
               profilePhoto: JSON.parse(localStorage.getItem('user')),
+              userRole: JSON.parse(localStorage.getItem('user'))
         };
     }
 
@@ -54,6 +56,10 @@ export default class SideBar extends Component {
 
     
     render (){
+      if(this.state.userRole.personsRoleId === 2){
+        console.log(this.state.userRole.personsRoleId)
+        return <SideBarUser/>
+      }
     
         return(
           <div className="sidebar-container" style={{background:'#ffffff'}}>

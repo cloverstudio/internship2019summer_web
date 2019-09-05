@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SideBarUser from '../layout/SideBarUser';
 import { Redirect } from 'react-router-dom';
 import NewsListUser from './NewsListUser';
+import News from './News'
 
 export default class NewsUser extends Component {
 
@@ -10,6 +11,7 @@ export default class NewsUser extends Component {
         this.state = {
             jwt: localStorage.getItem('token'),
             newsList: [],
+            userRole: JSON.parse(localStorage.getItem('user'))
         }
     }
 
@@ -47,6 +49,10 @@ export default class NewsUser extends Component {
 
 
     render() {
+        if(this.state.userRole.personsRoleId === 1){
+            console.log(this.state.userRole.personsRoleId)
+            return <News/>
+          }
 
         
 

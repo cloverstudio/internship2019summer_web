@@ -35,18 +35,16 @@ export default class NoNewsUser extends Component {
         }
 
         return (
-            <div className="main-container" style={{display:'flex'}} >
+            <div className="main-container" style={{display:'flex', background:'#e7e7e7'}} >
                 <SideBar />
-            <div className="no-news-container">
+            <div className="no-news-container" style={{ position:'static'}}>
                 <div className="no-news">
                     <img style= {{maxWidth: '300px'}} alt= "logo grada gray" src = {no_content_icon} />
                     <p style={{fontSize: '60px', fontWeight: '600'}}> 
                         Niti jedna vijest <br></br> 
                         još nije objavljena!
                     </p>
-                    <Button onClick = {this.setRedirectToCreateNews}>
-                        Objavi vijest
-                    </Button>
+                    
                     
                        
                 </div> 

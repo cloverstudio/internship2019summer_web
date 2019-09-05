@@ -144,6 +144,7 @@ export default class EditUser extends Component {
         <div style={{ background: 'white', margin: '10px', minWidth: '50%' }}>
         <Row style={{ display: 'flex' }}>
           <Button
+            style={{width:'100px', marginLeft:'35px'}}
             className="return"
             onClick={this.setRedirectUsers}>
             Vrati se
@@ -167,7 +168,8 @@ export default class EditUser extends Component {
                   <Image src=
                     {this.state.linkToPhoto+`${this.state.image}`}
                     onClick={() => this.fileInput.click()}
-                    style={{ justifySelf: 'center' }} />
+                    style={{ justifySelf: 'center', width:'150px' }}
+                    roundedCircle />
                 </div>
               </div>
             </FormGroup>
