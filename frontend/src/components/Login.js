@@ -114,10 +114,10 @@ export default class Login extends Component {
   }
 
   checkIfError = (json) =>{
-    if(json.data.error.error_code == consts.errorEmail){
-      return swal("Greška",'Krivi email!','error');
-    }else if(json.data.error.error_code == consts.errorPassword){
-      return swal("Greška",'Krivi password!','error')
+    if(json.data.error.error_code == consts.errorEmail.error_code){
+      alert(consts.errorEmail.error_description);
+    }else if(json.data.error.error_code == consts.errorPassword.error_code){
+      alert(consts.errorPassword.error_description);
     }
     }
 
@@ -170,7 +170,7 @@ export default class Login extends Component {
                         />
                         </FormGroup>
 
-                        <FormGroup>
+                        <FormGroup style={{textAlign: 'center', fontSize: '18px'}}>
                           <input
                             id='rememberMe'
                             type="checkbox"

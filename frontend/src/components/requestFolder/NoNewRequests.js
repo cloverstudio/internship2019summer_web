@@ -12,8 +12,6 @@ export default class NoNewRequests extends Component {
         
         return(
 
-        <div className="main-container" style={{display:'flex'}} >
-          <SideBar />
           <div className="no-news-container">
             <div className="no-news">
                 <img style= {{maxWidth: '300px'}} alt= "logo grada gray" src = {no_content_icon} />
@@ -32,7 +30,6 @@ export default class NoNewRequests extends Component {
                 </div> 
             </div>
           </div>
-        </div>
 
         )
     }
