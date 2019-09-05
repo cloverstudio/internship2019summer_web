@@ -10,7 +10,7 @@ export class NewsContainerUser extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            linkToPhoto: 'https://intern2019dev.clover.studio/uploads/photos/',
+            linkToPhoto: 'https://intern2019dev.clover.studio/uploads/files/',
             redirectToOpenNews: false,
         }
     }

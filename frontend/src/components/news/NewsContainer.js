@@ -9,7 +9,7 @@ export default class NewsContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            linkToPhoto: 'https://intern2019dev.clover.studio/uploads/photos/',
+            linkToPhoto: 'https://intern2019dev.clover.studio/uploads/files/',
             redirectToEditNews: false
         }
     }
@@ -24,8 +24,11 @@ export default class NewsContainer extends Component {
 
     render() {
         if (this.state.redirectToEditNews) {
-            return <Redirect to='/News/:openNews' />
-          }
+            return <Redirect to={{
+                pathname: '/News/:ID',
+                state: { editNewsProps: this.props }
+            }}/>
+        }
 
         return (
 
@@ -33,7 +36,7 @@ export default class NewsContainer extends Component {
             <Card className="news-card"
                 style={{ background: "white", height: "400px ", width: "300px", color: '#0076ff', margin: '20px' }}
                 onClick={this.redirectToEditNews}>
-                <Image src={this.props.newsList.Images} style={{ height: '150px', width: '100%' }} />
+                <Image src={this.state.linkToPhoto+`${this.props.newsList.Images}`} style={{ height: '150px', width: '100%' }} />
                 <p className="title">{this.props.newsList.Title}</p>
                 <p className="text">{this.props.newsList.Message}</p>
                 <div className='author-date' style={{ display: 'flex' }}>

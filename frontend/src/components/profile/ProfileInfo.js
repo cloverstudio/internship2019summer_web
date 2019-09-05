@@ -3,7 +3,8 @@ import { FormGroup, FormControl, FormLabel, Button, Image } from 'react-bootstra
 import { Redirect } from 'react-router-dom';
 import swal from 'sweetalert';
 import no_content_icon from '../../assets/no_content_icon.svg';
-
+import consts from '../../lib/const';
+import nav_users_icon from '../../assets/nav_users_icon.svg'
 
 export default class ProfileInfo extends Component {
 
@@ -15,7 +16,6 @@ export default class ProfileInfo extends Component {
             images: null,
             linkToPhoto: 'https://intern2019dev.clover.studio/uploads/photos/',
             changedFields: {},
-
         }
     }
 
@@ -37,10 +37,17 @@ export default class ProfileInfo extends Component {
         });
     }
 
-    uploadImages = () => {
+    joinName(){
+        const name = this.state.profileData.firstName.concat(" ")
+        name = name.concat(this.state.profileData.lastName)
         this.setState({
-            // eslint-disable-next-line no-restricted-globals
-            images: URL.createObjectURL(event.target.files[0])
+            name: name
+        })
+    }
+
+    uploadImages = (event) => {
+        this.setState({
+            images: event.target.files[0]
         })
     }
 
@@ -51,19 +58,32 @@ export default class ProfileInfo extends Component {
         this.state.changedFields.lastName = splitString[1].trim();
       }
 
+      checkIfError = (json) => {
+        if (json.data.error.error_code == consts.errorEmail) {
+          return swal('Oib se vec koristi');
+        } else if (json.data.error.error_code == consts.errorPassword) {
+          return swal('email se vec koristi');
+        }
+      }
+
 
     handleSubmit = async (event) => {
-        const sendObject = this.state.changedFields
-        console.log(sendObject)
+        const data = new FormData()
+        for ( var key in this.state.changedFields ) {
+            data.append(key, this.state.changedFields[key]);  
+            }
+        if(this.state.images !== this.state.profileData.image && this.state.images !== null ){
+            data.append('photo', this.state.images)
+        }
         event.preventDefault();
         await fetch('https://intern2019dev.clover.studio/users/myProfile', {
             method: 'PUT',
             headers: {
-                'Accept': 'multipart/form-data',
+                'Accept': 'application/json',
                 'Content-Type': 'multipart/form-data',
                 'token': localStorage.getItem('token')
             },
-            body: JSON.stringify({ sendObject })
+            body: data 
                 .then(async (res) => {
                     const json = await res.json();
                     console.log(json);
@@ -81,7 +101,7 @@ export default class ProfileInfo extends Component {
         if (this.state.profileData.image === null) {
             this.setState({
                 profileData: {
-                    image: no_content_icon
+                    image: nav_users_icon
                 }
             })
         }
@@ -101,6 +121,7 @@ export default class ProfileInfo extends Component {
                             roundedCircle
                             style={{ alignSelf: 'center', width: '40%' }}
                             onClick={() => this.fileInput.click()}
+                            fluid
                         />
                     </FormGroup>
 

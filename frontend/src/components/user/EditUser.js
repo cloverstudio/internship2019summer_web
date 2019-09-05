@@ -4,6 +4,9 @@ import { Redirect } from 'react-router-dom';
 import swal from 'sweetalert';
 import md5 from 'md5';
 import upload_photo_icon from '../../assets/upload_photo_icon.svg';
+import consts from '../../lib/const';
+import Sidebar from '../layout/SideBar';
+
 
 export default class EditUser extends Component {
 
@@ -12,8 +15,9 @@ export default class EditUser extends Component {
     this.state = {
       jwt: localStorage.getItem('token'),
       redirectToUsers: false,
-      linkToPhoto: 'https://intern2019dev.clover.studio/uploads/photos/',
-      changedFields: {}
+      linkToPhoto: 'https://intern2019dev.clover.studio/uploads/files/',
+      changedFields: {},
+      images: null
     }
   }
 
@@ -36,8 +40,12 @@ export default class EditUser extends Component {
         email: String(json.data.user.email),
         image: json.data.user.image,
       })
+      if(this.state.firstName !== null && this.state.lastName !== null){
       const name = this.state.firstName.concat(" ").concat(this.state.lastName)
       this.setState({ name: name })
+      }else{
+        this.setState({ name: '' })
+      }
     }).catch(e => {
       console.log(e);
     })
@@ -55,50 +63,62 @@ export default class EditUser extends Component {
 
   handleChange = (event) => {
 
-    if (event.target.id == "name"){
-      this.separateName(this.state.name);
-      console.log(this.state.changedFields);
-    }
     this.setState({
       [event.target.id]: event.target.value,
       changedFields: {
         ...this.state.changedFields,
-        [event.target.id]: event.target.value
+        [event.target.id]: event.target.value,
       }
     });
+    console.log(this.state.changedFields)
   }
 
 
 
   handleSubmit = async (event) => {
-    if(this.state.firstName === this.state.changedFields.firstName ){
-      delete this.state.changedFields.firstName
-    }
-    if(this.state.lastName === this.state.changedFields.lastName){
-      delete this.state.changedFields.lastName
-    }
-    delete this.state.changedFields.name;
-    const sendObject = this.state.changedFields
-    console.log(sendObject);
     event.preventDefault();
-    await fetch('https://intern2019dev.clover.studio/users/newUser', {
+    //const changedFields = this.state.changedFields
+    const data = new FormData;
+    for ( var key in this.state.changedFields ) {
+      data.append(key, this.state.changedFields[key]);  
+      }
+    if(this.state.images !== null || this.state.image){
+    data.append('photo',this.state.images)
+    }
+    for(var pair of data.entries()) {
+      console.log(pair[0]+ ', '+ pair[1]); 
+    }
+    await fetch(`https://intern2019dev.clover.studio/users/newUser/${this.props.match.params.userId}`, {
       headers: {
-        'Accept': 'multipart/form-data',
-        'Content-Type': 'multipart/form-data',
+        'Accept': 'application/json',
         'token': this.state.jwt
       },
       method: 'PUT',
-      body: JSON.stringify(sendObject)
-      
+      body: data
+
     }).then(async (response) => {
       const json = await response.json();
       console.log(json);
       swal("Uspješno", "Korisnički podatci uspješno promijenjeni!", "success");
       return this.setRedirectUsers();
     }).catch(e => {
-      console.log(JSON.parse(e));
+      console.log(e);
       swal("Greška", "Podatci nisu promijenjeni!", "error");
     })
+  }
+
+  uploadImages = (event) => {
+    this.setState({
+      images: event.target.files[0]
+    })
+  }
+
+  checkIfError = (json) => {
+    if (json.data.error.error_code == consts.errorEmail) {
+      return swal('Oib se vec koristi');
+    } else if (json.data.error.error_code == consts.errorPassword) {
+      return swal('email se vec koristi');
+    }
   }
 
   separateName = name => {
@@ -119,8 +139,10 @@ export default class EditUser extends Component {
 
 
     return (
-      <div className="new-user-form ">
-        <Row>
+      <div className="new-user-form" style={{ display: 'flex', background: '#e7e7e7' }}>
+        <Sidebar/>
+        <div style={{ background: 'white', margin: '10px', minWidth: '50%' }}>
+        <Row style={{ display: 'flex' }}>
           <Button
             className="return"
             onClick={this.setRedirectUsers}>
@@ -132,12 +154,23 @@ export default class EditUser extends Component {
         <form>
           <div className="new-user-form-container">
 
-            <div className="add-user-photo">
-              <FormGroup controlId="profilePhoto" bsSize="large">
-                <FormLabel bsClass="custom-label">Profilna slika</FormLabel>
-                <Image src={this.state.linkToPhoto + `${this.state.image}`} style={{ display: "flex", maxWidth: "50px", borderRadius: "30px" }} />
-              </FormGroup>
-            </div>
+            <FormGroup controlId="profilePhoto" bsSize="large">
+              <FormLabel bsClass="custom-label">Profilna slika</FormLabel>
+              <div className="add-user-photo">
+                <div style={{ display: 'flex', justifyContent: 'center', height: '100px' }}>
+                  <input
+                    type="file"
+                    onChange={this.uploadImages}
+                    id="file"
+                    ref={fileInput => this.fileInput = fileInput}
+                    style={{ display: "none" }} />
+                  <Image src=
+                    {this.state.linkToPhoto+`${this.state.image}`}
+                    onClick={() => this.fileInput.click()}
+                    style={{ justifySelf: 'center' }} />
+                </div>
+              </div>
+            </FormGroup>
 
             <FormGroup controlId="name" bsSize="large">
               <FormLabel>Ime i prezime</FormLabel>
@@ -197,6 +230,8 @@ export default class EditUser extends Component {
 
 
         </form>
+
+        </div>
 
 
 

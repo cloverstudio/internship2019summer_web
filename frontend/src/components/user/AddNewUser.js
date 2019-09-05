@@ -26,7 +26,6 @@ export class AddNewUser extends Component {
       redirectToUsers: false,
       image: upload_photo_icon,
       images: undefined,
-      linkToPhoto: 'https://intern2019dev.clover.studio/uploads/photos/'
     }
   }
   validateForm() {
@@ -149,7 +148,7 @@ export class AddNewUser extends Component {
                     <Image src={upload_photo_icon}
                       onClick={() => this.fileInput.click()}
                       style={{ justifySelf: 'center' }}
-                      roundedCircle />
+                      />
                   </div>
                   </div>
                 </FormGroup>
